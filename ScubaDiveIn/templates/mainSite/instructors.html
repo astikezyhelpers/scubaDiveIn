@@ -1,0 +1,484 @@
+{% extends "../base.html" %}
+
+{% block title %} Scuba Diving Courses – Learn to Dive with Experts in Andaman {% endblock %}
+
+{% block description %} Master scuba diving with our certified courses in Andaman! From beginner to advanced levels, explore professional training programs and discover the underwater world with expert guidance. {% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="relume" class="px-[5%] pt-32 py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
+  <div class="container">
+    <div class="flex flex-col gap-5 md:flex-row md:gap-12 lg:gap-20">
+      <div class="w-full max-w-lg text-center">
+        <p class="mb-3 font-semibold text-ocean-blue md:mb-4">Meet the Team</p>
+        <h1 class="text-4xl font-bold text-deep-blue md:text-5xl lg:text-6xl">
+          Our Certified Scuba Instructors
+        </h1>
+      </div>
+      <div class="w-full max-w-lg">
+        <p class="text-base md:text-lg text-ocean-blue">
+          Our team of PADI, SSI, and NAUI certified instructors brings decades of combined experience from dive sites around the world. Each instructor specializes in different aspects of diving, from beginner courses to technical diving specialties.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-4 md:mt-8">
+          <button
+            class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3"
+            title="Learn More"
+          >
+            View Certifications</button
+          ><button
+            class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 py-3"
+            title="Sign Up"
+          >
+            Book an Instructor
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instructor Stats Section -->
+<section class="px-[5%] py-12 md:py-16 bg-white">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div class="p-6 bg-wave rounded-xl shadow-sm">
+        <p class="text-3xl font-bold text-deep-blue">25+</p>
+        <p class="text-ocean-blue">Certified Instructors</p>
+      </div>
+      <div class="p-6 bg-wave rounded-xl shadow-sm">
+        <p class="text-3xl font-bold text-deep-blue">10k+</p>
+        <p class="text-ocean-blue">Students Trained</p>
+      </div>
+      <div class="p-6 bg-wave rounded-xl shadow-sm">
+        <p class="text-3xl font-bold text-deep-blue">50+</p>
+        <p class="text-ocean-blue">Diving Specialties</p>
+      </div>
+      <div class="p-6 bg-wave rounded-xl shadow-sm">
+        <p class="text-3xl font-bold text-deep-blue">100%</p>
+        <p class="text-ocean-blue">Safety Record</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instructor Specialties Section -->
+<section class="px-[5%] py-12 md:py-16 bg-gradient-to-b from-white to-wave">
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-bold text-center text-deep-blue mb-8">Our Specialties</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center mb-4">
+          <div class="bg-ocean-blue/10 p-3 rounded-full mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-deep-blue">Beginner Courses</h3>
+        </div>
+        <p class="text-ocean-blue">Patient instructors specializing in first-time divers with custom learning approaches for all ages.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center mb-4">
+          <div class="bg-ocean-blue/10 p-3 rounded-full mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-deep-blue">Technical Diving</h3>
+        </div>
+        <p class="text-ocean-blue">Expertise in deep diving, wreck penetration, mixed gases, and advanced equipment configurations.</p>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
+        <div class="flex items-center mb-4">
+          <div class="bg-ocean-blue/10 p-3 rounded-full mr-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-deep-blue">Safety Training</h3>
+        </div>
+        <p class="text-ocean-blue">Emergency response, rescue diving, and equipment maintenance specialists.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Instructors Section -->
+<section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
+  <div class="container">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-deep-blue mb-4">Featured Instructors</h2>
+      <p class="text-ocean-blue max-w-2xl mx-auto">Meet some of our most experienced instructors who will guide you through your underwater journey.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Instructor 1 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+        <div class="relative">
+          <img 
+            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+            alt="Instructor Sarah Chen" 
+            class="w-full h-64 object-cover"
+          >
+          <div class="absolute bottom-0 left-0 bg-ocean-blue/90 text-white px-4 py-2 rounded-tr-xl">
+            <p class="font-semibold">PADI Master Instructor</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-deep-blue mb-2">Sarah Chen</h3>
+          <p class="text-sea-green font-medium mb-4">15+ years experience | 2000+ dives</p>
+          <p class="text-ocean-blue mb-4">Specializing in underwater photography and marine life identification. Sarah has led dives across Southeast Asia and the Great Barrier Reef.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Nitrox Certified</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Wreck Diving</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Deep Diving</span>
+          </div>
+          <button class="w-full mt-4 rounded-full inline-flex items-center justify-center border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2 transition-colors">
+            View Profile
+          </button>
+        </div>
+      </div>
+      
+      <!-- Instructor 2 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+        <div class="relative">
+          <img 
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+            alt="Instructor Michael Rodriguez" 
+            class="w-full h-64 object-cover"
+          >
+          <div class="absolute bottom-0 left-0 bg-ocean-blue/90 text-white px-4 py-2 rounded-tr-xl">
+            <p class="font-semibold">SSI Instructor Trainer</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-deep-blue mb-2">Michael Rodriguez</h3>
+          <p class="text-sea-green font-medium mb-4">12+ years experience | 1500+ dives</p>
+          <p class="text-ocean-blue mb-4">Technical diving expert with specialties in cave diving and mixed gas diving. Michael has explored cenotes in Mexico and deep wrecks in the Atlantic.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Trimix Certified</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Cave Diving</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Rebreather</span>
+          </div>
+          <button class="w-full mt-4 rounded-full inline-flex items-center justify-center border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2 transition-colors">
+            View Profile
+          </button>
+        </div>
+      </div>
+      
+      <!-- Instructor 3 -->
+      <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+        <div class="relative">
+          <img 
+            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+            alt="Instructor Jessica Williams" 
+            class="w-full h-64 object-cover"
+          >
+          <div class="absolute bottom-0 left-0 bg-ocean-blue/90 text-white px-4 py-2 rounded-tr-xl">
+            <p class="font-semibold">NAUI Course Director</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold text-deep-blue mb-2">Jessica Williams</h3>
+          <p class="text-sea-green font-medium mb-4">18+ years experience | 3000+ dives</p>
+          <p class="text-ocean-blue mb-4">Marine conservation specialist with extensive experience in coral reef restoration. Jessica leads our eco-diving programs and marine biology courses.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Marine Biology</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Night Diving</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Search & Recovery</span>
+          </div>
+          <button class="w-full mt-4 rounded-full inline-flex items-center justify-center border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2 transition-colors">
+            View Profile
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-12">
+      <button class="rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3 transition-colors">
+        View All Instructors
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Instructor Certification Process -->
+<section class="px-[5%] py-16 md:py-24 bg-gradient-to-b from-white to-wave">
+  <div class="container mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-deep-blue mb-4">Our Instructor Certification</h2>
+      <p class="text-ocean-blue max-w-2xl mx-auto">All our instructors undergo rigorous training and continuous education to ensure the highest standards.</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-xl shadow-md">
+        <div class="text-ocean-blue text-4xl font-bold mb-4">01</div>
+        <h3 class="text-xl font-bold text-deep-blue mb-3">Certification</h3>
+        <p class="text-ocean-blue">Minimum PADI MSDT or equivalent certification with verified teaching experience across multiple specialties.</p>
+      </div>
+      
+      <div class="bg-white p-8 rounded-xl shadow-md">
+        <div class="text-ocean-blue text-4xl font-bold mb-4">02</div>
+        <h3 class="text-xl font-bold text-deep-blue mb-3">Evaluation</h3>
+        <p class="text-ocean-blue">6-month probation period with evaluation dives, teaching observations, and student feedback analysis.</p>
+      </div>
+      
+      <div class="bg-white p-8 rounded-xl shadow-md">
+        <div class="text-ocean-blue text-4xl font-bold mb-4">03</div>
+        <h3 class="text-xl font-bold text-deep-blue mb-3">Continuing Education</h3>
+        <p class="text-ocean-blue">Annual training updates including emergency response drills, new equipment training, and teaching methodology workshops.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="relume" class="overflow-hidden px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
+  <div class="container">
+    <div class="relative pb-12 md:pb-16 lg:px-8">
+      <div
+        class="relative overflow-hidden"
+        role="region"
+        aria-roledescription="carousel"
+      >
+        <div>
+          <div>
+            <div class="flex ml-0">
+              <div
+                role="group"
+                aria-roledescription="slide"
+                class="min-w-0 shrink-0 grow-0 basis-full pl-0 md:px-16 lg:px-6"
+              >
+                <div
+                  class="mx-auto flex h-full max-w-lg flex-col items-center justify-center text-center"
+                >
+                  <div class="mb-6 flex md:mb-8">
+                    <svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      class="size-6 text-coral"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
+                      ></path></svg
+                    ><svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      class="size-6 text-coral"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
+                      ></path></svg
+                    ><svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      class="size-6 text-coral"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
+                      ></path></svg
+                    ><svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      class="size-6 text-coral"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
+                      ></path></svg
+                    ><svg
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      class="size-6 text-coral"
+                      height="1em"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <blockquote class="text-xl font-bold text-deep-blue md:text-2xl">
+                    "The instructors here are truly exceptional. Their dedication to safety and teaching excellence makes learning to dive an absolute pleasure."
+                  </blockquote>
+                  <p class="mt-4 text-base text-ocean-blue">- Sarah Johnson, Open Water Diver</p>
+                  <div
+                    class="mt-6 flex w-full flex-col items-center gap-3 text-center md:mt-8 md:w-auto md:flex-row md:gap-5 md:text-left"
+                  >
+                    <div>
+                      <img
+                        src="https://img.freepik.com/premium-photo/portrait-young-woman-scuba-diver-wearing-diving-suit-posing-underwater_23-2149092624.jpg?w=1380"
+                        alt="Testimonial avatar 1"
+                        class="size-14 min-h-14 min-w-14 rounded-full object-cover"
+                      />
+                    </div>
+                    <div class="mb-4 md:mb-0">
+                      <p class="font-semibold text-deep-blue">Emily Johnson</p>
+                      <p class="text-ocean-blue">Diver, Adventure Co.</p>
+                    </div>
+                    <div
+                      class="hidden w-px self-stretch bg-ocean-blue/20 md:block"
+                    ></div>
+                    <div>
+                      <img
+                        src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_900,h_240/https://www.oceanadventures.in/wp-content/uploads/2021/08/1667637955167-removebg-preview-1.png"
+                        alt="Webflow logo 1"
+                        class="max-h-12"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="rounded-full gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue absolute size-14 rounded-full bg-white left-0 top-1/2 -translate-y-1/2 hidden md:flex md:size-14"
+            disabled=""
+          >
+            <svg
+              stroke="currentColor"
+              fill="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              class="size-6"
+              height="1em"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"
+              ></path></svg
+            ><span class="sr-only">Previous slide</span></button
+          ><button
+            class="rounded-full gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue absolute size-14 rounded-full bg-white right-0 top-1/2 -translate-y-1/2 hidden md:flex md:size-14"
+            disabled=""
+          >
+            <svg
+              stroke="currentColor"
+              fill="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              class="size-6"
+              height="1em"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+              ></path></svg
+            ><span class="sr-only">Next slide</span>
+          </button>
+          <div class="mt-[30px] flex items-center justify-center md:mt-[46px]">
+            <button
+              class="relative mx-[3px] inline-block size-2 rounded-full bg-ocean-blue/40"
+            ></button
+            ><button
+              class="relative mx-[3px] inline-block size-2 rounded-full bg-ocean-blue/40"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Certification Partners Section -->
+<section id="relume" class="px-[5%] py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white to-wave">
+  <div
+    class="container grid grid-cols-1 items-start justify-start gap-x-12 gap-y-8 md:grid-cols-[max-content_1fr] md:items-center md:justify-between md:gap-y-4 lg:gap-x-16"
+  >
+    <h1
+      class="leading-[1.2] font-bold text-deep-blue md:max-w-[16rem] md:text-md md:leading-[1.2] lg:max-w-xxs"
+    >
+      Certified by Leading Diving Organizations
+    </h1>
+    <div
+      class="grid grid-cols-2 items-center justify-end gap-x-4 gap-y-4 pt-4 sm:grid-cols-3 md:gap-x-8 md:pt-0 lg:grid-cols-5"
+    >
+      <div
+        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
+      >
+        <img
+          src="https://icon2.cleanpng.com/20180713/wtb/kisspng-professional-association-of-diving-instructors-scu-padi-5b48bde043e982.4412117915314938562782.jpg"
+          alt="PADI logo"
+          class="max-h-12 md:max-h-14"
+        />
+      </div>
+      <div
+        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
+      >
+        <img
+          src="https://w7.pngwing.com/pngs/739/337/png-transparent-ssi-hd-logo.png"
+          alt="SSI logo"
+          class="max-h-12 md:max-h-14"
+        />
+      </div>
+      <div
+        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
+      >
+        <img
+          src="https://cdn.freebiesupply.com/logos/thumbs/2x/naui-logo.png"
+          alt="NAUI logo"
+          class="max-h-12 md:max-h-14"
+        />
+      </div>
+      <div
+        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
+      >
+        <img
+          src="https://i.vimeocdn.com/player/374102?sig=58cd0e6db1d3b4dd1d1c5d52e4a6bfeed58e7a93c1ed9c2ffa1dd379292d66e6&v=1"
+          alt="BSAC logo"
+          class="max-h-12 md:max-h-14"
+        />
+      </div>
+      <div
+        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
+      >
+        <img
+          src="https://cdn.freelogovectors.net/wp-content/uploads/2020/04/cmas-world-underwater-federation-logo.png"
+          alt="CMAS logo"
+          class="max-h-12 md:max-h-14"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-deep-blue">
+  <div class="container mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Diving Journey?</h2>
+    <p class="text-wave max-w-2xl mx-auto mb-8">Our instructors are ready to guide you through every step of your scuba adventure, from your first breath underwater to advanced technical diving.</p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <button class="rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3 transition-colors">
+        Book a Discovery Dive
+      </button>
+      <button class="rounded-full inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-deep-blue px-8 py-3 transition-colors">
+        Contact Our Team
+      </button>
+    </div>
+  </div>
+</section>
+{% endblock %}

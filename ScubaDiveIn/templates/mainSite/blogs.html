@@ -1,0 +1,159 @@
+{% extends "../base.html" %}
+
+{% block title %} Scuba Diving Blogs – Learn to Dive with Experts in Andaman {% endblock %}
+
+{% block description %} Scuba Diving Blogs – Learn to Dive with Experts in Andaman {% endblock %}
+
+{% block content %}
+<section id="relume" class="px-[5%] pt-32 py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
+    <div class="container">
+      <div class="mx-auto mb-12 max-w-lg text-center md:mb-18 lg:mb-20">
+        <p class="mb-3 text-base font-semibold text-ocean-blue md:mb-4">Diving Insights</p>
+        <h1 class="mb-5 text-4xl font-bold text-deep-blue md:text-5xl lg:text-6xl">
+          Explore Our Blog
+        </h1>
+        <p class="text-base md:text-lg text-ocean-blue">
+          Discover tips, stories, and updates from the diving community.
+        </p>
+      </div>
+      <div
+        class="grid grid-cols-1 items-start justify-center gap-x-8 gap-y-12 md:grid-cols-2 md:gap-y-16 lg:grid-cols-3 lg:gap-x-12"
+      >
+        <div class="flex flex-col">
+          <div
+            class="relative mb-5 size-full overflow-hidden rounded-2xl pt-[66%] md:mb-6 md:pt-[100%]"
+          >
+            <img
+              src="https://img.freepik.com/premium-photo/underwater-exploration-scuba-divers-journey-into-vibrant-coral-reef_1062371-31370.jpg?w=1380"
+              alt="Blog post image 1"
+              class="absolute inset-0 size-full object-cover transition-transform duration-300 hover:scale-105"
+            />
+              </div>
+          <div class="mb-3 md:mb-4">
+            <h3 class="text-xl font-bold text-deep-blue md:text-2xl lg:text-3xl">
+              Essential Scuba Diving Tips for Beginners
+            </h3>
+            <p class="text-base text-ocean-blue">Learn the basics of safe and enjoyable diving.</p>
+            </div>
+          <p class="mb-4 text-base text-ocean-blue">
+            Discover fundamental tips and techniques for your first diving experience.
+          </p>
+          <div class="mt-auto">
+            <a
+              href="{% url 'sampleBlogPage'%}"
+              class="inline-flex items-center gap-2 text-ocean-blue hover:text-coral transition-colors"
+            >
+              Read More
+              <svg
+                stroke="currentColor"
+                fill="none"
+                stroke-width="0"
+                viewBox="0 0 15 15"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div
+            class="relative mb-5 size-full overflow-hidden rounded-2xl pt-[66%] md:mb-6 md:pt-[100%]"
+          >
+            <img
+              src="https://img.freepik.com/premium-photo/underwater-adventure-scuba-diver-immersed-fishes-mesmerizing-formation-social-media-post-si_795881-30528.jpg?ga=GA1.1.1606433894.1730365922&semt=ais_hybrid"
+              alt="Blog post image 2"
+              class="absolute inset-0 size-full object-cover transition-transform duration-300 hover:scale-105"
+            />
+          </div>
+          <div class="mb-3 md:mb-4">
+            <h3 class="text-xl font-bold text-deep-blue md:text-2xl lg:text-3xl">
+              Best Diving Locations Worldwide
+            </h3>
+            <p class="text-base text-ocean-blue">Explore top destinations for scuba diving.</p>
+          </div>
+          <p class="mb-4 text-base text-ocean-blue">
+            Find the perfect spot for your next underwater adventure.
+          </p>
+          <div class="mt-auto">
+            <a
+              href="{% url 'sampleBlogPage'%}"
+              class="inline-flex items-center gap-2 text-ocean-blue hover:text-coral transition-colors"
+            >
+              Read More
+              <svg
+                stroke="currentColor"
+                fill="none"
+                stroke-width="0"
+                viewBox="0 0 15 15"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div
+            class="relative mb-5 size-full overflow-hidden rounded-2xl pt-[66%] md:mb-6 md:pt-[100%]"
+          >
+            <img
+              src="https://img.freepik.com/premium-photo/scuba-diver-checks-their-equipment-while-underwater-surrounded-by-bubbles_885831-26921.jpg?ga=GA1.1.1606433894.1730365922&semt=ais_hybrid"
+              alt="Blog post image 3"
+              class="absolute inset-0 size-full object-cover transition-transform duration-300 hover:scale-105"
+            />
+              </div>
+          <div class="mb-3 md:mb-4">
+            <h3 class="text-xl font-bold text-deep-blue md:text-2xl lg:text-3xl">
+              Essential Diving Equipment Guide
+            </h3>
+            <p class="text-base text-ocean-blue">Everything you need to know about gear.</p>
+          </div>
+          <p class="mb-4 text-base text-ocean-blue">
+            A comprehensive guide to choosing and maintaining your diving equipment.
+          </p>
+          <div class="mt-auto">
+            <a
+              href="{% url 'sampleBlogPage'%}"
+              class="inline-flex items-center gap-2 text-ocean-blue hover:text-coral transition-colors"
+            >
+              Read More
+              <svg
+                stroke="currentColor"
+                fill="none"
+                stroke-width="0"
+                viewBox="0 0 15 15"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock %}
