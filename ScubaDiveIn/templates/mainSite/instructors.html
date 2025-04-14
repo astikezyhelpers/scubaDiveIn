@@ -1,4 +1,5 @@
 {% extends "../base.html" %}
+{% load static %}
 
 {% block title %} Scuba Diving Courses – Learn to Dive with Experts in Andaman {% endblock %}
 
@@ -17,7 +18,7 @@
       </div>
       <div class="w-full max-w-lg">
         <p class="text-base md:text-lg text-ocean-blue">
-          Our team of PADI, SSI, and NAUI certified instructors brings decades of combined experience from dive sites around the world. Each instructor specializes in different aspects of diving, from beginner courses to technical diving specialties.
+          Our team of PADI certified instructors brings decades of combined experience from dive sites around the world. Each instructor specializes in different aspects of diving, from beginner courses to technical diving specialties.
         </p>
         <div class="mt-6 flex flex-wrap gap-4 md:mt-8">
           <button
@@ -148,7 +149,7 @@
             class="w-full h-64 object-cover"
           >
           <div class="absolute bottom-0 left-0 bg-ocean-blue/90 text-white px-4 py-2 rounded-tr-xl">
-            <p class="font-semibold">SSI Instructor Trainer</p>
+            <p class="font-semibold">PADI Instructor Trainer</p>
           </div>
         </div>
         <div class="p-6">
@@ -175,7 +176,8 @@
             class="w-full h-64 object-cover"
           >
           <div class="absolute bottom-0 left-0 bg-ocean-blue/90 text-white px-4 py-2 rounded-tr-xl">
-            <p class="font-semibold">NAUI Course Director</p>
+            <p class="font-semibold">PADI Course Director</p>
+
           </div>
         </div>
         <div class="p-6">
@@ -405,61 +407,22 @@
 </section>
 
 <!-- Certification Partners Section -->
-<section id="relume" class="px-[5%] py-12 md:py-16 lg:py-20 bg-gradient-to-b from-white to-wave">
-  <div
-    class="container grid grid-cols-1 items-start justify-start gap-x-12 gap-y-8 md:grid-cols-[max-content_1fr] md:items-center md:justify-between md:gap-y-4 lg:gap-x-16"
-  >
-    <h1
-      class="leading-[1.2] font-bold text-deep-blue md:max-w-[16rem] md:text-md md:leading-[1.2] lg:max-w-xxs"
-    >
-      Certified by Leading Diving Organizations
-    </h1>
-    <div
-      class="grid grid-cols-2 items-center justify-end gap-x-4 gap-y-4 pt-4 sm:grid-cols-3 md:gap-x-8 md:pt-0 lg:grid-cols-5"
-    >
+<section class="py-12 bg-white">
+  <div class="container mx-auto px-[5%]">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-deep-blue mb-4">Internationally Recognized Certifications</h2>
+      <p class="text-ocean-blue max-w-2xl mx-auto">Our courses are accredited by the world's leading scuba diving organizations</p>
+    </div>
+    <!-- <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-center">
       <div
         class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
-      >
+      > -->
+      <div class="grid items-center justify-center mx-auto">
+        <div class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0">
         <img
-          src="https://icon2.cleanpng.com/20180713/wtb/kisspng-professional-association-of-diving-instructors-scu-padi-5b48bde043e982.4412117915314938562782.jpg"
+          src="{% static 'images/padi-logo.png' %}"
           alt="PADI logo"
-          class="max-h-12 md:max-h-14"
-        />
-      </div>
-      <div
-        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
-      >
-        <img
-          src="https://w7.pngwing.com/pngs/739/337/png-transparent-ssi-hd-logo.png"
-          alt="SSI logo"
-          class="max-h-12 md:max-h-14"
-        />
-      </div>
-      <div
-        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
-      >
-        <img
-          src="https://cdn.freebiesupply.com/logos/thumbs/2x/naui-logo.png"
-          alt="NAUI logo"
-          class="max-h-12 md:max-h-14"
-        />
-      </div>
-      <div
-        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
-      >
-        <img
-          src="https://i.vimeocdn.com/player/374102?sig=58cd0e6db1d3b4dd1d1c5d52e4a6bfeed58e7a93c1ed9c2ffa1dd379292d66e6&v=1"
-          alt="BSAC logo"
-          class="max-h-12 md:max-h-14"
-        />
-      </div>
-      <div
-        class="flex items-start justify-center justify-self-center px-4 py-3 md:p-0"
-      >
-        <img
-          src="https://cdn.freelogovectors.net/wp-content/uploads/2020/04/cmas-world-underwater-federation-logo.png"
-          alt="CMAS logo"
-          class="max-h-12 md:max-h-14"
+          class="max-h-36 md:max-h-42"
         />
       </div>
     </div>
