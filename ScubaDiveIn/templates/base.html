@@ -87,19 +87,19 @@
                 <h2 class="mb-3 font-semibold text-coral md:mb-4">Quick Links</h2>
                 <ul>
                   <li class="py-2 text-sm">
-                    <a href="../about-us/index.html" class="flex items-center gap-3 text-white hover:text-coral transition-colors">About Us</a>
+                    <a href="{% url 'aboutPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">About Us</a>
                   </li>
                   <li class="py-2 text-sm">
-                    <a href="../contact-us/index.html" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Contact Us</a>
+                    <a href="{% url 'contactPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Contact Us</a>
                   </li>
                   <li class="py-2 text-sm">
-                    <a href="../courses/index.html" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Our Courses</a>
+                    <a href="{% url 'coursesPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Our Courses</a>
                   </li>
                   <li class="py-2 text-sm">
-                    <a href="../blog/index.html" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Blog</a>
+                    <a href="{% url 'blogsPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Blog</a>
                   </li>
                   <li class="py-2 text-sm">
-                    <a href="../instructors/index.html" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Instructor Info</a>
+                    <a href="{% url 'instructorsPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Instructor Info</a>
                   </li>
                 </ul>
               </div>
@@ -268,5 +268,12 @@
           </div>
         </div>
     </footer>
+    <script 
+      type="text/javascript"
+      src="https://d3mkw6s8thqya7.cloudfront.net/integration-plugin.js"
+      id="aisensy-wa-widget"
+      widget-id="aaa0eo"
+    >
+    </script>
 </body>
 </html>
