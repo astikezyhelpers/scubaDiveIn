@@ -23,3 +23,6 @@ def blogDetail(request,slug):
 
 def sampleBlog(request):
     return render(request, 'mainSite/blogDetail.html')
+
+def courseDetail(request):
+    return render(request, 'mainSite/courseDetail.html')

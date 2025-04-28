@@ -22,9 +22,41 @@
       <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-4 text-lg">
         <a href="{% url 'coursesPage' %}">Explore Courses</a>
       </button>
-      <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-white text-white bg-transparent hover:bg-white hover:text-deep-blue px-8 py-4 text-lg">
+      <button onclick="openVideoPopup()" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-white text-white bg-transparent hover:bg-white hover:text-deep-blue px-8 py-4 text-lg">
         Watch Intro Video
       </button>
+      
+      <!-- Video Popup Container (initially hidden) -->
+      <div id="videoPopup" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="relative w-full max-w-4xl px-4">
+          <button onclick="closeVideoPopup()" class="absolute -top-10 right-0 text-white text-2xl">&times;</button>
+          <div class="aspect-w-16 aspect-h-9">
+            <iframe id="youtubeVideo" class="w-full h-[500px]" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        function openVideoPopup() {
+          const popup = document.getElementById('videoPopup');
+          const iframe = document.getElementById('youtubeVideo');
+          
+          // Replace 'YOUTUBE_VIDEO_ID' with your actual YouTube video ID
+          iframe.src = 'https://www.youtube.com/embed/KvZT3etZIsw?si=wpMzZfJbvJjuOcNV';
+          
+          popup.classList.remove('hidden');
+          document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+      
+        function closeVideoPopup() {
+          const popup = document.getElementById('videoPopup');
+          const iframe = document.getElementById('youtubeVideo');
+          
+          iframe.src = ''; // Stop the video
+          popup.classList.add('hidden');
+          document.body.style.overflow = ''; // Restore scrolling
+        }
+      </script>
     </div>
   </div>
   <div class="absolute bottom-8 left-0 right-0 text-center">
@@ -130,9 +162,11 @@
               <span class="text-sea-green font-bold">$399</span>
               <span class="text-sm text-gray-500 ml-2">(3-4 days)</span>
             </div>
-            <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
-              Learn More
-            </button>
+            <a href="{% url 'courseDetailPage' %}" class="text-sea-green hover:underline">
+              <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
+                Learn More
+              </button>
+            </a>
           </div>
         </div>
       </div>
@@ -154,9 +188,11 @@
               <span class="text-sea-green font-bold">$349</span>
               <span class="text-sm text-gray-500 ml-2">(2-3 days)</span>
             </div>
-            <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
-              Learn More
-            </button>
+            <a href="{% url 'courseDetailPage' %}" class="text-sea-green hover:underline">
+              <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
+                Learn More
+              </button>
+            </a>
           </div>
         </div>
       </div>
@@ -178,18 +214,22 @@
               <span class="text-sea-green font-bold">$449</span>
               <span class="text-sm text-gray-500 ml-2">(3-4 days)</span>
             </div>
-            <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
-              Learn More
-            </button>
+            <a href="{% url 'courseDetailPage' %}" class="text-sea-green hover:underline">
+              <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
+                Learn More
+              </button>
+            </a>
           </div>
         </div>
       </div>
     </div>
     
     <div class="text-center mt-12">
+      <a href="{% url 'coursesPage' %}" class="text-sea-green hover:underline">
       <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3">
         View All Courses
       </button>
+      </a>
     </div>
   </div>
 </section>
@@ -264,20 +304,20 @@
         <img src="https://img.freepik.com/premium-photo/underwater-coral-reef-with-fishes_488220-28315.jpg" alt="Coral Reef" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
         <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
         <div class="absolute bottom-0 left-0 p-6 text-white">
-          <h3 class="text-2xl font-bold mb-2">Coral Paradise</h3>
-          <p class="mb-4">Vibrant coral gardens teeming with marine life</p>
+          <h3 class="text-2xl font-bold mb-2">Tribe gate</h3>
+          <p class="mb-4">Beautiful dive site with good amount of table corals, nudibranch and sea anemones etc</p>
           <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>15 min boat ride</span>
+            <span>5 minutes boat ride</span>
           </div>
           <div class="flex items-center mt-1">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span>Depth: 5-18m</span>
+            <span>Depth: 5-12meters</span>
           </div>
         </div>
       </div>
@@ -287,20 +327,20 @@
         <img src="https://img.freepik.com/premium-photo/sunken-ship-underwater_488220-28312.jpg" alt="Shipwreck" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
         <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
         <div class="absolute bottom-0 left-0 p-6 text-white">
-          <h3 class="text-2xl font-bold mb-2">The Sunken Treasure</h3>
-          <p class="mb-4">Explore a historic shipwreck from the 1920s</p>
+          <h3 class="text-2xl font-bold mb-2">Red pillar</h3>
+          <p class="mb-4">Beautiful pillars which have a lot of barrel sponge, sea horse, fan coral etc</p>
           <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>30 min boat ride</span>
+            <span>5 minutes boat ride</span>
           </div>
           <div class="flex items-center mt-1">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span>Depth: 12-25m</span>
+            <span>Depth: 5-14 meters</span>
           </div>
         </div>
       </div>
@@ -310,20 +350,20 @@
         <img src="https://img.freepik.com/premium-photo/underwater-cave-with-light_488220-28314.jpg" alt="Underwater Cave" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
         <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
         <div class="absolute bottom-0 left-0 p-6 text-white">
-          <h3 class="text-2xl font-bold mb-2">The Blue Cathedral</h3>
-          <p class="mb-4">Stunning underwater cave system with light effects</p>
+          <h3 class="text-2xl font-bold mb-2">Lighthouse</h3>
+          <p class="mb-4">Beautiful, colourful corals with lots of fish life and wonderful visibility </p>
           <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span>45 min boat ride</span>
+            <span>15 minutes boat ride</span>
           </div>
           <div class="flex items-center mt-1">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span>Depth: 8-15m</span>
+            <span>Depth: 5-15 meters</span>
           </div>
         </div>
       </div>
@@ -618,12 +658,16 @@
     <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Diving Journey?</h2>
     <p class="text-wave max-w-2xl mx-auto mb-8">Our instructors are ready to guide you through every step of your scuba adventure, from your first breath underwater to advanced technical diving.</p>
     <div class="flex flex-wrap justify-center gap-4">
-      <button class="rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3 transition-colors">
-        Book a Discovery Dive
-      </button>
-      <button class="rounded-full inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-deep-blue px-8 py-3 transition-colors">
-        Contact Our Team
-      </button>
+      <a href="#">
+        <button class="rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3 transition-colors">
+          Book a Discover scuba dive
+        </button>
+      </a>
+      <a href="#">
+        <button class="rounded-full inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-deep-blue px-8 py-3 transition-colors">
+          Contact Our Team
+        </button>
+      </a>
     </div>
   </div>
 </section>
