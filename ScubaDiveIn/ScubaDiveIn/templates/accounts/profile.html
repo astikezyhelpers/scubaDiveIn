@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile | ScubaDiveIn{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Profile Sidebar -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">{{ user.get_full_name }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img src="https://via.placeholder.com/150" class="rounded-circle img-thumbnail" alt="Profile Picture">
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Username:</span>
+                            <span>{{ user.username }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Email:</span>
+                            <span>{{ user.email }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Member since:</span>
+                            <span>{{ user.date_joined|date:"M d, Y" }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'booking_history' %}" class="btn btn-outline-primary w-100 mb-2">My Bookings</a>
+                    <a href="{% url 'password_change' %}" class="btn btn-outline-secondary w-100">Change Password</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profile Edit Form -->
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Edit Profile</h4>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                    <div class="messages mb-3">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <h5 class="border-bottom pb-2 mb-3">Basic Information</h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ user_form.first_name.id_for_label }}">First Name</label>
+                                {{ user_form.first_name.errors }}
+                                <input type="text" name="{{ user_form.first_name.html_name }}" 
+                                       class="form-control" id="{{ user_form.first_name.id_for_label }}" 
+                                       value="{{ user_form.first_name.value }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ user_form.last_name.id_for_label }}">Last Name</label>
+                                {{ user_form.last_name.errors }}
+                                <input type="text" name="{{ user_form.last_name.html_name }}" 
+                                       class="form-control" id="{{ user_form.last_name.id_for_label }}" 
+                                       value="{{ user_form.last_name.value }}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="{{ user_form.email.id_for_label }}">Email</label>
+                                {{ user_form.email.errors }}
+                                <input type="email" name="{{ user_form.email.html_name }}" 
+                                       class="form-control" id="{{ user_form.email.id_for_label }}" 
+                                       value="{{ user_form.email.value }}">
+                            </div>
+                        </div>
+                        
+                        <h5 class="border-bottom pb-2 mb-3">Contact Information</h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ profile_form.phone_number.id_for_label }}">Phone Number</label>
+                                {{ profile_form.phone_number.errors }}
+                                <input type="tel" name="{{ profile_form.phone_number.html_name }}" 
+                                       class="form-control" id="{{ profile_form.phone_number.id_for_label }}" 
+                                       value="{{ profile_form.phone_number.value|default:'' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ profile_form.date_of_birth.id_for_label }}">Date of Birth</label>
+                                {{ profile_form.date_of_birth.errors }}
+                                <input type="date" name="{{ profile_form.date_of_birth.html_name }}" 
+                                       class="form-control" id="{{ profile_form.date_of_birth.id_for_label }}" 
+                                       value="{{ profile_form.date_of_birth.value|date:'Y-m-d'|default:'' }}">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="{{ profile_form.address.id_for_label }}">Address</label>
+                                {{ profile_form.address.errors }}
+                                <textarea name="{{ profile_form.address.html_name }}" class="form-control" 
+                                          id="{{ profile_form.address.id_for_label }}" rows="3">{{ profile_form.address.value|default:'' }}</textarea>
+                            </div>
+                        </div>
+                        
+                        <h5 class="border-bottom pb-2 mb-3">Emergency Contact</h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ profile_form.emergency_contact_name.id_for_label }}">Contact Name</label>
+                                {{ profile_form.emergency_contact_name.errors }}
+                                <input type="text" name="{{ profile_form.emergency_contact_name.html_name }}" 
+                                       class="form-control" id="{{ profile_form.emergency_contact_name.id_for_label }}" 
+                                       value="{{ profile_form.emergency_contact_name.value|default:'' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ profile_form.emergency_contact_number.id_for_label }}">Contact Number</label>
+                                {{ profile_form.emergency_contact_number.errors }}
+                                <input type="tel" name="{{ profile_form.emergency_contact_number.html_name }}" 
+                                       class="form-control" id="{{ profile_form.emergency_contact_number.id_for_label }}" 
+                                       value="{{ profile_form.emergency_contact_number.value|default:'' }}">
+                            </div>
+                        </div>
+                        
+                        <h5 class="border-bottom pb-2 mb-3">Diving Information</h5>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="{{ profile_form.diving_experience.id_for_label }}">Diving Experience</label>
+                                {{ profile_form.diving_experience.errors }}
+                                <textarea name="{{ profile_form.diving_experience.html_name }}" class="form-control" 
+                                          id="{{ profile_form.diving_experience.id_for_label }}" rows="3">{{ profile_form.diving_experience.value|default:'' }}</textarea>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="{{ profile_form.certification_level.id_for_label }}">Certification Level</label>
+                                {{ profile_form.certification_level.errors }}
+                                <input type="text" name="{{ profile_form.certification_level.html_name }}" 
+                                       class="form-control" id="{{ profile_form.certification_level.id_for_label }}" 
+                                       value="{{ profile_form.certification_level.value|default:'' }}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="{{ profile_form.certification_agency.id_for_label }}">Certification Agency</label>
+                                {{ profile_form.certification_agency.errors }}
+                                <input type="text" name="{{ profile_form.certification_agency.html_name }}" 
+                                       class="form-control" id="{{ profile_form.certification_agency.id_for_label }}" 
+                                       value="{{ profile_form.certification_agency.value|default:'' }}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="{{ profile_form.certification_number.id_for_label }}">Certification Number</label>
+                                {{ profile_form.certification_number.errors }}
+                                <input type="text" name="{{ profile_form.certification_number.html_name }}" 
+                                       class="form-control" id="{{ profile_form.certification_number.id_for_label }}" 
+                                       value="{{ profile_form.certification_number.value|default:'' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

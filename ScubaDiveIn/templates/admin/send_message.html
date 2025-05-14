@@ -1,0 +1,51 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">Home</a>
+&rsaquo; <a href="{% url 'admin:mainSite_usermessage_changelist' %}">User Messages</a>
+&rsaquo; Send Message to User
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <div class="module aligned">
+    <h2>Send Message to {{ recipient.get_full_name|default:recipient.username }}</h2>
+    
+    {% if messages %}
+    <ul class="messagelist">
+      {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <p>You are sending a message to: <strong>{{ recipient.email }}</strong></p>
+    
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="form-row">
+        <div class="field-box">
+          <label for="id_subject">Subject:</label>
+          <input type="text" name="subject" id="id_subject" maxlength="200" style="width: 90%;">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="field-box">
+          <label for="id_message">Message:</label>
+          <textarea name="message" id="id_message" rows="10" cols="80" style="width: 90%;" required></textarea>
+        </div>
+      </div>
+      
+      <div class="submit-row">
+        <input type="submit" value="Send Message" class="default">
+        <a href="{% url 'admin:mainSite_usermessage_changelist' %}" class="button">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %} 

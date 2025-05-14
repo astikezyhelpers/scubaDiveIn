@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Terms and Conditions - Scuba Dive In{% endblock %}
+
+{% block description %}Read our terms and conditions to understand the rules, guidelines, and legal agreements for using Scuba Dive In's services.{% endblock %}
+
+{% block content %}
+<section class="pt-32 pb-16 px-[5%]">
+    <div class="container mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-deep-blue mb-8">Terms and Conditions</h1>
+        
+        <div class="prose max-w-none">
+            <p class="text-lg text-gray-700 mb-6">Last updated: {{ current_date }}</p>
+
+            <div class="space-y-8">
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">1. Acceptance of Terms</h2>
+                    <p class="text-gray-700 mb-4">By accessing and using Scuba Dive In's services, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">2. Eligibility</h2>
+                    <p class="text-gray-700 mb-4">To use our services, you must:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Be at least 18 years old</li>
+                        <li>Have the legal capacity to enter into contracts</li>
+                        <li>Meet the medical requirements for scuba diving</li>
+                        <li>Provide accurate and complete information</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">3. Booking and Payment</h2>
+                    <p class="text-gray-700 mb-4">When booking our services:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Full payment is required to confirm bookings</li>
+                        <li>Prices are subject to change without notice</li>
+                        <li>We accept payments through Razorpay</li>
+                        <li>All payments are in Indian Rupees (INR)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">4. Diving Requirements</h2>
+                    <p class="text-gray-700 mb-4">Participants must:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Complete a medical questionnaire</li>
+                        <li>Provide valid diving certification (if applicable)</li>
+                        <li>Follow all safety instructions</li>
+                        <li>Meet minimum age requirements for specific courses</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">5. Liability and Risk</h2>
+                    <p class="text-gray-700 mb-4">Scuba diving involves inherent risks. By using our services, you:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Acknowledge these risks</li>
+                        <li>Release us from liability for personal injury</li>
+                        <li>Agree to follow all safety protocols</li>
+                        <li>Accept responsibility for your own actions</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">6. Intellectual Property</h2>
+                    <p class="text-gray-700 mb-4">All content on our website, including:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Text and images</li>
+                        <li>Logos and branding</li>
+                        <li>Course materials</li>
+                        <li>Website design</li>
+                    </ul>
+                    <p class="text-gray-700 mt-4">is the property of Scuba Dive In and protected by copyright laws.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">7. Governing Law</h2>
+                    <p class="text-gray-700 mb-4">These terms are governed by the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in [Your City].</p>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">8. Contact Information</h2>
+                    <p class="text-gray-700 mb-4">For questions about these Terms and Conditions, please contact us at:</p>
+                    <div class="bg-wave p-6 rounded-lg">
+                        <p class="text-gray-700">Email: legal@scubadivein.com</p>
+                        <p class="text-gray-700">Phone: +91 8951099693</p>
+                        <p class="text-gray-700">Address: Scubadivein, Govinda nager, beach no. 01, swarajdeep, south Andaman, 744211</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

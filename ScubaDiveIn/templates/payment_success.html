@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 80px;"></i>
+                    </div>
+                    <h2 class="mb-4">Payment Successful!</h2>
+                    <p class="lead">Thank you for your booking. Your payment has been processed successfully.</p>
+                    
+                    <div class="card mb-4 mt-4">
+                        <div class="card-body bg-light">
+                            <h5 class="mb-3">Booking Details</h5>
+                            <div class="row text-start">
+                                <div class="col-md-6">
+                                    <p><strong>Service:</strong> {{ service.name }}</p>
+                                    <p><strong>Booking Date:</strong> {{ payment.booking_date }}</p>
+                                    <p><strong>Participants:</strong> {{ payment.participants }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Amount Paid:</strong> ₹{{ payment.amount }}</p>
+                                    <p><strong>Payment ID:</strong> {{ payment.payment_id }}</p>
+                                    <p><strong>Order ID:</strong> {{ payment.order_id }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p>A confirmation email has been sent to your registered email address.</p>
+                    
+                    <div class="mt-5">
+                        <a href="{% url 'home' %}" class="btn btn-primary me-3">Return to Home</a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'user_bookings' %}" class="btn btn-outline-primary">View My Bookings</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

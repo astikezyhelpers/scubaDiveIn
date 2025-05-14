@@ -1,0 +1,60 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Payment Successful{% endblock %}
+
+{% block description %}Thank you for your payment{% endblock %}
+
+{% block content %}
+<section class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-white to-wave">
+  <div class="container mx-auto">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
+        <div class="mb-8">
+          <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          </div>
+          <h1 class="text-3xl font-bold text-deep-blue">Payment Successful!</h1>
+          <p class="text-gray-600 mt-2">Thank you for your booking. Your payment has been processed successfully.</p>
+        </div>
+        
+        <div class="bg-gray-50 rounded-lg p-6 mb-8">
+          <h2 class="text-xl font-semibold text-ocean-blue mb-4 text-left">Booking Details</h2>
+          <div class="space-y-3 text-left">
+            <div class="flex justify-between">
+              <span class="text-deep-blue">Course:</span>
+              <span class="font-medium">{{ service.name }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-deep-blue">Amount Paid:</span>
+              <span class="font-medium">₹{{ payment.amount }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-deep-blue">Payment ID:</span>
+              <span class="font-medium">{{ payment.payment_id }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-deep-blue">Order ID:</span>
+              <span class="font-medium">{{ payment.order_id }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <p class="text-gray-600 mb-6">A confirmation email has been sent to your registered email address.</p>
+        
+        <div class="flex flex-col gap-4">
+          <a href="{% url 'coursesPage' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
+            <span>Browse More Courses</span>
+          </a>
+          
+          {% if show_booking_history_link %}
+          <a href="{% url 'booking_history' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-white text-ocean-blue hover:bg-ocean-blue hover:text-white px-6 py-3">
+            <span>View Booking History</span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} 

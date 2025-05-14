@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cancellations and Refunds Policy - Scuba Dive In{% endblock %}
+
+{% block description %}Learn about our cancellation and refund policies for diving courses, equipment, and services at Scuba Dive In.{% endblock %}
+
+{% block content %}
+<section class="pt-32 pb-16 px-[5%]">
+    <div class="container mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold text-deep-blue mb-8">Cancellations and Refunds Policy</h1>
+        
+        <div class="prose max-w-none">
+            <p class="text-lg text-gray-700 mb-6">Last updated: {{ current_date }}</p>
+
+            <div class="space-y-8">
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">1. Course Cancellations</h2>
+                    <p class="text-gray-700 mb-4">For diving courses:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Cancellation 7+ days before course: 90% refund</li>
+                        <li>Cancellation 3-7 days before course: 50% refund</li>
+                        <li>Cancellation less than 3 days: No refund</li>
+                        <li>Medical emergencies: Case-by-case consideration</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">2. Equipment Returns</h2>
+                    <p class="text-gray-700 mb-4">For diving equipment purchases:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Unused items: 14-day return window</li>
+                        <li>Original packaging required</li>
+                        <li>Shipping costs for returns are customer's responsibility</li>
+                        <li>Custom or personalized items are non-refundable</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">3. Refund Process</h2>
+                    <p class="text-gray-700 mb-4">Refunds will be processed:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Within 7-10 business days</li>
+                        <li>To the original payment method</li>
+                        <li>After inspection of returned items</li>
+                        <li>Minus any applicable fees</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">4. Weather Cancellations</h2>
+                    <p class="text-gray-700 mb-4">For weather-related cancellations:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Full refund or rescheduling option</li>
+                        <li>Based on local weather authority advisories</li>
+                        <li>Safety is our primary concern</li>
+                        <li>Alternative dates will be offered</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">5. Special Circumstances</h2>
+                    <p class="text-gray-700 mb-4">We consider exceptions for:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Medical emergencies with documentation</li>
+                        <li>Natural disasters</li>
+                        <li>Government-imposed restrictions</li>
+                        <li>Technical issues with our services</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">6. Processing Fees</h2>
+                    <p class="text-gray-700 mb-4">The following fees may apply:</p>
+                    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+                        <li>Administrative fee: 5% of refund amount</li>
+                        <li>Payment processing fees</li>
+                        <li>Shipping and handling costs</li>
+                        <li>Restocking fees for equipment</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-semibold text-ocean-blue mb-4">7. Contact Information</h2>
+                    <p class="text-gray-700 mb-4">For cancellation and refund inquiries, please contact us at:</p>
+                    <div class="bg-wave p-6 rounded-lg">
+                        <p class="text-gray-700">Email: refunds@scubadivein.com</p>
+                        <p class="text-gray-700">Phone: +91 8951099693</p>
+                        <p class="text-gray-700">Address: Scubadivein, Govinda nager, beach no. 01, swarajdeep, south Andaman, 744211</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

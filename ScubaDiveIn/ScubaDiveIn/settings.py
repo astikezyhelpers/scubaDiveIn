@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2n-3#t%!fum0)m#+*mdafc9*#am$zprt502llr2g2jo3rt#e0$'
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-2n-3#t%!fum0)m#+*mdafc9*#am$zprt502llr2g2jo3rt#e0$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ["13.61.19.80", "scubadivein.in"]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default="13.61.19.80,scubadivein.in,*", cast=Csv())
 
 
 # Application definition
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainSite',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,31 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Razorpay Settings
+RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID', default='rzp_test_Sf5MAcuzRuHH3h')
+RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='XvMTRMSGBlUtaU4o3VfyTjBF')
+
+# Authentication settings
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'profile'
+LOGOUT_REDIRECT_URL = 'homePage'
+
+# Email settings (for password reset and other transactional emails)
+# For development, use console backend to see emails in console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# For production, use SMTP
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+# EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+# EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='your-email@gmail.com')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='your-app-password')
+
+# Admin email for receiving notifications
+ADMIN_EMAIL = config('ADMIN_EMAIL', default='admin@scubadivein.in')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='info@scubadivein.in')
+
+# Base URL configuration
+BASE_URL = 'http://127.0.0.1:8000'

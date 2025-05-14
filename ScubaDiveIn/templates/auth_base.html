@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Scuba Diving in Andaman – Explore the Best Diving Spots & Packages{% endblock %}</title>
+  <meta name="description" content="{% block description %}Discover the beauty of scuba diving in Andaman! Explore crystal-clear waters, vibrant coral reefs, and diverse marine life. Book the best scuba diving packages for an unforgettable underwater adventure.{% endblock %}">
+  <link rel="shortcut icon" href="{% static 'images/logo-main.png' %}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ocean-blue': '#006994',
+            'coral': '#FF6B6B',
+            'sea-green': '#2E8B57',
+            'deep-blue': '#003366',
+            'sand': '#F4D03F',
+            'wave': '#E8F4F8'
+          },
+          fontFamily: {
+            'sans': ['"Open Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-wave font-sans">
+    <div class="pt-4 min-h-screen flex flex-col">
+        <!-- Small logo at the top center for authentication pages -->
+        <div class="text-center mb-4">
+            <a href="{% url 'homePage' %}">
+                <img src="{% static 'images/logo-main.png' %}" alt="ScubaDiveIn Logo" class="h-16 mx-auto">
+            </a>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+        
+        <!-- Simple footer for auth pages -->
+        <div class="mt-auto py-4 text-center text-sm text-ocean-blue">
+            <p>&copy; {% now "Y" %} ScubaDiveIn. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html> 

@@ -58,122 +58,49 @@
     <div
       class="grid auto-cols-fr grid-cols-1 gap-x-12 gap-y-12 md:grid-cols-2 md:gap-y-16"
     >
+      {% for course in courses %}
       <div class="flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
         <div class="mb-5 lg:mb-6">
-          <img
-            src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070"
-            class="size-full object-cover"
-            alt="Open Water Diver course"
-          />
+          {% if course.featured_image %}
+            <img
+              src="{{ course.featured_image.url }}"
+              class="size-full object-cover"
+              alt="{{ course.name }}"
+            />
+          {% else %}
+            <img
+              src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070"
+              class="size-full object-cover"
+              alt="{{ course.name }}"
+            />
+          {% endif %}
         </div>
         <div class="p-6">
           <h3
             class="mb-3 text-xl leading-[1.4] font-bold text-deep-blue md:text-2xl lg:mb-4 lg:text-3xl"
           >
-            Open Water Diver
+            {{ course.name }}
           </h3>
           <p class="mb-5 text-base text-ocean-blue md:mb-6">
-            Perfect for beginners, this course teaches you the fundamentals of scuba diving.
+            {{ course.short_description }}
           </p>
-          <div class="mt-auto">
-            <a href="{% url 'courseDetailPage' %}">
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-sea-green font-bold">₹{{ course.price }}</span>
+              <span class="text-sm text-gray-500 ml-2">({{ course.duration }} minutes)</span>
+            </div>
+            <a href="{% url 'courseDetailPage' course.slug %}">
               <button
                 class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3"
                 title="Learn More"
               >
-              Learn More
+                Learn More
               </button>
             </a>
           </div>
         </div>
       </div>
-      <div class="flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="mb-5 lg:mb-6">
-          <img
-            src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070"
-            class="size-full object-cover"
-            alt="Advanced Open Water course"
-          />
-        </div>
-        <div class="p-6">
-          <h3
-            class="mb-3 text-xl leading-[1.4] font-bold text-deep-blue md:text-2xl lg:mb-4 lg:text-3xl"
-          >
-            Advanced Open Water
-          </h3>
-          <p class="mb-5 text-base text-ocean-blue md:mb-6">
-            Take your diving skills to the next level with advanced techniques and specialties.
-          </p>
-          <div class="mt-auto">
-            <a href="{% url 'courseDetailPage' %}">
-            <button
-              class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3"
-              title="Learn More"
-            >
-            Learn More
-            </button>
-          </a>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="mb-5 lg:mb-6">
-          <img
-            src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070"
-            class="size-full object-cover"
-            alt="Rescue Diver course"
-          />
-        </div>
-        <div class="p-6">
-          <h3
-            class="mb-3 text-xl leading-[1.4] font-bold text-deep-blue md:text-2xl lg:mb-4 lg:text-3xl"
-          >
-            Rescue Diver
-          </h3>
-          <p class="mb-5 text-base text-ocean-blue md:mb-6">
-            Learn essential rescue skills and emergency response procedures.
-          </p>
-          <div class="mt-auto">
-            <a href="{% url 'courseDetailPage' %}">
-              <button
-                class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3"
-                title="Learn More"
-              >
-              Learn More
-              </button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden">
-        <div class="mb-5 lg:mb-6">
-          <img
-            src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070"
-            class="size-full object-cover"
-            alt="Divemaster course"
-          />
-        </div>
-        <div class="p-6">
-          <h3
-            class="mb-3 text-xl leading-[1.4] font-bold text-deep-blue md:text-2xl lg:mb-4 lg:text-3xl"
-          >
-            Divemaster
-          </h3>
-          <p class="mb-5 text-base text-ocean-blue md:mb-6">
-            Professional-level training for those who want to lead and teach others.
-          </p>
-          <div class="mt-auto">
-            <a href="{% url 'courseDetailPage' %}">
-              <button
-                class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3"
-                title="Learn More"
-              >
-              Learn More
-              </button>
-            </a>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </section>

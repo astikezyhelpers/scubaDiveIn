@@ -37,9 +37,15 @@
         <a href="{% url 'homePage' %}"><img src="{% static 'images/logo-main.png' %}" alt="Logo image" style="height: 75px;"/></a>
         <div class="flex items-center gap-4 lg:hidden">
             <div>
-            <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue w-full px-4 py-1" title="Join">
-                Join
-            </button>
+            {% if user.is_authenticated %}
+              <a href="{% url 'profile' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-1" title="Profile">
+                My Account
+              </a>
+            {% else %}
+              <a href="{% url 'login' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-1" title="Login">
+                Login
+              </a>
+            {% endif %}
             </div>
             <button class="-mr-2 flex size-12 flex-col items-center justify-center lg:hidden">
             <span class="my-[3px] h-0.5 w-6 bg-ocean-blue"></span>
@@ -55,11 +61,48 @@
         <a href="{% url 'instructorsPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">Instructors</a>
         <a href="{% url 'blogsPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">Blogs</a>
         <a href="{% url 'contactPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">Contact Us</a>
+        
+        {% if user.is_authenticated %}
+        <div class="border-t border-gray-200 mt-4 mb-2 lg:hidden"></div>
+        <a href="{% url 'profile' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">My Profile</a>
+        <a href="{% url 'booking_history' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">My Bookings</a>
+        <a href="{% url 'logout' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">Log Out</a>
+        {% else %}
+        <div class="border-t border-gray-200 mt-4 mb-2 lg:hidden"></div>
+        <a href="{% url 'login' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">Log In</a>
+        <a href="{% url 'signup' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">Sign Up</a>
+        {% endif %}
         </div>
         <div class="hidden justify-self-end lg:block">
-        <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-2" title="Join">
-            <a href="{% url 'contactPage' %}">Join</a>
-        </button>
+          {% if user.is_authenticated %}
+            <div class="flex items-center gap-3">
+              <div class="relative group">
+                <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2" title="My Account">
+                  <span>{{ user.first_name|default:user.username }}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </button>
+                <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block">
+                  <div class="py-1">
+                    <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white">My Profile</a>
+                    <a href="{% url 'booking_history' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white">My Bookings</a>
+                    <div class="border-t border-gray-200"></div>
+                    <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white">Log Out</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div class="flex items-center gap-3">
+              <a href="{% url 'login' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out focus-visible:outline-none border-2 border-transparent text-ocean-blue hover:border-ocean-blue hover:bg-ocean-blue hover:text-white px-4 py-2" title="Login">
+                Log In
+              </a>
+              <a href="{% url 'signup' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-2" title="Sign Up">
+                Sign Up
+              </a>
+            </div>
+          {% endif %}
         </div>
     </div>
     </section>
@@ -206,7 +249,13 @@
               <div
                 class="grid grid-flow-row grid-cols-[max-content] justify-center gap-y-4 md:grid-flow-col md:justify-center md:gap-x-6 md:gap-y-0 lg:text-left"
               >
-                <p class="mt-8 text-white/70 md:mt-0">© 2024 Scuba Dive. All rights reserved.</p>
+                <p class="mt-8 text-white/70 md:mt-0">© 2025 Scuba Dive. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                  <a href="{% url 'privacyPolicy' %}" class="text-white/70 hover:text-coral transition-colors">Privacy Policy</a>
+                  <a href="{% url 'termsConditions' %}" class="text-white/70 hover:text-coral transition-colors">Terms & Conditions</a>
+                  <a href="{% url 'shippingPolicy' %}" class="text-white/70 hover:text-coral transition-colors">Shipping Policy</a>
+                  <a href="{% url 'cancellationsRefunds' %}" class="text-white/70 hover:text-coral transition-colors">Cancellations & Refunds</a>
+                </div>
               </div>
             </div>
             <div class="mb-8 flex items-center justify-center gap-3 lg:mb-0">

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings | ScubaDiveIn{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">{{ user.get_full_name }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img src="https://via.placeholder.com/150" class="rounded-circle img-thumbnail" alt="Profile Picture">
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Username:</span>
+                            <span>{{ user.username }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Email:</span>
+                            <span>{{ user.email }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Member since:</span>
+                            <span>{{ user.date_joined|date:"M d, Y" }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary w-100 mb-2">My Profile</a>
+                    <a href="{% url 'password_change' %}" class="btn btn-outline-secondary w-100">Change Password</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Booking History -->
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">My Booking History</h4>
+                </div>
+                <div class="card-body">
+                    {% if bookings %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Service</th>
+                                        <th>Date</th>
+                                        <th>Participants</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in bookings %}
+                                    <tr>
+                                        <td>{{ booking.service.name }}</td>
+                                        <td>{{ booking.booking_date|date:"M d, Y" }}</td>
+                                        <td>{{ booking.participants }}</td>
+                                        <td>₹{{ booking.amount }}</td>
+                                        <td>
+                                            <span class="badge {% if booking.status == 'completed' %}bg-success{% elif booking.status == 'failed' %}bg-danger{% else %}bg-warning{% endif %}">
+                                                {{ booking.status|title }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <p class="mb-0">You haven't made any bookings yet. 
+                              <a href="{% url 'coursesPage' %}" class="alert-link">Explore our diving services</a> to book your first adventure!
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            {% if bookings %}
+            <div class="card shadow mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Booking Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3">
+                            <div class="border rounded p-3">
+                                <h3>{{ bookings.count }}</h3>
+                                <p class="text-muted mb-0">Total Bookings</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="border rounded p-3">
+                                <h3>{{ bookings|dictsortreversed:"created_at"|first|date:"M Y" }}</h3>
+                                <p class="text-muted mb-0">Last Booking</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="border rounded p-3">
+                                <h3>₹{{ total_spent }}</h3>
+                                <p class="text-muted mb-0">Total Spent</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+        </div>
+    </div>
+</div>
+{% endblock %} 

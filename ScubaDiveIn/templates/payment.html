@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Complete Your Payment</h3>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <img src="{% static 'img/logo.png' %}" alt="Scuba Dive In" height="80" onerror="this.src='{% static 'img/default-logo.png' %}'">
+                        <h4 class="mt-3">Payment Details</h4>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body bg-light">
+                            <h5 class="mb-3">Booking Summary</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Service:</strong> {{ service.name }}</p>
+                                    <p><strong>Date:</strong> {{ booking_date }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Participants:</strong> {{ participants }}</p>
+                                    <p><strong>Duration:</strong> {{ service.duration }} minutes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body bg-light">
+                            <h5 class="mb-3">Payment Information</h5>
+                            <div class="d-flex justify-content-between">
+                                <span>Service Price:</span>
+                                <span>₹{{ service.price }} × {{ participants }}</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between fw-bold">
+                                <span>Total Amount:</span>
+                                <span>₹{{ total_amount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button id="rzp-button" class="btn btn-primary btn-lg">Pay Now</button>
+                    </div>
+                </div>
+                <div class="card-footer bg-white text-center">
+                    <small class="text-muted">Secure payment processed by Razorpay</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{ payment_data.key }}",
+        "amount": "{{ payment_data.amount }}",
+        "currency": "{{ payment_data.currency }}",
+        "name": "{{ payment_data.name }}",
+        "description": "{{ payment_data.description }}",
+        "order_id": "{{ payment_data.order_id }}",
+        "handler": function (response) {
+            document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+            document.getElementById('razorpay_order_id').value = response.razorpay_order_id;
+            document.getElementById('razorpay_signature').value = response.razorpay_signature;
+            document.getElementById('razorpay-form').submit();
+        },
+        "prefill": {
+            "name": "{{ payment_data.prefill.name }}",
+            "email": "{{ payment_data.prefill.email }}",
+            "contact": "{{ payment_data.prefill.contact }}"
+        },
+        "theme": {
+            "color": "{{ payment_data.theme.color }}"
+        }
+    };
+    var rzp = new Razorpay(options);
+    document.getElementById('rzp-button').onclick = function(e){
+        rzp.open();
+        e.preventDefault();
+    }
+</script>
+
+<form action="{% url 'payment_callback' %}" method="POST" id="razorpay-form" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+    <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
+    <input type="hidden" name="razorpay_signature" id="razorpay_signature">
+</form>
+{% endblock %}

@@ -1,4 +1,5 @@
 {% extends "../base.html" %}
+{% load static %}
 
 {% block title %} Scuba Diving Blogs – Learn to Dive with Experts in Andaman {% endblock %}
 
@@ -156,79 +157,66 @@
           We're here to help you with any questions about our diving courses.
         </p>
       </div>
+      
+      {% if messages %}
+        <div class="max-w-md mx-auto mb-6">
+          {% for message in messages %}
+            <div class="{% if message.tags == 'success' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %} p-4 rounded-lg mb-4">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
       <div class="flex justify-center">
-        <form class="grid w-full max-w-md grid-cols-1 gap-6 bg-white rounded-2xl shadow-lg p-8">
-        <div class="grid w-full items-center">
-          <label
-              class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-ocean-blue"
-            for="name"
-            >Name</label
-          >
-          <div class="relative flex w-full items-center">
-            <input
-              type="text"
-                class="rounded-full flex size-full py-2 align-middle transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 border-2 border-ocean-blue/20 bg-white min-h-11 px-3"
-              id="name"
-            />
+        <form method="post" class="grid w-full max-w-md grid-cols-1 gap-6 bg-white rounded-2xl shadow-lg p-8">
+          {% csrf_token %}
+          
+          <div class="grid w-full items-center">
+            <label class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-ocean-blue" for="{{ form.name.id_for_label }}">Name</label>
+            <div class="relative flex w-full items-center">
+              {{ form.name }}
+              {% if form.name.errors %}
+                <div class="text-red-600 text-sm mt-1">{{ form.name.errors }}</div>
+              {% endif %}
+            </div>
           </div>
-        </div>
-        <div class="grid w-full items-center">
-          <label
-              class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-ocean-blue"
-            for="email"
-            >Email</label
-          >
-          <div class="relative flex w-full items-center">
-            <input
-              type="email"
-                class="rounded-full flex size-full py-2 align-middle transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 border-2 border-ocean-blue/20 bg-white min-h-11 px-3"
-              id="email"
-            />
+          
+          <div class="grid w-full items-center">
+            <label class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-ocean-blue" for="{{ form.email.id_for_label }}">Email</label>
+            <div class="relative flex w-full items-center">
+              {{ form.email }}
+              {% if form.email.errors %}
+                <div class="text-red-600 text-sm mt-1">{{ form.email.errors }}</div>
+              {% endif %}
+            </div>
           </div>
-        </div>
-        <div class="grid w-full items-center">
-          <label
-              class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-ocean-blue"
-            for="message"
-            >Message</label
-          ><textarea
-              class="flex w-full border-2 border-ocean-blue/20 bg-white p-3 placeholder:text-ocean-blue/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 min-h-[11.25rem] overflow-auto rounded-lg"
-            id="message"
-            placeholder="Type your message..."
-          ></textarea>
-        </div>
-        <div class="mb-3 flex items-center space-x-2 text-sm md:mb-4">
-          <button
-            type="button"
-            role="checkbox"
-            aria-checked="false"
-            data-state="unchecked"
-            value="on"
-              class="size-[1.125rem] border-2 border-ocean-blue/20 transition-all duration-200 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-ocean-blue data-[state=indeterminate]:bg-white data-[state=checked]:text-white data-[state=indeterminate]:text-ocean-blue"
-            id="terms"
-          ></button
-          ><input
-            type="checkbox"
-            aria-hidden="true"
-            style="transform:translateX(-100%);position:absolute;pointer-events:none;opacity:0;margin:0"
-            tabindex="-1"
-            value="on"
-          /><label
-              class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-ocean-blue"
-            for="terms"
-            >I accept the Terms</label
-          >
-        </div>
+          
+          <div class="grid w-full items-center">
+            <label class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-ocean-blue" for="{{ form.subject.id_for_label }}">Subject (Optional)</label>
+            <div class="relative flex w-full items-center">
+              {{ form.subject }}
+              {% if form.subject.errors %}
+                <div class="text-red-600 text-sm mt-1">{{ form.subject.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="grid w-full items-center">
+            <label class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 mb-2 text-ocean-blue" for="{{ form.message.id_for_label }}">Message</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+              <div class="text-red-600 text-sm mt-1">{{ form.message.errors }}</div>
+            {% endif %}
+          </div>
+          
           <div class="flex justify-center">
-          <button
-              class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3"
-            title="Submit"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+            <button type="submit" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 

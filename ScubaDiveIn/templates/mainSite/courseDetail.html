@@ -1,45 +1,34 @@
 {% extends '../base.html' %}
 {% load static %}
 
-{% block title %}Scuba Diving in Andaman – Explore the Best Diving Spots & Packages{% endblock %}
+{% block title %}{{ course.name }} - Scuba Diving Course{% endblock %}
 
-{% block desription %}Discover the beauty of scuba diving in Andaman! Explore crystal-clear waters, vibrant coral reefs, and diverse marine life. Book the best scuba diving packages for an unforgettable underwater adventure.{% endblock %}
+{% block description %}{{ course.short_description }}{% endblock %}
 
 {% block content %}
 <section id="relume" class="relative px-[5%] pt-32 py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
   <div class="relative z-10 container">
     <div class="w-full max-w-lg">
-      <p class="mb-3 font-semibold text-white md:mb-4">Beginner Course</p>
-      <h1
-        class="mb-5 text-4xl font-bold text-white md:mb-6 md:text-5xl lg:text-6xl"
-      >
-        Open Water Diver
+      <p class="mb-3 font-semibold text-white md:mb-4">{{ course.category.name }}</p>
+      <h1 class="mb-5 text-4xl font-bold text-white md:mb-6 md:text-5xl lg:text-6xl">
+        {{ course.name }}
       </h1>
       <p class="text-base md:text-lg text-white">
-        Start your scuba diving journey with our comprehensive Open Water Diver certification course.
+        {{ course.short_description }}
       </p>
       <div class="mt-6 flex flex-wrap gap-4 md:mt-8">
-              <button
-          class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 py-3"
-          title="Enroll Now"
-              >
-          Enroll Now
-              </button>
-                <button
-          class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-6 py-3"
-          title="Learn More"
-                  >
+        <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-6 py-3">
           Learn More
-                </button>
-            </div>
-            </div>
-            </div>
+        </button>
+      </div>
+    </div>
+  </div>
   <div class="absolute inset-0 z-0 bg-black/50">
-                    <img
-      src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070"
-      class="size-full object-cover"
-      alt="Open Water Diver course background"
-                      />
+    {% if course.featured_image and course.featured_image.url %}
+      <img src="{{ course.featured_image.url }}" class="size-full object-cover" alt="{{ course.name }} background" />
+    {% else %}
+      <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070" class="size-full object-cover" alt="{{ course.name }} background" />
+    {% endif %}
     <div class="absolute inset-0 bg-gradient-to-b from-deep-blue/50 to-transparent"></div>
     <div class="absolute inset-0 z-5 bg-black/30"></div>
   </div>
@@ -51,138 +40,103 @@
       <div class="lg:col-span-2">
         <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
           <h2 class="text-2xl font-bold text-deep-blue mb-6">Course Overview</h2>
-          <p class="text-base text-ocean-blue mb-6">
-            The Open Water Diver course is your first step into the underwater world. This comprehensive program combines classroom learning, pool training, and open water dives to give you the skills and knowledge needed to become a certified scuba diver.
-        </p>
-          <div class="space-y-4">
-            <h3 class="text-xl font-semibold text-deep-blue">What You'll Learn</h3>
-            <ul class="list-disc list-inside text-base text-ocean-blue space-y-2">
-              <li>Basic scuba diving equipment and its use</li>
-              <li>Essential diving skills and techniques</li>
-              <li>Safety procedures and emergency protocols</li>
-              <li>Underwater communication</li>
-              <li>Dive planning and execution</li>
-              <li>Environmental awareness and conservation</li>
-            </ul>
+          <div class="text-base text-ocean-blue space-y-2">
+            {% for line in course.description.splitlines %}
+              <p>{{ line }}</p>
+            {% endfor %}
+          </div>
         </div>
-      </div>
-        
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+          <h2 class="text-2xl font-bold text-deep-blue mb-6">What's Included</h2>
+          <ul class="list-disc list-inside text-base text-ocean-blue space-y-2">
+            {% for item in course.included_items.splitlines %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
         <div class="bg-white rounded-2xl shadow-lg p-8">
-          <h2 class="text-2xl font-bold text-deep-blue mb-6">Course Structure</h2>
+          <h2 class="text-2xl font-bold text-deep-blue mb-6">Requirements</h2>
           <div class="space-y-6">
-            <div>
-              <h3 class="text-xl font-semibold text-deep-blue mb-3">Classroom Sessions</h3>
-              <p class="text-base text-ocean-blue">5 theory sessions covering diving fundamentals, equipment, and safety procedures.</p>
-      </div>
-          <div>
-              <h3 class="text-xl font-semibold text-deep-blue mb-3">Pool Training</h3>
-              <p class="text-base text-ocean-blue">5 confined water sessions to practice and perfect your diving skills.</p>
-          </div>
-          <div>
-              <h3 class="text-xl font-semibold text-deep-blue mb-3">Open Water Dives</h3>
-              <p class="text-base text-ocean-blue">4 open water dives to apply your skills in real conditions.</p>
+            <ul class="list-disc list-inside text-base text-ocean-blue space-y-2">
+              {% for requirement in course.requirements.splitlines %}
+                <li>{{ requirement }}</li>
+              {% endfor %}
+            </ul>
           </div>
         </div>
       </div>
-    </div>
       
       <div class="lg:col-span-1">
         <div class="bg-white rounded-2xl shadow-lg p-8 sticky top-24">
           <h2 class="text-2xl font-bold text-deep-blue mb-6">Course Details</h2>
           <div class="space-y-4">
-          <div>
+            <div>
               <h3 class="font-semibold text-ocean-blue">Duration</h3>
-              <p class="text-base text-deep-blue">3-4 weeks</p>
-          </div>
-          <div>
-              <h3 class="font-semibold text-ocean-blue">Prerequisites</h3>
-              <p class="text-base text-deep-blue">Minimum age: 10 years</p>
-              <p class="text-base text-deep-blue">Basic swimming ability</p>
-              <p class="text-base text-deep-blue">Medical clearance required</p>
-          </div>
-          <div>
-              <h3 class="font-semibold text-ocean-blue">Price</h3>
-              <p class="text-base text-deep-blue">$499 USD</p>
-              <p class="text-sm text-ocean-blue">Includes all equipment rental and certification fees</p>
+              <p class="text-base text-deep-blue">{{ course.duration }} minutes</p>
             </div>
-            <button
-              class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3 mt-6"
-              title="Book Now"
-            >
-              Book Now
-            </button>
+            <div>
+              <h3 class="font-semibold text-ocean-blue">Difficulty Level</h3>
+              <p class="text-base text-deep-blue">{{ course.get_difficulty_level_display }}</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-ocean-blue">Max Participants</h3>
+              <p class="text-base text-deep-blue">{{ course.max_participants }} people</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-ocean-blue">Price</h3>
+              <p class="text-base text-deep-blue">₹{{ course.price }}</p>
+            </div>
+            
+            <div class="pt-4 space-y-4">
+              {% if user.is_authenticated %}
+                {% if already_purchased %}
+                  <div class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap bg-green-100 text-green-700 border-2 border-green-700 px-6 py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Already Purchased</span>
+                  </div>
+                  <a href="{% url 'booking_history' %}" class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
+                    <span>View My Bookings</span>
+                  </a>
+                {% else %}
+                  <a href="{% url 'initiate_payment' %}?service_id={{ course.id }}" class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
+                    <span>Book Now</span>
+                  </a>
+                {% endif %}
+              {% else %}
+                <a href="{% url 'initiate_payment' %}?service_id={{ course.id }}" class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
+                  <span>Book Now</span>
+                </a>
+              {% endif %}
+            </div>
           </div>
         </div>
-            </div>
+      </div>
     </div>
   </div>
 </section>
 
+{% if images %}
 <section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-white to-wave">
   <div class="container mx-auto">
     <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-deep-blue mb-4">Course Preview</h2>
-      <p class="text-base text-ocean-blue">Watch our Open Water Diver course in action</p>
+      <h2 class="text-3xl font-bold text-deep-blue mb-4">Course Gallery</h2>
+      <p class="text-base text-ocean-blue">Take a look at what you'll experience during the course</p>
     </div>
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-      <div class="aspect-w-16 aspect-h-9 w-full">
-        <iframe 
-          class="w-full h-[300px] md:h-[400px] lg:h-[500px]" 
-          src="https://www.youtube.com/embed/aq8UpXPo054?si=qw1Ol994E2tRSG0g" 
-          title="YouTube video player" 
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
-        </iframe>
-      </div>
-      <div class="p-6 md:p-8">
-        <h3 class="text-xl font-semibold text-deep-blue mb-3">Experience the Adventure</h3>
-        <p class="text-base text-ocean-blue">
-          This video gives you a glimpse of what to expect during your Open Water Diver course. 
-          See the skills you'll learn and the beautiful underwater world waiting for you.
-        </p>
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for image in images %}
+        {% if image.image and image.image.url %}
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="w-full h-64 object-cover">
+          <div class="p-4">
+            <p class="text-base text-ocean-blue">{{ image.caption }}</p>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
     </div>
   </div>
 </section>
-
-<section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
-  <div class="container mx-auto">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-deep-blue mb-4">What's Included</h2>
-      <p class="text-base text-ocean-blue">Everything you need to become a certified Open Water Diver</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
-        <div class="mb-4 flex justify-center">
-          <svg class="w-12 h-12 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-      </div>
-        <h3 class="text-xl font-semibold text-deep-blue mb-2">Professional Instruction</h3>
-        <p class="text-ocean-blue">Learn from certified instructors with years of experience</p>
-      </div>
-      <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
-        <div class="mb-4 flex justify-center">
-          <svg class="w-12 h-12 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-            </svg>
-      </div>
-        <h3 class="text-xl font-semibold text-deep-blue mb-2">All Equipment Provided</h3>
-        <p class="text-ocean-blue">Complete scuba gear rental included in course price</p>
-      </div>
-      <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
-        <div class="mb-4 flex justify-center">
-          <svg class="w-12 h-12 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-      </div>
-        <h3 class="text-xl font-semibold text-deep-blue mb-2">Certification</h3>
-        <p class="text-ocean-blue">Internationally recognized Open Water Diver certification</p>
-      </div>
-    </div>
-  </div>
-</section>
-</body>
-</html>
+{% endif %}
 {% endblock %}
