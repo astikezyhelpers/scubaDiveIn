@@ -149,11 +149,13 @@
       {% for course in featured_courses %}
       <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
         <div class="relative h-48 overflow-hidden">
-          {% if course.featured_image %}
-          <img src="{{ course.featured_image.url }}" alt="{{ course.name }}" class="w-full h-full object-cover">
-          {% else %}
-          <img src="{% static 'images/default-course.jpg' %}" alt="{{ course.name }}" class="w-full h-full object-cover" onerror="this.src='https://res.cloudinary.com/padi/image/upload/f_auto,q_90,w_auto,dpr_auto/v1743670865/CDN/commerce/60462-1B2C.jpg'">
-          {% endif %}
+          <div class="course-image">
+            {% if course.featured_image_url %}
+                <img src="{{ course.featured_image_url }}" alt="{{ course.name }}" class="w-full h-full object-cover">
+            {% else %}
+                <img src="{% static 'images/default-course.jpg' %}" alt="{{ course.name }}" class="w-full h-full object-cover" onerror="this.src='https://res.cloudinary.com/padi/image/upload/f_auto,q_90,w_auto,dpr_auto/v1743670865/CDN/commerce/60462-1B2C.jpg'">
+            {% endif %}
+          </div>
           <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
           <div class="absolute bottom-4 left-4">
             <span class="bg-{% if course.difficulty_level == 'beginner' %}coral{% elif course.difficulty_level == 'intermediate' %}sea-green{% else %}ocean-blue{% endif %} text-white text-sm font-semibold px-3 py-1 rounded-full">
@@ -208,12 +210,14 @@
       {% for location in featured_locations %}
       <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
         <div class="relative h-48 overflow-hidden">
-          {% if location.featured_image %}
-          <img src="{{ location.featured_image.url }}" alt="{{ location.name }}" class="w-full h-full object-cover">
-          {% else %}
-          <img src="{% static 'images/default-location.jpg' %}" alt="{{ location.name }}" class="w-full h-full object-cover" 
-               onerror="this.src='https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1470&auto=format&fit=crop'">
-          {% endif %}
+          <div class="location-image">
+            {% if location.featured_image_url %}
+                <img src="{{ location.featured_image_url }}" alt="{{ location.name }}" class="w-full h-full object-cover">
+            {% else %}
+                <img src="{% static 'images/default-location.jpg' %}" alt="{{ location.name }}" class="w-full h-full object-cover" 
+                     onerror="this.src='https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1470&auto=format&fit=crop'">
+            {% endif %}
+          </div>
           <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
           <div class="absolute bottom-4 left-4">
             <span class="bg-ocean-blue text-white text-sm font-semibold px-3 py-1 rounded-full">
@@ -265,12 +269,14 @@
       {% for event in featured_events %}
       <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
         <div class="relative h-48 overflow-hidden">
-          {% if event.featured_image %}
-          <img src="{{ event.featured_image.url }}" alt="{{ event.name }}" class="w-full h-full object-cover">
-          {% else %}
-          <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.name }}" class="w-full h-full object-cover"
-               onerror="this.src='https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1470&auto=format&fit=crop'">
-          {% endif %}
+          <div class="event-image">
+            {% if event.featured_image_url %}
+                <img src="{{ event.featured_image_url }}" alt="{{ event.name }}" class="w-full h-full object-cover">
+            {% else %}
+                <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.name }}" class="w-full h-full object-cover"
+                     onerror="this.src='https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1470&auto=format&fit=crop'">
+            {% endif %}
+          </div>
           <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
           <div class="absolute bottom-4 left-4">
             <span class="bg-coral text-white text-sm font-semibold px-3 py-1 rounded-full">

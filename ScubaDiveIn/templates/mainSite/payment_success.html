@@ -22,21 +22,21 @@
           <h2 class="text-xl font-semibold text-ocean-blue mb-4 text-left">Booking Details</h2>
           <div class="space-y-3 text-left">
             <div class="flex justify-between">
-              <span class="text-deep-blue">{% if service %}Course{% else %}Event{% endif %}:</span>
-              <span class="font-medium">{% if service %}{{ service.name }}{% else %}{{ event.name }}{% endif %}</span>
+              <span class="text-deep-blue">{% if payment.service %}Course{% else %}Event{% endif %}:</span>
+              <span class="font-medium">{% if payment.service %}{{ payment.service.name }}{% else %}{{ payment.event.name }}{% endif %}</span>
             </div>
-            {% if event %}
+            {% if payment.event %}
             <div class="flex justify-between">
               <span class="text-deep-blue">Date:</span>
-              <span class="font-medium">{{ event.event_date|date:"F d, Y" }}</span>
+              <span class="font-medium">{{ payment.event.event_date|date:"F d, Y" }}</span>
             </div>
             <div class="flex justify-between">
               <span class="text-deep-blue">Time:</span>
-              <span class="font-medium">{{ event.start_time|time:"g:i A" }}</span>
+              <span class="font-medium">{{ payment.event.start_time|time:"g:i A" }}</span>
             </div>
             <div class="flex justify-between">
               <span class="text-deep-blue">Location:</span>
-              <span class="font-medium">{{ event.location.name }}</span>
+              <span class="font-medium">{{ payment.event.location.name }}</span>
             </div>
             {% endif %}
             <div class="flex justify-between">
@@ -57,7 +57,7 @@
         <p class="text-gray-600 mb-6">A confirmation email has been sent to your registered email address.</p>
         
         <div class="flex flex-col gap-4">
-          {% if service %}
+          {% if payment.service %}
           <a href="{% url 'coursesPage' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
             <span>Browse More Courses</span>
           </a>
@@ -73,6 +73,26 @@
           </a>
           {% endif %}
         </div>
+
+        {% if payment.service %}
+        <div class="service-image">
+            {% if payment.service.featured_image_url %}
+                <img src="{{ payment.service.featured_image_url }}" alt="{{ payment.service.name }}" class="w-full h-full object-cover">
+            {% else %}
+                <img src="{% static 'images/default-course.jpg' %}" alt="{{ payment.service.name }}" class="w-full h-full object-cover">
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if payment.event %}
+        <div class="event-image">
+            {% if payment.event.featured_image_url %}
+                <img src="{{ payment.event.featured_image_url }}" alt="{{ payment.event.name }}" class="w-full h-full object-cover">
+            {% else %}
+                <img src="{% static 'images/default-event.jpg' %}" alt="{{ payment.event.name }}" class="w-full h-full object-cover">
+            {% endif %}
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>

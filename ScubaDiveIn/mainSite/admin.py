@@ -3,20 +3,99 @@ from .models import RazorpayPayment, ServiceCategory, DivingService, ServiceImag
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils import timezone
+from django import forms
+
+class ServiceCategoryForm(forms.ModelForm):
+    class Meta:
+        model = ServiceCategory
+        fields = '__all__'
+        widgets = {
+            'image': forms.FileInput(),
+        }
+
+class ServiceImageForm(forms.ModelForm):
+    class Meta:
+        model = ServiceImage
+        fields = '__all__'
+        widgets = {
+            'image': forms.FileInput(),
+        }
+
+class DivingServiceForm(forms.ModelForm):
+    class Meta:
+        model = DivingService
+        fields = '__all__'
+        widgets = {
+            'featured_image': forms.FileInput(),
+        }
 
 # Register your models here.
 admin.site.register(RazorpayPayment)
-admin.site.register(ServiceCategory)
-admin.site.register(DivingService)
-admin.site.register(ServiceImage)
+
+class ServiceCategoryAdmin(admin.ModelAdmin):
+    form = ServiceCategoryForm
+    list_display = ('name', 'order', 'image_preview')
+    list_editable = ('order',)
+    search_fields = ('name', 'description')
+    ordering = ('order', 'name')
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="max-height: 50px;"/>', obj.image)
+        return "-"
+    image_preview.short_description = 'Image Preview'
+
+class ServiceImageInline(admin.TabularInline):
+    model = ServiceImage
+    form = ServiceImageForm
+    extra = 1
+
+class DivingServiceAdmin(admin.ModelAdmin):
+    form = DivingServiceForm
+    list_display = ('name', 'category', 'price', 'duration', 'is_featured', 'is_active', 'image_preview')
+    list_filter = ('category', 'is_featured', 'is_active', 'difficulty_level')
+    search_fields = ('name', 'short_description', 'description')
+    prepopulated_fields = {'slug': ('name',)}
+    inlines = [ServiceImageInline]
+    ordering = ('category', 'name')
+
+    def image_preview(self, obj):
+        if obj.featured_image:
+            return format_html('<img src="{}" style="max-height: 50px;"/>', obj.featured_image)
+        return "-"
+    image_preview.short_description = 'Featured Image Preview'
+
+class ServiceImageAdmin(admin.ModelAdmin):
+    form = ServiceImageForm
+    list_display = ('service', 'caption', 'order', 'image_preview')
+    list_filter = ('service',)
+    list_editable = ('order',)
+    ordering = ('service', 'order')
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="max-height: 50px;"/>', obj.image)
+        return "-"
+    image_preview.short_description = 'Image Preview'
+
+# Register models with their admin classes
+admin.site.register(ServiceCategory, ServiceCategoryAdmin)
+admin.site.register(DivingService, DivingServiceAdmin)
+admin.site.register(ServiceImage, ServiceImageAdmin)
 
 @admin.register(DiveLocation)
 class DiveLocationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'depth_range_min', 'depth_range_max', 'boat_ride_duration', 'is_featured', 'is_active')
+    list_display = ('name', 'depth_range_min', 'depth_range_max', 'boat_ride_duration', 'is_featured', 'is_active', 'image_preview')
     list_filter = ('is_featured', 'is_active')
     search_fields = ('name', 'short_description', 'description')
     prepopulated_fields = {'slug': ('name',)}
     ordering = ('name',)
+
+    def image_preview(self, obj):
+        if obj.featured_image:
+            return format_html('<img src="{}" style="max-height: 50px;"/>', obj.featured_image)
+        return "-"
+    image_preview.short_description = 'Featured Image Preview'
 
 @admin.register(UserMessage)
 class UserMessageAdmin(admin.ModelAdmin):
@@ -80,11 +159,17 @@ class UserMessageAdmin(admin.ModelAdmin):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'event_date', 'start_time', 'location', 'price', 'is_featured', 'is_active')
+    list_display = ('name', 'event_date', 'start_time', 'location', 'price', 'is_featured', 'is_active', 'image_preview')
     list_filter = ('is_featured', 'is_active', 'event_date', 'location')
     search_fields = ('name', 'short_description', 'description')
     prepopulated_fields = {'slug': ('name',)}
     ordering = ('event_date', 'start_time')
+
+    def image_preview(self, obj):
+        if obj.featured_image:
+            return format_html('<img src="{}" style="max-height: 50px;"/>', obj.featured_image)
+        return "-"
+    image_preview.short_description = 'Featured Image Preview'
 
 @admin.register(NewsletterSubscription)
 class NewsletterSubscriptionAdmin(admin.ModelAdmin):

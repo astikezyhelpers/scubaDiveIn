@@ -6,35 +6,32 @@
 {% block description %}{{ course.short_description }}{% endblock %}
 
 {% block content %}
-<section id="relume" class="relative px-[5%] pt-32 py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
-  <div class="relative z-10 container">
-    <div class="w-full max-w-lg">
-      <p class="mb-3 font-semibold text-white md:mb-4">{{ course.category.name }}</p>
-      <h1 class="mb-5 text-4xl font-bold text-white md:mb-6 md:text-5xl lg:text-6xl">
-        {{ course.name }}
-      </h1>
-      <p class="text-base md:text-lg text-white">
-        {{ course.short_description }}
-      </p>
-      <div class="mt-6 flex flex-wrap gap-4 md:mt-8">
-        <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-6 py-3">
-          Learn More
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="absolute inset-0 z-0 bg-black/50">
-    {% if course.featured_image and course.featured_image.url %}
-      <img src="{{ course.featured_image.url }}" class="size-full object-cover" alt="{{ course.name }} background" />
+<section id="course-hero" class="relative h-[50vh] min-h-[500px] flex items-center justify-center overflow-hidden pt-20 md:pt-24 lg:pt-28">
+  <div class="absolute inset-0 z-0">
+    {% if course.featured_image_url %}
+        <img src="{{ course.featured_image_url }}" alt="{{ course.name }}" class="w-full h-full object-cover">
     {% else %}
-      <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070" class="size-full object-cover" alt="{{ course.name }} background" />
+        <img src="{% static 'images/default-course.jpg' %}" alt="{{ course.name }}" class="w-full h-full object-cover">
     {% endif %}
-    <div class="absolute inset-0 bg-gradient-to-b from-deep-blue/50 to-transparent"></div>
-    <div class="absolute inset-0 z-5 bg-black/30"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/70 to-transparent"></div>
+  </div>
+  <div class="relative z-10 container text-center text-white px-[5%]">
+    <p class="mb-3 font-semibold md:mb-4">{{ course.category.name }}</p>
+    <h1 class="mb-5 text-4xl font-bold md:mb-6 md:text-5xl lg:text-6xl">
+      {{ course.name }}
+    </h1>
+    <p class="text-base md:text-lg max-w-xl mx-auto">
+      {{ course.short_description }}
+    </p>
+    <div class="mt-6 flex flex-wrap justify-center gap-4 md:mt-8">
+      <a href="#course-content-section" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 py-3">
+        Learn More
+      </a>
+    </div>
   </div>
 </section>
 
-<section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-white to-wave">
+<section id="course-content-section" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-white to-wave">
   <div class="container mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div class="lg:col-span-2">
@@ -117,26 +114,16 @@
   </div>
 </section>
 
-{% if images %}
-<section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-white to-wave">
-  <div class="container mx-auto">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-deep-blue mb-4">Course Gallery</h2>
-      <p class="text-base text-ocean-blue">Take a look at what you'll experience during the course</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {% for image in images %}
-        {% if image.image and image.image.url %}
-        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <img src="{{ image.image.url }}" alt="{{ image.caption }}" class="w-full h-64 object-cover">
-          <div class="p-4">
-            <p class="text-base text-ocean-blue">{{ image.caption }}</p>
-          </div>
+<!-- Course Gallery Images -->
+<div class="course-gallery">
+    {% for image_obj in course_images %}
+        <div class="gallery-item">
+            {% if image_obj.optimized_url %}
+                <img src="{{ image_obj.optimized_url }}" alt="{{ image_obj.caption|default:course.name }}" class="img-fluid">
+            {% elif image_obj.image %}
+                 <img src="{{ image_obj.image.url }}" alt="{{ image_obj.caption|default:course.name }}" class="img-fluid">
+            {% endif %}
         </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-</section>
-{% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

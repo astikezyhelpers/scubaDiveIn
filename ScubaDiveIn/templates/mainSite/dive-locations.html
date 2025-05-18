@@ -1,9 +1,9 @@
 {% extends '../base.html' %}
 {% load static %}
 
-{% block title %}Dive Locations in Andaman - Explore Our Beautiful Dive Sites{% endblock %}
+{% block title %}{{ page_title }} - Scuba Diving in Andaman{% endblock %}
 
-{% block desription %}Discover the most beautiful dive sites in Andaman. From shallow coral reefs to deep-sea adventures, find the perfect spot for your next dive.{% endblock %}
+{% block description %}{{ page_description }}{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -25,8 +25,8 @@
       {% for location in locations %}
       <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
         <div class="relative h-48 overflow-hidden">
-          {% if location.featured_image %}
-          <img src="{{ location.featured_image.url }}" alt="{{ location.name }}" class="w-full h-full object-cover">
+          {% if location.featured_image_url %}
+          <img src="{{ location.featured_image_url }}" alt="{{ location.name }}" class="w-full h-full object-cover">
           {% else %}
           <img src="{% static 'images/default-location.jpg' %}" alt="{{ location.name }}" class="w-full h-full object-cover" onerror="this.src='https://img.freepik.com/premium-photo/underwater-coral-reef-with-fishes_488220-28315.jpg'">
           {% endif %}

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainSite',
     'accounts',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -180,3 +181,8 @@ BASE_URL = 'http://127.0.0.1:8000'
 # Media files (User uploaded content)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# ImageKit Settings
+IMAGEKIT_PRIVATE_KEY = 'private_MUzQsUvmxmoOtjbyTQ22f4RqQOU='
+IMAGEKIT_PUBLIC_KEY = 'public_Rmn9CYcy5ESbCY4tkUFIjogNwbg='
+IMAGEKIT_URL_ENDPOINT = 'https://ik.imagekit.io/7wugbzwtbb'

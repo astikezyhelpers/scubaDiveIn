@@ -4,12 +4,13 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.core.validators import MinValueValidator
 from django.utils import timezone
+from .utils.imagekit_field import ImageKitField
 
 class ServiceCategory(models.Model):
     """Categories for scuba diving services"""
     name = models.CharField(max_length=100, db_index=True)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='category_images/', blank=True, null=True)
+    image = ImageKitField(folder_name='category_images', max_length=500, blank=True, null=True)
     order = models.PositiveIntegerField(default=0, help_text="Display order on the website", db_index=True)
     
     def __str__(self):
@@ -41,7 +42,7 @@ class DivingService(models.Model):
     difficulty_level = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, default='beginner', db_index=True)
     included_items = models.TextField(blank=True, help_text="Items included in the service, one per line")
     requirements = models.TextField(blank=True, help_text="Requirements for this service, one per line")
-    featured_image = models.ImageField(upload_to='service_images/', blank=True, null=True)
+    featured_image = ImageKitField(folder_name='service_images', max_length=500, blank=True, null=True)
     is_featured = models.BooleanField(default=False, db_index=True)
     is_active = models.BooleanField(default=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -61,7 +62,7 @@ class DivingService(models.Model):
 class ServiceImage(models.Model):
     """Additional images for services"""
     service = models.ForeignKey(DivingService, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='service_gallery/')
+    image = ImageKitField(folder_name='service_gallery', max_length=500)
     caption = models.CharField(max_length=200, blank=True)
     order = models.PositiveIntegerField(default=0)
     
@@ -77,7 +78,7 @@ class DiveLocation(models.Model):
     slug = models.SlugField(unique=True, db_index=True)
     short_description = models.CharField(max_length=255)
     description = models.TextField()
-    featured_image = models.ImageField(upload_to='dive_locations/', blank=True, null=True)
+    featured_image = ImageKitField(folder_name='dive_locations', max_length=500, blank=True, null=True)
     boat_ride_duration = models.PositiveIntegerField(help_text="Duration in minutes")
     depth_range_min = models.PositiveIntegerField(help_text="Minimum depth in meters")
     depth_range_max = models.PositiveIntegerField(help_text="Maximum depth in meters")
@@ -103,7 +104,7 @@ class Event(models.Model):
     slug = models.SlugField(unique=True, db_index=True)
     short_description = models.CharField(max_length=255)
     description = models.TextField()
-    featured_image = models.ImageField(upload_to='event_images/', blank=True, null=True)
+    featured_image = ImageKitField(folder_name='event_images', max_length=500, blank=True, null=True)
     event_date = models.DateField(db_index=True)
     start_time = models.TimeField()
     duration = models.PositiveIntegerField(help_text="Duration in minutes")

@@ -17,6 +17,8 @@ from django.contrib.auth.models import User
 from .models import UserMessage
 import logging
 from django.db import models
+from .utils.imagekit_config import get_optimized_image_url
+from urllib.parse import urlparse
 
 client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
@@ -82,25 +84,25 @@ def initiate_payment(request):
         # Handle course booking
         service = get_object_or_404(DivingService, id=service_id, is_active=True)
     
-        # Check if user has already purchased this course
-        already_purchased = has_purchased_course(request.user, service)
-        
-        if already_purchased:
-            messages.warning(request, f"You have already purchased the '{service.name}' course. Check your booking history.")
-            return redirect('booking_history')
-            
+    # Check if user has already purchased this course
+    already_purchased = has_purchased_course(request.user, service)
+    
+    if already_purchased:
+        messages.warning(request, f"You have already purchased the '{service.name}' course. Check your booking history.")
+        return redirect('booking_history')
+    
         # Get user profile info for prefilling the form
         user = request.user
         context = {
             'service': service,
-            'booking_type': 'course',
-            'user_info': {
-                'name': f"{user.first_name} {user.last_name}".strip(),
-                'email': user.email,
-                'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
-            },
-            'is_authenticated': True
-        }
+                'booking_type': 'course',
+                'user_info': {
+                    'name': f"{user.first_name} {user.last_name}".strip(),
+                    'email': user.email,
+                    'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
+                },
+                'is_authenticated': True
+            }
     else:
         # Handle event booking
         event = get_object_or_404(Event, id=event_id, is_active=True)
@@ -115,13 +117,13 @@ def initiate_payment(request):
         context = {
             'event': event,
             'booking_type': 'event',
-            'user_info': {
-                'name': f"{user.first_name} {user.last_name}".strip(),
-                'email': user.email,
-                'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
-            },
-            'is_authenticated': True
-        }
+        'user_info': {
+            'name': f"{user.first_name} {user.last_name}".strip(),
+            'email': user.email,
+            'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
+        },
+        'is_authenticated': True
+    }
     
     return render(request, 'mainSite/initiate_payment.html', context)
 
@@ -387,29 +389,69 @@ def payment_callback(request):
         'message': 'Invalid request method'
     }, status=405)
 
+def get_image_url(image_field, transformation_type='thumbnail'):
+    """Helper function to get ImageKit URL with transformation"""
+    if not image_field:
+        return None
+    
+    full_url = str(image_field)
+    
+    # Ensure IMAGEKIT_URL_ENDPOINT ends with a slash for consistent stripping
+    endpoint = settings.IMAGEKIT_URL_ENDPOINT
+    if not endpoint.endswith('/'):
+        endpoint += '/'
+        
+    if full_url.startswith(endpoint):
+        image_path = full_url.replace(endpoint, "/", 1) # Replace only the first occurrence and ensure leading slash
+        # Further ensure it starts with a single slash if multiple were somehow introduced
+        if image_path.startswith('//'):
+            image_path = image_path[1:]
+        if not image_path.startswith('/'): # If endpoint itself was just "http://domain.com" without trailing /
+            # This case might happen if full_url was "http://domain.comfolder/image.jpg"
+            # and endpoint was "http://domain.com". Replace might make it "folder/image.jpg"
+            # We need "/folder/image.jpg" for imagekit.url path.
+            # A more robust way is to use urlparse.
+            parsed_url = urlparse(full_url)
+            image_path = parsed_url.path # This should give "/service_images/image.jpg"
+    else:
+        # If it doesn't start with the endpoint, it might already be a path or something else.
+        # For safety, let's assume it might be a path but ensure it starts with a slash.
+        image_path = full_url
+        if not image_path.startswith("/"):
+            image_path = "/" + image_path
+            
+    return get_optimized_image_url(image_path, transformation_type)
+
 def home(request):
     featured_courses = DivingService.objects.filter(
         is_active=True,
         is_featured=True
-    ).select_related('category')[:3]  # Get top 3 featured courses
+    ).select_related('category')[:3]
     
-    # Get featured dive locations
     featured_locations = DiveLocation.objects.filter(
         is_active=True,
         is_featured=True
-    )[:3]  # Get top 3 featured locations
+    )[:3]
     
-    # Get upcoming featured events
     featured_events = Event.objects.filter(
         is_active=True,
         is_featured=True,
         event_date__gte=timezone.now().date()
-    ).select_related('location').order_by('event_date')[:3]  # Get top 3 upcoming featured events
+    ).select_related('location').order_by('event_date')[:3]
     
-    # Get 5 most important FAQs
     featured_faqs = FAQ.objects.filter(
         is_active=True
     ).order_by('order')[:5]
+    
+    # Transform image URLs
+    for course in featured_courses:
+        course.featured_image_url = get_image_url(course.featured_image, 'thumbnail')
+    
+    for location in featured_locations:
+        location.featured_image_url = get_image_url(location.featured_image, 'thumbnail')
+    
+    for event in featured_events:
+        event.featured_image_url = get_image_url(event.featured_image, 'thumbnail')
     
     context = {
         'featured_courses': featured_courses,
@@ -551,6 +593,8 @@ def send_message_to_user(request, user_id):
 
 def courses(request):
     courses = DivingService.objects.filter(is_active=True).select_related('category')
+    for course_item in courses: # Changed variable name to avoid conflict
+        course_item.featured_image_url = get_image_url(course_item.featured_image, 'thumbnail')
     context = {
         'courses': courses,
     }
@@ -565,25 +609,32 @@ def blogs(request):
 def dive_locations(request):
     """View function for displaying dive locations page"""
     # Get all active dive locations
-    locations = DiveLocation.objects.filter(is_active=True).order_by('name')
+    locations = DiveLocation.objects.all().order_by('name')
+    for loc_item in locations:
+        loc_item.featured_image_url = get_image_url(loc_item.featured_image, 'thumbnail')
     
     context = {
         'locations': locations,
         'page_title': 'Dive Locations',
         'page_description': 'Explore our spectacular dive sites in the Andaman Islands'
     }
-    return render(request, 'mainSite/dive_locations.html', context)
+    return render(request, 'mainSite/dive-locations.html', context)
 
 def dive_location_detail(request, slug):
     """View function for displaying individual dive location details"""
-    # Get the specific dive location
     location = get_object_or_404(DiveLocation, slug=slug, is_active=True)
     
-    # Get upcoming events at this location
+    # Transform image URL
+    location.featured_image_url = get_image_url(location.featured_image, 'featured')
+    
     upcoming_events = location.events.filter(
         is_active=True,
         event_date__gte=timezone.now().date()
     ).order_by('event_date', 'start_time')[:3]
+    
+    # Transform event image URLs
+    for event in upcoming_events:
+        event.featured_image_url = get_image_url(event.featured_image, 'thumbnail')
     
     context = {
         'location': location,
@@ -607,6 +658,12 @@ def events(request):
         event_date__lt=timezone.now().date()
     ).order_by('-event_date', 'start_time')[:5]  # Show only last 5 past events
     
+    # Transform event image URLs
+    for event_item in upcoming_events:
+        event_item.featured_image_url = get_image_url(event_item.featured_image, 'thumbnail')
+    for event_item in past_events:
+        event_item.featured_image_url = get_image_url(event_item.featured_image, 'thumbnail')
+
     context = {
         'upcoming_events': upcoming_events,
         'past_events': past_events,
@@ -617,17 +674,21 @@ def events(request):
 
 def event_detail(request, slug):
     """View function for displaying individual event details"""
-    # Get the specific event
     event = get_object_or_404(Event, slug=slug, is_active=True)
     
-    # Check if event is upcoming or past
+    # Transform image URL
+    event.featured_image_url = get_image_url(event.featured_image, 'featured')
+    
     is_upcoming = event.event_date >= timezone.now().date()
     
-    # Get related events at the same location
     related_events = Event.objects.filter(
         location=event.location,
         is_active=True
     ).exclude(id=event.id).order_by('event_date')[:3]
+    
+    # Transform related events image URLs
+    for related_event in related_events:
+        related_event.featured_image_url = get_image_url(related_event.featured_image, 'thumbnail')
     
     context = {
         'event': event,
@@ -731,9 +792,16 @@ def courseDetail(request, slug):
         # Check if authenticated user has already purchased this course
         already_purchased = has_purchased_course(request.user, course)
         
+        # Transform image URLs
+        course.featured_image_url = get_image_url(course.featured_image, 'featured')
+        course_images = course.images.all().order_by('order')
+        
+        for gallery_image in course_images:
+            gallery_image.optimized_url = get_image_url(gallery_image.image, 'gallery')
+
         context = {
             'course': course,
-            'images': course.images.all().order_by('order'),
+            'images': course_images,
             'already_purchased': already_purchased
         }
         return render(request, 'mainSite/courseDetail.html', context)
