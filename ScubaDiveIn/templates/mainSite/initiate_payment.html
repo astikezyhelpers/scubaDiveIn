@@ -1,9 +1,9 @@
 {% extends '../base.html' %}
 {% load static %}
 
-{% block title %}Payment - {{ service.name }}{% endblock %}
+{% block title %}Payment - {% if service %}{{ service.name }}{% else %}{{ event.name }}{% endif %}{% endblock %}
 
-{% block description %}Complete your payment for {{ service.name }}{% endblock %}
+{% block description %}Complete your payment for {% if service %}{{ service.name }}{% else %}{{ event.name }}{% endif %}{% endblock %}
 
 {% block content %}
 <section class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-white to-wave">
@@ -23,19 +23,29 @@
         <h1 class="text-3xl font-bold text-deep-blue mb-6">Complete Your Payment</h1>
         
         <div class="mb-8">
-          <h2 class="text-xl font-semibold text-ocean-blue mb-4">Course Details</h2>
+          <h2 class="text-xl font-semibold text-ocean-blue mb-4">{% if service %}Course Details{% else %}Event Details{% endif %}</h2>
           <div class="space-y-4">
             <div class="flex justify-between">
-              <span class="text-deep-blue">Course Name:</span>
-              <span class="font-medium">{{ service.name }}</span>
+              <span class="text-deep-blue">{% if service %}Course Name{% else %}Event Name{% endif %}:</span>
+              <span class="font-medium">{% if service %}{{ service.name }}{% else %}{{ event.name }}{% endif %}</span>
             </div>
             <div class="flex justify-between">
               <span class="text-deep-blue">Duration:</span>
-              <span class="font-medium">{{ service.duration }} minutes</span>
+              <span class="font-medium">{% if service %}{{ service.duration }}{% else %}{{ event.duration }}{% endif %} minutes</span>
+            </div>
+            {% if event %}
+            <div class="flex justify-between">
+              <span class="text-deep-blue">Date:</span>
+              <span class="font-medium">{{ event.event_date|date:"F d, Y" }}</span>
             </div>
             <div class="flex justify-between">
+              <span class="text-deep-blue">Time:</span>
+              <span class="font-medium">{{ event.start_time|time:"g:i A" }}</span>
+            </div>
+            {% endif %}
+            <div class="flex justify-between">
               <span class="text-deep-blue">Price:</span>
-              <span class="font-medium">₹{{ service.price }}</span>
+              <span class="font-medium">₹{% if service %}{{ service.price }}{% else %}{{ event.price }}{% endif %}</span>
             </div>
           </div>
         </div>
@@ -99,7 +109,7 @@
 
           <button type="submit" id="pay-button"
             class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
-            Pay ₹{{ service.price }}
+            Pay ₹{% if service %}{{ service.price }}{% else %}{{ event.price }}{% endif %}
           </button>
         </form>
       </div>
@@ -117,11 +127,17 @@
       name: formData.get('name'),
       email: formData.get('email'),
       phone: formData.get('phone'),
-      service_id: '{{ service.id }}',
       csrfmiddlewaretoken: formData.get('csrfmiddlewaretoken')
     };
 
-    fetch('{{ request.scheme }}://{{ request.get_host }}/payment/create/', {
+    // Add service_id or event_id based on the type
+    {% if service %}
+    data.service_id = '{{ service.id }}';
+    {% else %}
+    data.event_id = '{{ event.id }}';
+    {% endif %}
+
+    fetch('{% url "create_payment" %}', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -137,11 +153,11 @@
           amount: data.amount,
           currency: data.currency,
           name: "ScubaDiveIn",
-          description: "{{ service.name }}",
+          description: "{% if service %}{{ service.name }}{% else %}{{ event.name }}{% endif %}",
           order_id: data.order_id,
           handler: function (response) {
             // Handle successful payment
-            window.location.href = "{{ request.scheme }}://{{ request.get_host }}/payment/success/?payment_id=" + response.razorpay_payment_id;
+            window.location.href = "{% url 'payment_success' %}?payment_id=" + response.razorpay_payment_id;
           },
           prefill: {
             name: data.name,

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block description %}{{ page_description }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative pt-32 pb-16 md:pt-40 md:pb-20 bg-gradient-to-b from-wave to-white">
+    <div class="container mx-auto px-[5%]">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-deep-blue mb-4">Frequently Asked Questions</h1>
+            <p class="text-ocean-blue text-lg max-w-2xl mx-auto">Find answers to common questions about scuba diving, our courses, and diving in Andaman.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-[5%]">
+        {% for category, faqs in faq_by_category.items %}
+        <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-bold text-deep-blue mb-6">{{ category }}</h2>
+            <div class="space-y-4">
+                {% for faq in faqs %}
+                <div class="border border-wave rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full text-left px-6 py-4 bg-wave hover:bg-wave/80 transition-colors flex items-center justify-between">
+                        <span class="text-deep-blue font-medium pr-8">{{ faq.question }}</span>
+                        <svg class="w-6 h-6 text-ocean-blue transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-content hidden px-6 py-4 bg-white">
+                        <p class="text-ocean-blue whitespace-pre-line">{{ faq.answer }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Still Have Questions Section -->
+<section class="py-16 bg-gradient-to-b from-white to-wave">
+    <div class="container mx-auto px-[5%] text-center">
+        <h2 class="text-3xl font-bold text-deep-blue mb-4">Still Have Questions?</h2>
+        <p class="text-ocean-blue mb-8 max-w-2xl mx-auto">Can't find what you're looking for? Feel free to reach out to our team. We're here to help!</p>
+        <a href="{% url 'contactPage' %}" class="rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3 transition-colors">
+            Contact Us
+        </a>
+    </div>
+</section>
+
+<!-- FAQ JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    
+    faqToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const arrow = this.querySelector('svg');
+            
+            // Close all other FAQs
+            document.querySelectorAll('.faq-content').forEach(item => {
+                if (item !== content && item.classList.contains('show')) {
+                    item.classList.remove('show');
+                    item.classList.add('hidden');
+                    item.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+                }
+            });
+            
+            // Toggle current FAQ
+            content.classList.toggle('hidden');
+            content.classList.toggle('show');
+            arrow.classList.toggle('rotate-180');
+        });
+    });
+});
+</script>
+
+<style>
+.faq-content.show {
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+{% endblock %} 

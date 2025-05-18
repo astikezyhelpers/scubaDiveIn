@@ -1,220 +1,425 @@
 {% extends "../base.html" %}
+{% load static %}
 
-{% block title %} Scuba Diving Blogs – Learn to Dive with Experts in Andaman {% endblock %}
+{% block title %} About Us - Scuba Diving in Andaman {% endblock %}
 
-{% block description %} Scuba Diving Blogs – Learn to Dive with Experts in Andaman {% endblock %}
+{% block description %} Learn about our passionate team of scuba diving instructors and our commitment to providing the best diving experience in Andaman. {% endblock %}
 
 {% block content %}   
-    <section id="relume" class="px-[5%] pt-32 py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
-      <div class="container">
-        <div class="flex flex-col gap-5 md:flex-row md:gap-12 lg:gap-20">
-          <div class="w-full max-w-lg">
-            <p class="mb-3 font-semibold md:mb-4 text-ocean-blue">About Us</p>
-            <h1 class="text-6xl font-bold md:text-9xl lg:text-10xl text-deep-blue">
-              Our Story
+    <!-- Hero Section with Parallax Effect -->
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <!-- Background Image with Parallax -->
+      <div class="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2070"
+          alt="Underwater scene"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-deep-blue/60"></div>
+      </div>
+      
+      <!-- Content -->
+      <div class="relative z-10 container mx-auto px-[5%] pt-20">
+        <div class="flex flex-col gap-8 md:flex-row md:gap-12 lg:gap-20 items-center">
+          <div class="w-full max-w-2xl text-center md:text-left">
+            <p class="mb-4 font-semibold text-coral text-lg md:text-xl">Welcome to Scuba Dive In</p>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+              Discover the <span class="text-coral">Underwater</span> World With Us
             </h1>
-          </div>
-          <div class="w-full max-w-lg">
-            <p class="md:text-md text-ocean-blue">
-              Scuba Dive In was founded with a passion for the underwater world and a commitment to sharing that passion through exceptional dive education and experiences.
+            <p class="text-lg md:text-xl text-wave mb-8">
+              Your journey into the depths begins here. Join us for an unforgettable diving experience in the pristine waters of Andaman.
             </p>
-            <div class="mt-6 flex flex-wrap gap-4 md:mt-8">
-              <button
-                class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 py-3"
-                title="Learn More"
-              >
-                Learn More</button
-              ><button
-                class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-6 py-3"
-                title="Contact"
-              >
-                Contact
-              </button>
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+              <a href="{% url 'coursesPage' %}" class="rounded-full inline-flex gap-2 items-center justify-center transition-all duration-300 border-2 border-coral bg-coral text-white hover:bg-transparent hover:text-coral px-8 py-4 text-lg">
+                Start Your Journey
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a href="{% url 'contactPage' %}" class="rounded-full inline-flex gap-2 items-center justify-center transition-all duration-300 border-2 border-white text-white hover:bg-white hover:text-deep-blue px-8 py-4 text-lg">
+                Contact Us
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+              </a>
             </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-[5%]">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div class="p-6 bg-deep-blue/5 hover:bg-deep-blue/10 rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <p class="text-4xl font-bold text-deep-blue mb-2">15+</p>
+            <p class="text-ocean-blue font-medium">Years Experience</p>
+          </div>
+          <div class="p-6 bg-deep-blue/5 hover:bg-deep-blue/10 rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <p class="text-4xl font-bold text-deep-blue mb-2">2000+</p>
+            <p class="text-ocean-blue font-medium">Dives Completed</p>
+          </div>
+          <div class="p-6 bg-deep-blue/5 hover:bg-deep-blue/10 rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <p class="text-4xl font-bold text-deep-blue mb-2">500+</p>
+            <p class="text-ocean-blue font-medium">Happy Students</p>
+          </div>
+          <div class="p-6 bg-deep-blue/5 hover:bg-deep-blue/10 rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <p class="text-4xl font-bold text-deep-blue mb-2">100%</p>
+            <p class="text-ocean-blue font-medium">Safety Record</p>
           </div>
         </div>
       </div>
     </section>
     
-    <section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28">
-      <div class="container">
-        <div
-          class="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-x-12 lg:gap-x-20"
-        >
-          <div>
-            <p class="mb-3 font-semibold md:mb-4 text-text-primary">Mission</p>
-            <h2 class="text-5xl font-bold md:text-7xl lg:text-8xl text-text-primary">
-              Our Commitment
-            </h2>
-          </div>
-          <div>
-            <p class="md:text-md text-text-primary">
+    <!-- Mission Section -->
+    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-white to-wave">
+      <div class="container mx-auto px-[5%]">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="relative">
+            <div class="absolute -top-4 -left-4 w-24 h-24 bg-coral/20 rounded-full"></div>
+            <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-ocean-blue/20 rounded-full"></div>
+            <div class="relative bg-white p-8 rounded-2xl shadow-xl">
+              <p class="text-lg font-semibold text-coral mb-4">Our Mission</p>
+              <h2 class="text-4xl md:text-5xl font-bold text-deep-blue mb-6">
+                Committed to Excellence in Diving Education
+              </h2>
+              <p class="text-ocean-blue text-lg leading-relaxed mb-8">
               We are dedicated to providing the highest quality scuba diving education in a safe, fun, and environmentally responsible manner. Our mission is to create confident, competent divers who share our passion for the underwater world.
             </p>
-            <div class="mt-6 flex flex-wrap items-center gap-4 md:mt-8">
-              <button
-                class="rounded-button inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border border-border-primary text-text-primary bg-background-primary px-6 py-3"
-                title="Join"
-              >
-                Join</button
-              ><button
-                class="rounded-button inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-0 text-text-primary gap-2 bg-transparent p-0"
-                title="Contact"
-              >
-                Contact<svg
-                  stroke="currentColor"
-                  fill="none"
-                  stroke-width="0"
-                  viewBox="0 0 15 15"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M6.1584 3.13508C6.35985 2.94621 6.67627 2.95642 6.86514 3.15788L10.6151 7.15788C10.7954 7.3502 10.7954 7.64949 10.6151 7.84182L6.86514 11.8418C6.67627 12.0433 6.35985 12.0535 6.1584 11.8646C5.95694 11.6757 5.94673 11.3593 6.1356 11.1579L9.565 7.49985L6.1356 3.84182C5.94673 3.64036 5.95694 3.32394 6.1584 3.13508Z"
-                    fill="currentColor"
-                  ></path>
+              <div class="flex flex-wrap gap-4">
+                <a href="{% url 'coursesPage' %}" class="group relative inline-flex items-center justify-center overflow-hidden rounded-full border-2 border-ocean-blue bg-ocean-blue px-8 py-3 font-medium text-white transition duration-300 ease-out hover:bg-white hover:text-ocean-blue">
+                  <span class="absolute inset-0 flex h-full w-full items-center justify-center text-white duration-300 -translate-x-full bg-ocean-blue group-hover:translate-x-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </span>
+                  <span class="absolute flex h-full w-full items-center justify-center transition-all duration-300 transform group-hover:translate-x-full">Join Us</span>
+                  <span class="invisible">Join Us</span>
+                </a>
+                <a href="{% url 'contactPage' %}" class="group inline-flex items-center gap-2 text-ocean-blue hover:text-coral transition-colors duration-300">
+                  Contact Us
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+              <div class="text-coral mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
-              </button>
+              </div>
+              <h3 class="text-xl font-bold text-deep-blue mb-2">Safety First</h3>
+              <p class="text-ocean-blue">Rigorous safety protocols and top-quality equipment for worry-free diving.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300 mt-8">
+              <div class="text-coral mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-deep-blue mb-2">Expert Training</h3>
+              <p class="text-ocean-blue">Comprehensive courses tailored to your skill level and goals.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+              <div class="text-coral mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-deep-blue mb-2">Certified Programs</h3>
+              <p class="text-ocean-blue">Internationally recognized certifications for all levels.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300 mt-8">
+              <div class="text-coral mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold text-deep-blue mb-2">Passion for Ocean</h3>
+              <p class="text-ocean-blue">Dedicated to marine conservation and sustainable diving practices.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
     
-    <section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28">
-      <div class="container">
-        <div class="mx-auto mb-12 max-w-lg text-center md:mb-18 lg:mb-20">
-          <p class="mb-3 font-semibold md:mb-4 text-text-primary">Team</p>
-          <h2 class="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl text-text-primary">
-            Our Instructors
+    <!-- Instructor Section -->
+    <section class="py-24 bg-gradient-to-b from-wave to-white">
+      <div class="container mx-auto px-[5%]">
+        <div class="text-center mb-16">
+          <p class="text-lg font-semibold text-coral mb-4">Our Team</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-deep-blue mb-6">
+            Meet Our Expert Instructors
           </h2>
-          <p class="md:text-md text-text-primary">
-            Meet our team of passionate and professional dive instructors.
+          <p class="text-lg text-ocean-blue max-w-2xl mx-auto">
+            Learn from our experienced and passionate instructors who are dedicated to making your diving journey safe and memorable.
           </p>
         </div>
-        <div
-          class="grid grid-cols-1 items-start justify-center gap-x-8 gap-y-12 md:grid-cols-3 md:gap-x-8 md:gap-y-16 lg:gap-x-12"
-        >
-          <div class="flex flex-col text-center">
-            <div class="rb-5 mb-5 flex w-full items-center justify-center md:mb-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <!-- Instructor 1 -->
+          <div class="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
+            <div class="relative h-80">
               <img
-                src="https://scubadivein.world/themes/demo/assets/images/instructor1.jpg"
-                alt="Instructor 1"
-                class="aspect-square size-full object-cover rounded-full"
+                src="{% static 'images/Utshab.jfif' %}"
+                alt="Instructor Utshab Mazumder"
+                class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
               />
+              <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <h3 class="text-2xl font-bold mb-1">Utshab Mazumder</h3>
+                <p class="text-coral font-medium">Scuba Instructor</p>
+              </div>
             </div>
-            <div class="mb-3 md:mb-4">
-              <h5 class="text-md font-semibold md:text-lg text-text-primary">John Smith</h5>
-              <h6 class="md:text-md text-text-primary">Master Instructor</h6>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">15+ Years Experience</span>
+                <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">2000+ Dives</span>
+                <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">PADI Certified</span>
+              </div>
+              <p class="text-ocean-blue mb-6">
+                Utshab brings extensive knowledge and passion to his teaching. His commitment to safety, environmental awareness, and student success has earned him a reputation as a trusted and skilled instructor.
+              </p>
+              <div class="flex items-center gap-4">
+                <a href="{% url 'instructorsPage' %}" class="text-coral hover:text-deep-blue transition-colors duration-300 flex items-center gap-2">
+                  Learn More
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </a>
+              </div>
             </div>
-            <p class="text-text-primary">
-              With over 15 years of diving experience, John specializes in technical diving and instructor training.
-            </p>
           </div>
-          <div class="flex flex-col text-center">
-            <div class="rb-5 mb-5 flex w-full items-center justify-center md:mb-6">
+          
+          <!-- Instructor 2 -->
+          <div class="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
+            <div class="relative h-80">
               <img
-                src="https://scubadivein.world/themes/demo/assets/images/instructor2.jpg"
-                alt="Instructor 2"
-                class="aspect-square size-full object-cover rounded-full"
+                src="{% static 'images/Arwin.jfif' %}"
+                alt="Instructor Arwin Monteiro"
+                class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
               />
+              <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <h3 class="text-2xl font-bold mb-1">Arwin Monteiro</h3>
+                <p class="text-coral font-medium">Certified Scuba Instructor</p>
+              </div>
             </div>
-            <div class="mb-3 md:mb-4">
-              <h5 class="text-md font-semibold md:text-lg text-text-primary">Sarah Johnson</h5>
-              <h6 class="md:text-md text-text-primary">Course Director</h6>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">12+ Years Experience</span>
+                <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">1500+ Dives</span>
+                <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Technical Diving</span>
             </div>
-            <p class="text-text-primary">
-              Sarah has trained hundreds of divers and specializes in underwater photography.
+              <p class="text-ocean-blue mb-6">
+                As a certified scuba instructor, Arwin Monteiro brings a wealth of knowledge and passion to the underwater world. With extensive experience in teaching scuba diving techniques, Arwin ensures that students learn in a safe, supportive, and exciting environment.
             </p>
-          </div>
-          <div class="flex flex-col text-center">
-            <div class="rb-5 mb-5 flex w-full items-center justify-center md:mb-6">
-              <img
-                src="https://scubadivein.world/themes/demo/assets/images/instructor3.jpg"
-                alt="Instructor 3"
-                class="aspect-square size-full object-cover rounded-full"
-              />
+              <div class="flex items-center gap-4">
+                <a href="{% url 'instructorsPage' %}" class="text-coral hover:text-deep-blue transition-colors duration-300 flex items-center gap-2">
+                  Learn More
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </a>
             </div>
-            <div class="mb-3 md:mb-4">
-              <h5 class="text-md font-semibold md:text-lg text-text-primary">Mike Davis</h5>
-              <h6 class="md:text-md text-text-primary">Divemaster Trainer</h6>
             </div>
-            <p class="text-text-primary">
-              Mike focuses on conservation diving and leads our marine biology programs.
-            </p>
           </div>
         </div>
       </div>
     </section>
     
-    <section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28">
-      <div class="container">
-        <div
-          class="grid grid-cols-1 gap-x-20 gap-y-12 md:gap-y-16 lg:grid-cols-2 lg:items-center"
-        >
+    <!-- Why Choose Us Section -->
+    <section class="py-24 bg-gradient-to-b from-white to-wave">
+      <div class="container mx-auto px-[5%]">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div class="order-2 lg:order-1">
+            <div class="relative">
+              <div class="absolute -top-4 -left-4 w-32 h-32 bg-coral/20 rounded-full -z-10"></div>
+              <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-ocean-blue/20 rounded-full -z-10"></div>
+              <img
+                src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070"
+                alt="Scuba diving training"
+                class="w-full h-[600px] object-cover rounded-2xl shadow-2xl"
+              />
+              <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-sm p-6 rounded-xl">
+                <div class="flex items-center gap-4">
+                  <div class="flex -space-x-4">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80" class="w-12 h-12 rounded-full border-2 border-white" alt="Student 1">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80" class="w-12 h-12 rounded-full border-2 border-white" alt="Student 2">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80" class="w-12 h-12 rounded-full border-2 border-white" alt="Student 3">
+                  </div>
           <div>
-            <h2
-              class="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl text-text-primary"
-            >
-              Why Choose Us
+                    <div class="flex items-center gap-1 text-coral">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </div>
+                    <p class="text-deep-blue font-medium">"Best diving experience ever!"</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="order-1 lg:order-2">
+            <p class="text-lg font-semibold text-coral mb-4">Why Choose Us</p>
+            <h2 class="text-4xl md:text-5xl font-bold text-deep-blue mb-8">
+              Experience the Difference with Scuba Dive In
             </h2>
-            <p class="md:text-md text-text-primary">
-              We offer personalized training in small groups, top-quality equipment, and dive sites carefully selected for optimal learning conditions.
-            </p>
-            <div class="mt-6 flex flex-wrap gap-4 md:mt-8">
-              <button
-                class="rounded-button inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border border-border-primary bg-background-alternative text-text-alternative px-6 py-3"
-                title="Contact"
-              >
-                Contact</button
-              ><button
-                class="rounded-button inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border border-border-primary text-text-primary bg-background-primary px-6 py-3"
-                title="Sign Up"
-              >
-                Sign Up
-              </button>
-            </div>
+            <div class="space-y-6">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-wave flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-deep-blue mb-2">Safety First Approach</h3>
+                  <p class="text-ocean-blue">We prioritize your safety with top-quality equipment and rigorous safety protocols.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-wave flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-deep-blue mb-2">Expert Instruction</h3>
+                  <p class="text-ocean-blue">Learn from experienced instructors who are passionate about diving.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-wave flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                  </svg>
           </div>
           <div>
-            <img
-              src="https://scubadivein.world/themes/demo/assets/images/about-dive.jpg"
-              class="w-full rounded-image object-cover"
-              alt="Scuba diving"
-            />
+                  <h3 class="text-xl font-bold text-deep-blue mb-2">Prime Locations</h3>
+                  <p class="text-ocean-blue">Access to the best diving spots in Andaman with diverse marine life.</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a href="{% url 'contactPage' %}" class="rounded-full inline-flex gap-2 items-center justify-center transition-all duration-300 border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-4">
+                Get Started
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </a>
+              <a href="{% url 'coursesPage' %}" class="rounded-full inline-flex gap-2 items-center justify-center transition-all duration-300 border-2 border-ocean-blue text-ocean-blue hover:bg-ocean-blue hover:text-white px-8 py-4">
+                View Courses
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </section>
     
-    <section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-ocean-blue text-white">
-      <div class="container">
-        <div class="mx-auto mb-12 max-w-lg text-center md:mb-18 lg:mb-20">
-          <p class="mb-3 font-semibold md:mb-4 text-coral">Facilities</p>
-          <h2 class="rb-5 mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl text-white">
-            Our Dive Center
+    <!-- Facilities Section -->
+    <section class="py-24 bg-ocean-blue relative overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+      </div>
+      
+      <div class="container mx-auto px-[5%] relative">
+        <div class="text-center mb-16">
+          <p class="text-lg font-semibold text-coral mb-4">Our Facilities</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+            World-Class Diving Center
           </h2>
-          <p class="md:text-md text-white">
-            We pride ourselves on maintaining excellent facilities for your training and comfort.
+          <p class="text-lg text-wave max-w-2xl mx-auto">
+            Experience diving excellence with our state-of-the-art facilities designed for your comfort and learning.
           </p>
         </div>
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Facility 1 -->
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center transform hover:-translate-y-2 transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-coral/20 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-4">Training Pool</h3>
+            <p class="text-wave">
+              Our heated pool provides the perfect environment for beginners to learn diving basics and for experienced divers to refine their skills.
+            </p>
+          </div>
+          
+          <!-- Facility 2 -->
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center transform hover:-translate-y-2 transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-coral/20 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-4">Equipment Center</h3>
+            <p class="text-wave">
+              Access top-quality diving equipment with our comprehensive rental service and professional maintenance facility.
+            </p>
+          </div>
+          
+          <!-- Facility 3 -->
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center transform hover:-translate-y-2 transition-all duration-300">
+            <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-coral/20 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-4">Modern Classrooms</h3>
+            <p class="text-wave">
+              Learn in comfort with our air-conditioned classrooms equipped with the latest multimedia technology.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Additional Features -->
+        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div class="text-center">
-            <div class="mb-4 text-4xl text-coral">🏊</div>
-            <h3 class="mb-2 text-xl font-bold">Heated Pool</h3>
-            <p>Year-round confined water training in our heated pool</p>
+            <div class="text-4xl font-bold text-coral mb-2">24/7</div>
+            <p class="text-wave">Support Available</p>
           </div>
           <div class="text-center">
-            <div class="mb-4 text-4xl text-coral">🛠️</div>
-            <h3 class="mb-2 text-xl font-bold">Equipment Center</h3>
-            <p>Full-service equipment rental and maintenance</p>
+            <div class="text-4xl font-bold text-coral mb-2">100%</div>
+            <p class="text-wave">Safety Record</p>
           </div>
           <div class="text-center">
-            <div class="mb-4 text-4xl text-coral">📚</div>
-            <h3 class="mb-2 text-xl font-bold">Classrooms</h3>
-            <p>Comfortable learning spaces with multimedia</p>
+            <div class="text-4xl font-bold text-coral mb-2">50+</div>
+            <p class="text-wave">Diving Spots</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold text-coral mb-2">5⭐</div>
+            <p class="text-wave">Rated Center</p>
           </div>
         </div>
       </div>

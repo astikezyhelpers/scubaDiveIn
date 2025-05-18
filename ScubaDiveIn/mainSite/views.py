@@ -8,9 +8,9 @@ from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from .models import RazorpayPayment, DivingService, ServiceCategory
+from .models import RazorpayPayment, DivingService, ServiceCategory, DiveLocation, Event, NewsletterSubscription, FAQ, InstructorBooking
 from django.contrib import messages
-from .forms import ContactForm
+from .forms import ContactForm, InstructorBookingForm
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -73,29 +73,56 @@ def has_purchased_course(user, service, email=None):
 @login_required
 def initiate_payment(request):
     service_id = request.GET.get('service_id')
-    if not service_id:
-        return redirect('courses')
+    event_id = request.GET.get('event_id')
     
-    service = get_object_or_404(DivingService, id=service_id, is_active=True)
+    if not service_id and not event_id:
+        return redirect('coursesPage')
     
-    # Check if user has already purchased this course
-    already_purchased = has_purchased_course(request.user, service)
+    if service_id:
+        # Handle course booking
+        service = get_object_or_404(DivingService, id=service_id, is_active=True)
     
-    if already_purchased:
-        messages.warning(request, f"You have already purchased the '{service.name}' course. Check your booking history.")
-        return redirect('booking_history')
+        # Check if user has already purchased this course
+        already_purchased = has_purchased_course(request.user, service)
+        
+        if already_purchased:
+            messages.warning(request, f"You have already purchased the '{service.name}' course. Check your booking history.")
+            return redirect('booking_history')
+            
+        # Get user profile info for prefilling the form
+        user = request.user
+        context = {
+            'service': service,
+            'booking_type': 'course',
+            'user_info': {
+                'name': f"{user.first_name} {user.last_name}".strip(),
+                'email': user.email,
+                'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
+            },
+            'is_authenticated': True
+        }
+    else:
+        # Handle event booking
+        event = get_object_or_404(Event, id=event_id, is_active=True)
+        
+        # Check if event date has passed
+        if event.event_date < timezone.now().date():
+            messages.error(request, "This event has already passed and cannot be booked.")
+            return redirect('eventsPage')
+        
+        # Get user profile info for prefilling the form
+        user = request.user
+        context = {
+            'event': event,
+            'booking_type': 'event',
+            'user_info': {
+                'name': f"{user.first_name} {user.last_name}".strip(),
+                'email': user.email,
+                'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
+            },
+            'is_authenticated': True
+        }
     
-    # Get user profile info for prefilling the form
-    user = request.user
-    context = {
-        'service': service,
-        'user_info': {
-            'name': f"{user.first_name} {user.last_name}".strip(),
-            'email': user.email,
-            'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
-        },
-        'is_authenticated': True
-    }
     return render(request, 'mainSite/initiate_payment.html', context)
 
 # Guest checkout version (no login required)
@@ -103,29 +130,52 @@ def guest_checkout(request):
     # Redirect authenticated users to regular checkout
     if request.user.is_authenticated:
         service_id = request.GET.get('service_id')
+        event_id = request.GET.get('event_id')
         if service_id:
             return redirect(f"{reverse('initiate_payment')}?service_id={service_id}")
-        return redirect('courses')
+        elif event_id:
+            return redirect(f"{reverse('initiate_payment')}?event_id={event_id}")
+        return redirect('coursesPage')
     
     logger = logging.getLogger(__name__)
     
     service_id = request.GET.get('service_id')
-    if not service_id:
-        return redirect('courses')
+    event_id = request.GET.get('event_id')
     
-    service = get_object_or_404(DivingService, id=service_id, is_active=True)
+    if not service_id and not event_id:
+        return redirect('coursesPage')
+    
+    if service_id:
+        # Handle course booking
+        service = get_object_or_404(DivingService, id=service_id, is_active=True)
+        context = {
+            'service': service,
+            'booking_type': 'course',
+            'is_authenticated': False,
+            'warning_message': "Note: Purchasing without an account will make it harder to access your course materials later. Consider creating an account first."
+        }
+    else:
+        # Handle event booking
+        event = get_object_or_404(Event, id=event_id, is_active=True)
+        
+        # Check if event date has passed
+        if event.event_date < timezone.now().date():
+            messages.error(request, "This event has already passed and cannot be booked.")
+            return redirect('eventsPage')
+        
+        context = {
+            'event': event,
+            'booking_type': 'event',
+            'is_authenticated': False,
+            'warning_message': "Note: Booking without an account will make it harder to manage your bookings later. Consider creating an account first."
+        }
     
     # Add warning for guest users
     messages.warning(
         request, 
-        "Note: If you're a returning user, please log in first to avoid duplicate purchases and to access your course history."
+        "Note: If you're a returning user, please log in first to avoid duplicate purchases and to access your booking history."
     )
     
-    context = {
-        'service': service,
-        'is_authenticated': False,
-        'warning_message': "Note: Purchasing without an account will make it harder to access your course materials later. Consider creating an account first."
-    }
     return render(request, 'mainSite/initiate_payment.html', context)
 
 @require_POST
@@ -133,62 +183,40 @@ def create_payment(request):
     try:
         data = json.loads(request.body)
         service_id = data.get('service_id')
+        event_id = data.get('event_id')
         name = data.get('name')
         email = data.get('email', '').strip().lower() if data.get('email') else ''
         phone = data.get('phone')
 
         logger = logging.getLogger(__name__)
-        logger.info(f"Payment creation requested for service_id={service_id}, email={email}")
+        logger.info(f"Payment creation requested for service_id={service_id}, event_id={event_id}, email={email}")
 
-        if not all([service_id, name, email, phone]):
+        if not name or not email or not phone:
             return JsonResponse({
                 'success': False, 
                 'error': 'Missing required fields'
             })
 
-        service = get_object_or_404(DivingService, id=service_id, is_active=True)
-        
-        # Double check for any existing purchases with this email as a standalone check
-        # This is a more direct check than relying on customer_notes
-        existing_purchases = RazorpayPayment.objects.filter(
-            service=service,
-            status='completed'
-        )
-        
-        # Find any matching email entries 
-        if request.user.is_authenticated:
-            user_purchases = existing_purchases.filter(user=request.user).exists()
-            if user_purchases:
-                logger.info(f"User {request.user.username} has already purchased this course (direct user check)")
+        if service_id:
+            # Handle course payment
+            service = get_object_or_404(DivingService, id=service_id, is_active=True)
+            amount = service.price
+            item = service
+        elif event_id:
+            # Handle event payment
+            event = get_object_or_404(Event, id=event_id, is_active=True)
+            if event.event_date < timezone.now().date():
                 return JsonResponse({
                     'success': False,
-                    'error': f"You have already purchased this course. Check your booking history.",
-                    'redirect_to': reverse('booking_history')
-                })
-
-        # Extra check for email in customer_notes (pattern matching)
-        import re
-        for purchase in existing_purchases:
-            if purchase.customer_notes:
-                # Look for email patterns in customer_notes
-                extracted_emails = re.findall(r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+', purchase.customer_notes)
-                for extracted_email in extracted_emails:
-                    if extracted_email.lower() == email.lower():
-                        logger.info(f"Email {email} was found in existing purchase (ID: {purchase.id})")
-                        return JsonResponse({
-                            'success': False,
-                            'error': f"This email has already been used to purchase this course.",
-                            'redirect_to': reverse('booking_history') if request.user.is_authenticated else reverse('courses')
+                    'error': 'This event has already passed and cannot be booked.',
+                    'redirect_to': reverse('eventsPage')
                         })
-        
-        # Use the comprehensive check from the utility function as a fallback
-        already_purchased = has_purchased_course(request.user, service, email)
-        if already_purchased:
-            logger.info(f"Duplicate purchase detected by has_purchased_course function")
+            amount = event.price
+            item = event
+        else:
             return JsonResponse({
                 'success': False,
-                'error': f"This course has already been purchased with this account or email. Check your booking history.",
-                'redirect_to': reverse('booking_history') if request.user.is_authenticated else reverse('courses')
+                'error': 'No service or event specified'
             })
         
         # Initialize Razorpay client
@@ -196,11 +224,12 @@ def create_payment(request):
         
         # Create Razorpay order
         order_data = {
-            'amount': int(service.price * 100),  # Amount in paise
+            'amount': int(amount * 100),  # Amount in paise
             'currency': 'INR',
-            'receipt': f'order_{service_id}_{int(time.time())}',
+            'receipt': f'order_{service_id or event_id}_{int(time.time())}',
             'notes': {
                 'service_id': service_id,
+                'event_id': event_id,
                 'name': name,
                 'email': email,
                 'phone': phone
@@ -220,9 +249,10 @@ def create_payment(request):
         try:
             customer_notes = f"Name: {name}, Email: {email}, Phone: {phone}"
             payment = RazorpayPayment.objects.create(
-                service=service,
+                service=item if isinstance(item, DivingService) else None,
+                event=item if isinstance(item, Event) else None,
                 order_id=order['id'],
-                amount=service.price,
+                amount=amount,
                 customer_notes=customer_notes,
                 # Associate with user if authenticated
                 user=request.user if request.user.is_authenticated else None
@@ -267,7 +297,8 @@ def payment_success(request):
         payment = RazorpayPayment.objects.get(payment_id=payment_id, status='completed')
         context = {
             'payment': payment,
-            'service': payment.service
+            'service': payment.service,
+            'event': payment.event
         }
         
         # If the user is logged in, show a link to booking history
@@ -357,7 +388,36 @@ def payment_callback(request):
     }, status=405)
 
 def home(request):
-    return render(request, 'mainSite/index.html')
+    featured_courses = DivingService.objects.filter(
+        is_active=True,
+        is_featured=True
+    ).select_related('category')[:3]  # Get top 3 featured courses
+    
+    # Get featured dive locations
+    featured_locations = DiveLocation.objects.filter(
+        is_active=True,
+        is_featured=True
+    )[:3]  # Get top 3 featured locations
+    
+    # Get upcoming featured events
+    featured_events = Event.objects.filter(
+        is_active=True,
+        is_featured=True,
+        event_date__gte=timezone.now().date()
+    ).select_related('location').order_by('event_date')[:3]  # Get top 3 upcoming featured events
+    
+    # Get 5 most important FAQs
+    featured_faqs = FAQ.objects.filter(
+        is_active=True
+    ).order_by('order')[:5]
+    
+    context = {
+        'featured_courses': featured_courses,
+        'featured_locations': featured_locations,
+        'featured_events': featured_events,
+        'featured_faqs': featured_faqs
+    }
+    return render(request, 'mainSite/index.html', context)
 
 def about(request):
     return render(request, 'mainSite/about-us.html')
@@ -502,6 +562,162 @@ def instructors(request):
 def blogs(request):
     return render(request, 'mainSite/blogs.html')
 
+def dive_locations(request):
+    """View function for displaying dive locations page"""
+    # Get all active dive locations
+    locations = DiveLocation.objects.filter(is_active=True).order_by('name')
+    
+    context = {
+        'locations': locations,
+        'page_title': 'Dive Locations',
+        'page_description': 'Explore our spectacular dive sites in the Andaman Islands'
+    }
+    return render(request, 'mainSite/dive_locations.html', context)
+
+def dive_location_detail(request, slug):
+    """View function for displaying individual dive location details"""
+    # Get the specific dive location
+    location = get_object_or_404(DiveLocation, slug=slug, is_active=True)
+    
+    # Get upcoming events at this location
+    upcoming_events = location.events.filter(
+        is_active=True,
+        event_date__gte=timezone.now().date()
+    ).order_by('event_date', 'start_time')[:3]
+    
+    context = {
+        'location': location,
+        'upcoming_events': upcoming_events,
+        'page_title': location.name,
+        'page_description': location.short_description
+    }
+    return render(request, 'mainSite/dive_location_detail.html', context)
+
+def events(request):
+    """View function for displaying events page"""
+    # Get all active upcoming events
+    upcoming_events = Event.objects.filter(
+        is_active=True,
+        event_date__gte=timezone.now().date()
+    ).order_by('event_date', 'start_time')
+    
+    # Get past events
+    past_events = Event.objects.filter(
+        is_active=True,
+        event_date__lt=timezone.now().date()
+    ).order_by('-event_date', 'start_time')[:5]  # Show only last 5 past events
+    
+    context = {
+        'upcoming_events': upcoming_events,
+        'past_events': past_events,
+        'page_title': 'Diving Events',
+        'page_description': 'Join our exciting diving events and activities in the Andaman Islands'
+    }
+    return render(request, 'mainSite/events.html', context)
+
+def event_detail(request, slug):
+    """View function for displaying individual event details"""
+    # Get the specific event
+    event = get_object_or_404(Event, slug=slug, is_active=True)
+    
+    # Check if event is upcoming or past
+    is_upcoming = event.event_date >= timezone.now().date()
+    
+    # Get related events at the same location
+    related_events = Event.objects.filter(
+        location=event.location,
+        is_active=True
+    ).exclude(id=event.id).order_by('event_date')[:3]
+    
+    context = {
+        'event': event,
+        'is_upcoming': is_upcoming,
+        'related_events': related_events,
+        'page_title': event.name,
+        'page_description': event.short_description
+    }
+    return render(request, 'mainSite/event_detail.html', context)
+
+def faq_page(request):
+    """View function for FAQ page"""
+    # Get all active FAQs grouped by category
+    faqs = FAQ.objects.filter(is_active=True).order_by('category', 'order')
+    
+    # Group FAQs by category
+    faq_by_category = {}
+    for faq in faqs:
+        if faq.category not in faq_by_category:
+            faq_by_category[faq.category] = []
+        faq_by_category[faq.category].append(faq)
+    
+    context = {
+        'faq_by_category': faq_by_category,
+        'page_title': 'Frequently Asked Questions - ScubaDiveIn',
+        'page_description': 'Find answers to common questions about scuba diving, courses, equipment, and diving in Andaman.'
+    }
+    
+    return render(request, 'mainSite/faq.html', context)
+
+def newsletter_signup(request):
+    """Handle newsletter signup submissions"""
+    email = request.POST.get('email')
+    
+    if not email:
+        messages.error(request, 'Please provide an email address.')
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
+    
+    try:
+        # Check if email already exists
+        if NewsletterSubscription.objects.filter(email=email).exists():
+            messages.info(request, 'You are already subscribed to our newsletter! 📫')
+        else:
+            # Create new subscription
+            subscription = NewsletterSubscription.objects.create(
+                email=email,
+                subscribed_at=timezone.now()
+            )
+            messages.success(request, '🎉 Welcome to our newsletter! You\'ll receive exciting updates about diving events, special offers, and more.')
+            
+            # Send welcome email
+            subject = 'Welcome to ScubaDiveIn Newsletter'
+            message = f"""
+            Dear Diver,
+
+            Thank you for subscribing to our newsletter! 🌊
+
+            Stay tuned for exciting updates about:
+            🎯 Upcoming diving events
+            💰 Special offers and discounts
+            🤿 Diving tips and stories
+            🌟 And much more!
+
+            Follow us on social media:
+            Facebook: facebook.com/scubadivein
+            Instagram: instagram.com/scubadivein
+            YouTube: youtube.com/scubadivein
+            
+            Best regards,
+            ScubaDiveIn Team
+            """
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    settings.EMAIL_HOST_USER,
+                    [email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                # Log the error but don't affect user experience
+                print(f"Error sending welcome email: {str(e)}")
+    
+    except Exception as e:
+        messages.error(request, 'Something went wrong. Please try again later. 😕')
+        print(f"Newsletter signup error: {str(e)}")
+    
+    # Redirect back to the referring page
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
 def blogDetail(request,slug):
     return render(request, 'mainSite/blogDetail.html')
 
@@ -548,3 +764,40 @@ def cancellations_refunds(request):
         'current_date': time.strftime("%B %d, %Y")
     }
     return render(request, 'mainSite/cancellations-refunds.html', context)
+
+def dsd_booking(request):
+    """View function for Discover Scuba Diving trial booking"""
+    try:
+        # First try to find DSD course by category name
+        dsd_course = DivingService.objects.filter(
+            category__name__iexact='Discover Scuba Diving',
+            is_active=True
+        ).first()
+        
+        if not dsd_course:
+            # If not found by category, try to find by course name
+            dsd_course = DivingService.objects.filter(
+                name__icontains='Discover Scuba',
+                is_active=True
+            ).first()
+        
+        if dsd_course:
+            return redirect('courseDetailPage', slug=dsd_course.slug)
+        else:
+            messages.error(request, "Discover Scuba Diving course is currently unavailable. Please check back later.")
+            return redirect('coursesPage')
+            
+    except Exception as e:
+        messages.error(request, "An error occurred while accessing the DSD course. Please try again later.")
+        return redirect('coursesPage')
+
+def book_instructor(request):
+    if request.method == 'POST':
+        form = InstructorBookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save()
+            messages.success(request, "Thank you for your booking request. We will contact you shortly to confirm the details.")
+            return JsonResponse({'status': 'success', 'message': 'Booking request submitted successfully'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)

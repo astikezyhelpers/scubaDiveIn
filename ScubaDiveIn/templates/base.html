@@ -117,9 +117,9 @@
     <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Diving Journey?</h2>
     <p class="text-wave max-w-2xl mx-auto mb-8">Our instructors are ready to guide you through every step of your scuba adventure, from your first breath underwater to advanced technical diving.</p>
     <div class="flex flex-wrap justify-center gap-4">
-      <a href="#">
+      <a href="{% url 'dsdBooking' %}">
         <button class="rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3 transition-colors">
-          Book a Discover scuba dive
+          Book a Discover Scuba Dive
         </button>
       </a>
       <a href="{% url 'contactPage' %}">
@@ -177,13 +177,13 @@
                     <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Social Media</a>
                   </li>
                   <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Diving Tips</a>
+                    <a href="{% url 'blogsPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Diving Tips</a>
                   </li>
                   <li class="py-2 text-sm">
                     <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Safety Guidelines</a>
                   </li>
                   <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">FAQs</a>
+                    <a href="{% url 'faqPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">FAQs</a>
                   </li>
                 </ul>
               </div>
@@ -191,19 +191,19 @@
                 <h2 class="mb-3 font-semibold text-coral md:mb-4">Newsletter</h2>
                 <ul>
                   <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Sign Up</a>
+                    <a href="{% url 'signup' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Sign Up</a>
                   </li>
                   <li class="py-2 text-sm">
                     <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Latest News</a>
                   </li>
                   <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Course Updates</a>
+                    <a href="{% url 'coursesPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Course Updates</a>
                   </li>
                   <li class="py-2 text-sm">
                     <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Special Offers</a>
                   </li>
                   <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Event Alerts</a>
+                    <a href="{% url 'eventsPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Event Alerts</a>
                   </li>
                 </ul>
               </div>
@@ -214,25 +214,37 @@
                 Join our newsletter to stay updated on courses and special offers.
               </p>
               <div class="w-full max-w-md">
-                <form
-                  class="mb-3 grid grid-cols-1 gap-x-4 gap-y-3 sm:grid-cols-[1fr_max-content] md:gap-y-4"
-                >
+                <form action="{% url 'newsletter_signup' %}" method="POST"
+                  class="mb-3 grid grid-cols-1 gap-x-4 gap-y-3 sm:grid-cols-[1fr_max-content] md:gap-y-4">
+                  {% csrf_token %}
                   <div class="relative flex w-full items-center">
                     <input
                       type="email"
+                      name="email"
                       class="rounded-full flex size-full py-2 align-middle transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 border-2 border-white bg-transparent text-white placeholder-white/70 min-h-11 px-3"
                       id="email"
                       placeholder="Enter your email"
-                      value=""
+                      required
                     />
                   </div>
-                  <button
+                  <button type="submit"
                     class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-5 py-2"
-                    title="Subscribe"
-                  >
-                    Subscribe
+                    title="Subscribe">
+                    <span>Subscribe</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
                   </button>
                 </form>
+                {% if messages %}
+                <div class="messages mt-4">
+                    {% for message in messages %}
+                    <div class="text-sm {% if message.tags == 'success' %}text-green-400{% elif message.tags == 'error' %}text-red-400{% else %}text-white/70{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 <p class="text-xs text-white/70">
                   By subscribing, you agree to our Privacy Policy and receive updates.
                 </p>

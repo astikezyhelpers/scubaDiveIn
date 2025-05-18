@@ -22,13 +22,9 @@
         </p>
         <div class="mt-6 flex flex-wrap gap-4 md:mt-8">
           <button
-            class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3"
-            title="Learn More"
-          >
-            View Certifications</button
-          ><button
+            onclick="scrollToInstructors()"
             class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 py-3"
-            title="Sign Up"
+            title="Book Now"
           >
             Book an Instructor
           </button>
@@ -105,7 +101,7 @@
 </section>
 
 <!-- Featured Instructors Section -->
-<section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
+<section id="instructorsList" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
   <div class="container">
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold text-deep-blue mb-4">Featured Instructors</h2>
@@ -122,7 +118,7 @@
             class="w-full h-64 object-cover object-top"
           >
           <div class="absolute bottom-0 left-0 bg-ocean-blue/90 text-white px-4 py-2 rounded-tr-xl">
-            <p class="font-semibold">Scuba Instructor</p>
+            <p class="font-semibold">Certified Scuba Instructor</p>
           </div>
         </div>
         <div class="p-6">
@@ -134,18 +130,23 @@
             <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Wreck Diving</span>
             <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Deep Diving</span>
           </div>
-          <!-- <button class="w-full mt-4 rounded-full inline-flex items-center justify-center border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2 transition-colors">
-            View Profile
-          </button> -->
+          <div class="flex gap-4">
+            <button onclick="viewCertificate('Utshab Mazumder')" class="flex-1 rounded-full inline-flex items-center justify-center border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2 transition-colors">
+              View Certificate
+            </button>
+            <button onclick="openBookingModal('Utshab Mazumder')" class="flex-1 rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-4 py-2 transition-colors">
+              Book Now
+            </button>
+          </div>
         </div>
       </div>
-      
+
       <!-- Instructor 2 -->
       <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
         <div class="relative">
           <img 
             src="{% static 'images/Arwin.jfif' %}" 
-            alt="Instructor Michael Rodriguez" 
+            alt="Instructor Arwin Monteiro" 
             class="w-full h-64 object-cover object-top"
           >
           <div class="absolute bottom-0 left-0 bg-ocean-blue/90 text-white px-4 py-2 rounded-tr-xl">
@@ -157,13 +158,18 @@
           <p class="text-sea-green font-medium mb-4">12+ years experience | 1500+ dives</p>
           <p class="text-ocean-blue mb-4">As a certified scuba instructor, Arwin Monteiro brings a wealth of knowledge and passion to the underwater world. With extensive experience in teaching scuba diving techniques, Arwin ensures that students learn in a safe, supportive, and exciting environment.</p>
           <div class="flex flex-wrap gap-2 mb-4">
-            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Trimix Certified</span>
-            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Cave Diving</span>
-            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Rebreather</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Nitrox Certified</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Wreck Diving</span>
+            <span class="bg-wave text-ocean-blue px-3 py-1 rounded-full text-sm">Deep Diving</span>
           </div>
-          <!-- <button class="w-full mt-4 rounded-full inline-flex items-center justify-center border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2 transition-colors">
-            View Profile
-          </button> -->
+          <div class="flex gap-4">
+            <button onclick="viewCertificate('Arwin Monteiro')" class="flex-1 rounded-full inline-flex items-center justify-center border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2 transition-colors">
+              View Certificate
+            </button>
+            <button onclick="openBookingModal('Arwin Monteiro')" class="flex-1 rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-4 py-2 transition-colors">
+              Book Now
+            </button>
+          </div>
         </div>
       </div>
       
@@ -235,102 +241,7 @@
 </section>
 
 <!-- Testimonials Section -->
-<section id="relume" class="overflow-hidden px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-white">
-  <div class="container">
-    <div class="relative pb-12 md:pb-16 lg:px-8">
-      <div
-        class="relative overflow-hidden"
-        role="region"
-        aria-roledescription="carousel"
-      >
-        <div>
-          <div>
-            <div class="flex ml-0">
-              <div
-                role="group"
-                aria-roledescription="slide"
-                class="min-w-0 shrink-0 grow-0 basis-full pl-0 md:px-16 lg:px-6"
-              >
-                <div
-                  class="mx-auto flex h-full max-w-lg flex-col items-center justify-center text-center"
-                >
-                  <div class="mb-6 flex md:mb-8">
-                    <svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      class="size-6 text-coral"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
-                      ></path></svg
-                    ><svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      class="size-6 text-coral"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
-                      ></path></svg
-                    ><svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      class="size-6 text-coral"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
-                      ></path></svg
-                    ><svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      class="size-6 text-coral"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
-                      ></path></svg
-                    ><svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      class="size-6 text-coral"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M21.947 9.179a1.001 1.001 0 0 0-.868-.676l-5.701-.453-2.467-5.461a.998.998 0 0 0-1.822-.001L8.622 8.05l-5.701.453a1 1 0 0 0-.619 1.713l4.213 4.107-1.49 6.452a1 1 0 0 0 1.53 1.057L12 18.202l5.445 3.63a1.001 1.001 0 0 0 1.517-1.106l-1.829-6.4 4.536-4.082c.297-.268.406-.686.278-1.065z"
-                      ></path>
-                    </svg>
-                  </div>
-                  <blockquote class="text-xl font-bold text-deep-blue md:text-2xl">
-                    "The instructors here are truly exceptional. Their dedication to safety and teaching excellence makes learning to dive an absolute pleasure."
-                  </blockquote>
-                  <p class="mt-4 text-base text-ocean-blue">- Sarah Johnson, Open Water Diver</p>
-                  <div
-                    class="mt-6 flex w-full flex-col items-center gap-3 text-center md:mt-8 md:w-auto md:flex-row md:gap-5 md:text-left"
-                  >
-                    <div>
-                      <img
+ <section class="py-16 bg-white">  <div class="container mx-auto px-[5%]">    <div class="text-center mb-16">      <h2 class="text-3xl font-bold text-deep-blue mb-4">What Our Divers Say</h2>      <p class="text-ocean-blue max-w-2xl mx-auto">Hear from certified divers who started their journey with us</p>    </div>        <iframe src='https://widgets.sociablekit.com/google-reviews/iframe/25558141' frameborder='0' width='100%' height='1000'></iframe>  </div></section>
                         src="https://img.freepik.com/premium-photo/portrait-young-woman-scuba-diver-wearing-diving-suit-posing-underwater_23-2149092624.jpg?w=1380"
                         alt="Testimonial avatar 1"
                         class="size-14 min-h-14 min-w-14 rounded-full object-cover"
@@ -429,19 +340,180 @@
   </div>
 </section>
 
-<!-- CTA Section -->
-<section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-deep-blue">
-  <div class="container mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Diving Journey?</h2>
-    <p class="text-wave max-w-2xl mx-auto mb-8">Our instructors are ready to guide you through every step of your scuba adventure, from your first breath underwater to advanced technical diving.</p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <button class="rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3 transition-colors">
-        Book a Discovery Dive
+<!-- Booking Form Modal -->
+<div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 z-[999] hidden">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 relative mt-16">
+      <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
       </button>
-      <button class="rounded-full inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-deep-blue px-8 py-3 transition-colors">
-        Contact Our Team
-      </button>
+      <h3 class="text-2xl font-bold text-deep-blue mb-4">Book an Instructor</h3>
+      <form id="bookingForm" class="space-y-4">
+        {% csrf_token %}
+        <input type="hidden" name="instructor" id="selectedInstructor">
+        <div>
+          <label for="name" class="block text-sm font-medium text-deep-blue mb-1">Name</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-ocean-blue">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-deep-blue mb-1">Email</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-ocean-blue">
+        </div>
+        <div>
+          <label for="phone" class="block text-sm font-medium text-deep-blue mb-1">Phone</label>
+          <input type="tel" id="phone" name="phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-ocean-blue">
+        </div>
+        <div>
+          <label for="preferred_date" class="block text-sm font-medium text-deep-blue mb-1">Preferred Date</label>
+          <input type="date" id="preferred_date" name="preferred_date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-ocean-blue">
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-medium text-deep-blue mb-1">Message (Optional)</label>
+          <textarea id="message" name="message" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-ocean-blue"></textarea>
+        </div>
+        <button type="submit" class="w-full rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 py-3 transition-colors">
+          Submit Booking Request
+        </button>
+      </form>
     </div>
   </div>
-</section>
+</div>
+
+<!-- Toast Notifications Container -->
+<div id="toastContainer" class="fixed right-0 top-20 p-4 z-[9999] space-y-4"></div>
+
+<script>
+// Toast notification system
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  const bgColor = type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-ocean-blue';
+  
+  toast.className = `${bgColor} text-white p-4 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out max-w-md`;
+  toast.innerHTML = `
+    <div class="flex items-center">
+      <div class="flex-1">${message}</div>
+      <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+  `;
+  
+  document.getElementById('toastContainer').appendChild(toast);
+  
+  // Trigger animation
+  requestAnimationFrame(() => {
+    toast.style.transform = 'translateX(0)';
+  });
+  
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+    if (toast.parentElement) {
+      toast.style.transform = 'translateX(full)';
+      setTimeout(() => toast.remove(), 300);
+    }
+  }, 5000);
+}
+
+function scrollToInstructors() {
+  const instructorsSection = document.getElementById('instructorsList');
+  if (instructorsSection) {
+    instructorsSection.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+}
+
+function openBookingModal(instructorName) {
+  document.getElementById('selectedInstructor').value = instructorName;
+  document.getElementById('bookingModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeBookingModal() {
+  document.getElementById('bookingModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function viewCertificate(instructorName) {
+  // Create a sample certificate using a data URL
+  const sampleCertificate = `data:image/svg+xml;base64,${btoa(`
+    <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#f8f9fa"/>
+      <rect x="20" y="20" width="760" height="560" fill="white" stroke="#006994" stroke-width="2"/>
+      <text x="400" y="100" font-family="Arial" font-size="40" text-anchor="middle" fill="#006994">Professional Scuba Certification</text>
+      <text x="400" y="180" font-family="Arial" font-size="24" text-anchor="middle">This certifies that</text>
+      <text x="400" y="240" font-family="Arial" font-size="32" font-weight="bold" text-anchor="middle" fill="#006994">${instructorName}</text>
+      <text x="400" y="300" font-family="Arial" font-size="24" text-anchor="middle">is a certified</text>
+      <text x="400" y="360" font-family="Arial" font-size="32" font-weight="bold" text-anchor="middle" fill="#006994">Professional Scuba Instructor</text>
+      <text x="400" y="420" font-family="Arial" font-size="20" text-anchor="middle">Licensed to teach all levels of recreational diving</text>
+      <text x="200" y="500" font-family="Arial" font-size="20">Date: January 2024</text>
+      <text x="600" y="500" font-family="Arial" font-size="20">License: #SI-2024-${instructorName.slice(0,3).toUpperCase()}</text>
+    </svg>
+  `)}`;
+
+  // Create and show modal for certificate
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+  modal.innerHTML = `
+    <div class="bg-white rounded-xl max-w-4xl w-full p-6 relative">
+      <button onclick="this.parentElement.parentElement.remove()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <h3 class="text-2xl font-bold text-deep-blue mb-4">${instructorName}'s Certification</h3>
+      <div class="aspect-video bg-gray-100 rounded-lg overflow-hidden">
+        <img src="${sampleCertificate}" alt="${instructorName}'s Certificate" class="w-full h-full object-contain">
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  document.body.style.overflow = 'hidden';
+  
+  // Close modal when clicking outside
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.remove();
+      document.body.style.overflow = '';
+    }
+  });
+}
+
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const formData = new FormData(this);
+  
+  fetch('{% url "bookInstructor" %}', {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      showToast('Booking request submitted successfully! We will contact you shortly.', 'success');
+      closeBookingModal();
+      this.reset();
+    } else {
+      showToast('Error submitting booking request. Please try again.', 'error');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    showToast('An error occurred. Please try again later.', 'error');
+  });
+});
+
+// Set minimum date for the date picker
+document.getElementById('preferred_date').min = new Date().toISOString().split('T')[0];
+</script>
+
 {% endblock %}

@@ -1,5 +1,6 @@
 {% extends '../base.html' %}
 {% load static %}
+{% load course_filters %}
 
 {% block title %}Scuba Diving in Andaman – Explore the Best Diving Spots & Packages{% endblock %}
 
@@ -19,9 +20,9 @@
     <h1 class="text-4xl font-bold md:text-5xl lg:text-6xl mb-6">Dive Into a World of Adventure</h1>
     <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Discover the magic beneath the waves with our internationally certified scuba diving courses</p>
     <div class="flex flex-wrap justify-center gap-4">
-      <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-4 text-lg">
-        <a href="{% url 'coursesPage' %}">Explore Courses</a>
-      </button>
+      <a href="{% url 'coursesPage' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-4 text-lg">
+        Explore Courses
+      </a>
       <button onclick="openVideoPopup()" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-white text-white bg-transparent hover:bg-white hover:text-deep-blue px-8 py-4 text-lg">
         Watch Intro Video
       </button>
@@ -145,24 +146,32 @@
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Course Card 1 -->
+      {% for course in featured_courses %}
       <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
         <div class="relative h-48 overflow-hidden">
-          <img src="https://res.cloudinary.com/padi/image/upload/f_auto,q_90,w_auto,dpr_auto/v1743670865/CDN/commerce/60462-1B2C.jpg" alt="Open Water Diver" class="w-full h-full object-cover">
+          {% if course.featured_image %}
+          <img src="{{ course.featured_image.url }}" alt="{{ course.name }}" class="w-full h-full object-cover">
+          {% else %}
+          <img src="{% static 'images/default-course.jpg' %}" alt="{{ course.name }}" class="w-full h-full object-cover" onerror="this.src='https://res.cloudinary.com/padi/image/upload/f_auto,q_90,w_auto,dpr_auto/v1743670865/CDN/commerce/60462-1B2C.jpg'">
+          {% endif %}
           <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
           <div class="absolute bottom-4 left-4">
-            <span class="bg-coral text-white text-sm font-semibold px-3 py-1 rounded-full">Beginner</span>
+            <span class="bg-{% if course.difficulty_level == 'beginner' %}coral{% elif course.difficulty_level == 'intermediate' %}sea-green{% else %}ocean-blue{% endif %} text-white text-sm font-semibold px-3 py-1 rounded-full">
+              {{ course.get_difficulty_level_display }}
+            </span>
           </div>
         </div>
         <div class="p-6">
-          <h3 class="text-xl font-bold text-deep-blue mb-2">Open Water Diver</h3>
-          <p class="text-ocean-blue mb-4">Your first step into scuba diving. Learn the fundamentals and earn your certification.</p>
+          <h3 class="text-xl font-bold text-deep-blue mb-2">{{ course.name }}</h3>
+          <p class="text-ocean-blue mb-4">{{ course.short_description }}</p>
           <div class="flex justify-between items-center">
             <div>
-              <span class="text-sea-green font-bold">$399</span>
-              <span class="text-sm text-gray-500 ml-2">(3-4 days)</span>
+              <span class="text-sea-green font-bold">₹{{ course.price }}</span>
+              {% with mins=course.duration|default:1440 %}
+              <span class="text-sm text-gray-500 ml-2">({{ mins|floatformat:0|default:"1" }} mins)</span>
+              {% endwith %}
             </div>
-            <a href="{% url 'courseDetailPage' 'basic-scuba-diving-course' %}" class="text-sea-green hover:underline">
+            <a href="{% url 'courseDetailPage' course.slug %}" class="text-sea-green hover:underline">
               <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
                 Learn More
               </button>
@@ -170,64 +179,132 @@
           </div>
         </div>
       </div>
-      
-      <!-- Course Card 2 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-        <div class="relative h-48 overflow-hidden">
-          <img src="https://res.cloudinary.com/padi/image/upload/f_auto,q_90,w_auto,dpr_auto/v1701290031/CDN/commerce/advanced-open-water-1.jpg" alt="Advanced Open Water" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
-          <div class="absolute bottom-4 left-4">
-            <span class="bg-sea-green text-white text-sm font-semibold px-3 py-1 rounded-full">Intermediate</span>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-deep-blue mb-2">Advanced Open Water</h3>
-          <p class="text-ocean-blue mb-4">Expand your diving skills with five adventure dives including deep and navigation.</p>
-          <div class="flex justify-between items-center">
-            <div>
-              <span class="text-sea-green font-bold">$349</span>
-              <span class="text-sm text-gray-500 ml-2">(2-3 days)</span>
-            </div>
-            <a href="{% url 'courseDetailPage' 'basic-scuba-diving-course' %}" class="text-sea-green hover:underline">
-              <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
-                Learn More
-              </button>
-            </a>
-          </div>
-        </div>
+      {% empty %}
+      <div class="col-span-full text-center text-ocean-blue">
+        <p>No featured courses available at the moment. Check back soon!</p>
       </div>
-      
-      <!-- Course Card 3 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-        <div class="relative h-48 overflow-hidden">
-          <img src="https://res.cloudinary.com/padi/image/upload/f_auto,q_90,w_auto,dpr_auto/v1733734943/CDN/commerce/60464-1B2C-2.jpg" alt="Rescue Diver" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
-          <div class="absolute bottom-4 left-4">
-            <span class="bg-ocean-blue text-white text-sm font-semibold px-3 py-1 rounded-full">Advanced</span>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-deep-blue mb-2">Rescue Diver</h3>
-          <p class="text-ocean-blue mb-4">Learn to prevent and manage problems in the water, and become a more confident diver.</p>
-          <div class="flex justify-between items-center">
-            <div>
-              <span class="text-sea-green font-bold">$449</span>
-              <span class="text-sm text-gray-500 ml-2">(3-4 days)</span>
-            </div>
-            <a href="{% url 'courseDetailPage' 'basic-scuba-diving-course' %}" class="text-sea-green hover:underline">
-              <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
-                Learn More
-              </button>
-            </a>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
     
     <div class="text-center mt-12">
       <a href="{% url 'coursesPage' %}" class="text-sea-green hover:underline">
+        <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3">
+          View All Courses
+        </button>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Dive Locations Section -->
+<section class="py-16 bg-gradient-to-b from-wave to-white">
+  <div class="container mx-auto px-[5%]">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-deep-blue mb-4">Explore Our Dive Sites</h2>
+      <p class="text-ocean-blue max-w-2xl mx-auto">Discover the most breathtaking diving locations in the Andaman Islands</p>
+      </div>
+      
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for location in featured_locations %}
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="relative h-48 overflow-hidden">
+          {% if location.featured_image %}
+          <img src="{{ location.featured_image.url }}" alt="{{ location.name }}" class="w-full h-full object-cover">
+          {% else %}
+          <img src="{% static 'images/default-location.jpg' %}" alt="{{ location.name }}" class="w-full h-full object-cover" 
+               onerror="this.src='https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1470&auto=format&fit=crop'">
+          {% endif %}
+          <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
+          <div class="absolute bottom-4 left-4">
+            <span class="bg-ocean-blue text-white text-sm font-semibold px-3 py-1 rounded-full">
+              {{ location.depth_range_min }}-{{ location.depth_range_max }}m
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-deep-blue mb-2">{{ location.name }}</h3>
+          <p class="text-ocean-blue mb-4">{{ location.short_description }}</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-sm text-gray-500">{{ location.boat_ride_duration }} min boat ride</span>
+            </div>
+            <a href="{% url 'diveLocationDetail' location.slug %}" class="text-sea-green hover:underline">
+              <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
+                View Details
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-full text-center text-ocean-blue">
+        <p>No featured dive locations available at the moment. Check back soon!</p>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div class="text-center mt-12">
+      <a href="{% url 'diveLocationsPage' %}" class="text-sea-green hover:underline">
+        <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3">
+          Explore All Locations
+        </button>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Events Section -->
+<section class="py-16 bg-gradient-to-b from-white to-wave">
+  <div class="container mx-auto px-[5%]">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-deep-blue mb-4">Upcoming Events</h2>
+      <p class="text-ocean-blue max-w-2xl mx-auto">Join our exciting diving events and activities</p>
+      </div>
+      
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for event in featured_events %}
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="relative h-48 overflow-hidden">
+          {% if event.featured_image %}
+          <img src="{{ event.featured_image.url }}" alt="{{ event.name }}" class="w-full h-full object-cover">
+          {% else %}
+          <img src="{% static 'images/default-event.jpg' %}" alt="{{ event.name }}" class="w-full h-full object-cover"
+               onerror="this.src='https://images.unsplash.com/photo-1682687982501-1e58ab814714?q=80&w=1470&auto=format&fit=crop'">
+          {% endif %}
+          <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
+          <div class="absolute bottom-4 left-4">
+            <span class="bg-coral text-white text-sm font-semibold px-3 py-1 rounded-full">
+              {{ event.event_date|date:"M d, Y" }}
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-deep-blue mb-2">{{ event.name }}</h3>
+          <p class="text-ocean-blue mb-4">{{ event.short_description }}</p>
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-sea-green font-bold">₹{{ event.price }}</span>
+              <span class="text-sm text-gray-500 ml-2">({{ event.duration }} min)</span>
+            </div>
+            <a href="{% url 'eventDetail' event.slug %}" class="text-sea-green hover:underline">
+              <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
+                Learn More
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-full text-center text-ocean-blue">
+        <p>No upcoming events available at the moment. Check back soon!</p>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div class="text-center mt-12">
+      <a href="{% url 'eventsPage' %}" class="text-sea-green hover:underline">
       <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3">
-        View All Courses
+          View All Events
       </button>
       </a>
     </div>
@@ -290,93 +367,6 @@
   </div>
 </section>
 
-<!-- Dive Locations Section -->
-<section class="py-16 bg-gradient-to-b from-wave to-white">
-  <div class="container mx-auto px-[5%]">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-deep-blue mb-4">Our Spectacular Dive Locations</h2>
-      <p class="text-ocean-blue max-w-2xl mx-auto">Explore breathtaking underwater worlds at our carefully selected dive sites</p>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Location 1 -->
-      <div class="relative rounded-xl overflow-hidden shadow-lg h-96 group">
-        <img src="https://img.freepik.com/premium-photo/underwater-coral-reef-with-fishes_488220-28315.jpg" alt="Coral Reef" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-        <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 p-6 text-white">
-          <h3 class="text-2xl font-bold mb-2">Tribe gate</h3>
-          <p class="mb-4">Beautiful dive site with good amount of table corals, nudibranch and sea anemones etc</p>
-          <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span>5 minutes boat ride</span>
-          </div>
-          <div class="flex items-center mt-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            <span>Depth: 5-12meters</span>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Location 2 -->
-      <div class="relative rounded-xl overflow-hidden shadow-lg h-96 group">
-        <img src="https://img.freepik.com/premium-photo/sunken-ship-underwater_488220-28312.jpg" alt="Shipwreck" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-        <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 p-6 text-white">
-          <h3 class="text-2xl font-bold mb-2">Red pillar</h3>
-          <p class="mb-4">Beautiful pillars which have a lot of barrel sponge, sea horse, fan coral etc</p>
-          <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span>5 minutes boat ride</span>
-          </div>
-          <div class="flex items-center mt-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            <span>Depth: 5-14 meters</span>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Location 3 -->
-      <div class="relative rounded-xl overflow-hidden shadow-lg h-96 group">
-        <img src="https://img.freepik.com/premium-photo/underwater-cave-with-light_488220-28314.jpg" alt="Underwater Cave" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-        <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 p-6 text-white">
-          <h3 class="text-2xl font-bold mb-2">Lighthouse</h3>
-          <p class="mb-4">Beautiful, colourful corals with lots of fish life and wonderful visibility </p>
-          <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            <span>15 minutes boat ride</span>
-          </div>
-          <div class="flex items-center mt-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            <span>Depth: 5-15 meters</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="text-center mt-12">
-      <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-8 py-3">
-        View All Dive Sites
-      </button>
-    </div>
-  </div>
-</section>
-
 <!-- Testimonials Section -->
 <section class="py-16 bg-white">
   <div class="container mx-auto px-[5%]">
@@ -385,187 +375,7 @@
       <p class="text-ocean-blue max-w-2xl mx-auto">Hear from certified divers who started their journey with us</p>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Testimonial 1 -->
-      <div class="bg-wave p-8 rounded-xl shadow-md">
-        <div class="flex items-center mb-4">
-          <div class="flex-shrink-0 mr-4">
-            <img src="https://img.freepik.com/free-photo/portrait-smiling-charming-young-man-grey-t-shirt-standing-against-plain-background_23-2148213406.jpg" alt="Michael" class="w-12 h-12 rounded-full object-cover">
-          </div>
-          <div>
-            <h4 class="font-bold text-deep-blue">Michael R.</h4>
-            <div class="flex text-yellow-400">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <p class="text-ocean-blue italic">"The Open Water course was incredible! My instructor was patient and thorough, making sure I understood every concept before moving forward. The small group size meant I got plenty of attention. Now I'm hooked and already planning my Advanced course!"</p>
-      </div>
-      
-      <!-- Testimonial 2 -->
-      <div class="bg-wave p-8 rounded-xl shadow-md">
-        <div class="flex items-center mb-4">
-          <div class="flex-shrink-0 mr-4">
-            <img src="https://img.freepik.com/free-photo/young-beautiful-woman-pink-warm-sweater-natural-look-smiling-portrait-isolated-long-hair_285396-896.jpg" alt="Sarah" class="w-12 h-12 rounded-full object-cover">
-          </div>
-          <div>
-            <h4 class="font-bold text-deep-blue">Sarah L.</h4>
-            <div class="flex text-yellow-400">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <p class="text-ocean-blue italic">"As someone who was initially nervous about diving, the team made me feel completely at ease. The Rescue Diver course was challenging but so rewarding. The instructors' professionalism and attention to safety were outstanding."</p>
-      </div>
-      
-      <!-- Testimonial 3 -->
-      <div class="bg-wave p-8 rounded-xl shadow-md">
-        <div class="flex items-center mb-4">
-          <div class="flex-shrink-0 mr-4">
-            <img src="https://img.freepik.com/free-photo/handsome-confident-smiling-man-with-hands-crossed-chest_176420-18743.jpg" alt="James" class="w-12 h-12 rounded-full object-cover">
-          </div>
-          <div>
-            <h4 class="font-bold text-deep-blue">James T.</h4>
-            <div class="flex text-yellow-400">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <p class="text-ocean-blue italic">"I've completed three courses with this school and each one has been fantastic. The dive sites they choose are spectacular, and their commitment to marine conservation is impressive. They've turned me into a confident, responsible diver."</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Upcoming Events Section -->
-<section class="py-16 bg-gradient-to-b from-wave to-white">
-  <div class="container mx-auto px-[5%]">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-deep-blue mb-4">Upcoming Dive Events</h2>
-      <p class="text-ocean-blue max-w-2xl mx-auto">Join our community for special diving experiences and conservation activities</p>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Event 1 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div class="relative h-48 overflow-hidden">
-          <img src="https://img.freepik.com/premium-photo/underwater-coral-reef-with-fishes_488220-28315.jpg" alt="Coral Planting" class="w-full h-full object-cover">
-          <div class="absolute top-4 right-4 bg-coral text-white text-sm font-semibold px-3 py-1 rounded-full">June 15</div>
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-deep-blue mb-2">Coral Reef Restoration</h3>
-          <p class="text-ocean-blue mb-4">Join our marine biologists for a day of coral planting and reef conservation.</p>
-          <div class="flex justify-between items-center">
-            <div class="flex items-center text-sm text-ocean-blue">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>Blue Bay</span>
-            </div>
-            <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
-              Register
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Event 2 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div class="relative h-48 overflow-hidden">
-          <img src="https://img.freepik.com/premium-photo/night-diving-with-torch_488220-28313.jpg" alt="Night Dive" class="w-full h-full object-cover">
-          <div class="absolute top-4 right-4 bg-sea-green text-white text-sm font-semibold px-3 py-1 rounded-full">June 22</div>
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-deep-blue mb-2">Full Moon Night Dive</h3>
-          <p class="text-ocean-blue mb-4">Experience the magic of bioluminescence on our special guided night dive.</p>
-          <div class="flex justify-between items-center">
-            <div class="flex items-center text-sm text-ocean-blue">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>Moonlight Cove</span>
-            </div>
-            <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
-              Register
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Event 3 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div class="relative h-48 overflow-hidden">
-          <img src="https://img.freepik.com/premium-photo/underwater-photography-course_488220-28316.jpg" alt="Underwater Photography" class="w-full h-full object-cover">
-          <div class="absolute top-4 right-4 bg-ocean-blue text-white text-sm font-semibold px-3 py-1 rounded-full">July 5-7</div>
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-bold text-deep-blue mb-2">Underwater Photography Workshop</h3>
-          <p class="text-ocean-blue mb-4">3-day intensive workshop with professional underwater photographer Mark Waters.</p>
-          <div class="flex justify-between items-center">
-            <div class="flex items-center text-sm text-ocean-blue">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <span>Dive Center</span>
-            </div>
-            <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">
-              Register
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="text-center mt-12">
-      <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3">
-        View All Events
-      </button>
-    </div>
+    <iframe src='https://widgets.sociablekit.com/google-reviews/iframe/25558141' frameborder='0' width='100%' height='1000'></iframe>
   </div>
 </section>
 
@@ -578,7 +388,20 @@
     </div>
     
     <div class="max-w-3xl mx-auto">
-      <!-- FAQ Item 1 -->
+      {% for faq in featured_faqs %}
+      <div class="mb-6 {% if not forloop.last %}border-b border-ocean-blue/20 pb-6{% endif %}">
+        <button class="faq-toggle flex w-full items-center justify-between text-left group">
+          <h3 class="text-lg font-semibold text-deep-blue group-hover:text-coral">{{ faq.question }}</h3>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue group-hover:text-coral transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="faq-content mt-4 text-ocean-blue hidden">
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+      {% empty %}
+      <!-- Show default FAQs if no FAQs in database -->
       <div class="mb-6 border-b border-ocean-blue/20 pb-6">
         <button class="faq-toggle flex w-full items-center justify-between text-left group">
           <h3 class="text-lg font-semibold text-deep-blue group-hover:text-coral">How old do I need to be to learn scuba diving?</h3>
@@ -590,64 +413,13 @@
           <p>The minimum age is 10 years old for the Junior Open Water Diver certification. From age 15, divers can earn the standard Open Water Diver certification. There's no maximum age as long as you're in good health.</p>
         </div>
       </div>
-      
-      <!-- FAQ Item 2 -->
-      <div class="mb-6 border-b border-ocean-blue/20 pb-6">
-        <button class="faq-toggle flex w-full items-center justify-between text-left group">
-          <h3 class="text-lg font-semibold text-deep-blue group-hover:text-coral">Do I need to know how to swim to scuba dive?</h3>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue group-hover:text-coral transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        <div class="faq-content mt-4 text-ocean-blue hidden">
-          <p>Basic swimming skills are required. You'll need to swim 200 meters/yards (or 300 meters/yards in mask, fins and snorkel) without stopping, and float or tread water for 10 minutes. We offer swimming lessons if you need to improve your skills before starting the course.</p>
-        </div>
-      </div>
-      
-      <!-- FAQ Item 3 -->
-      <div class="mb-6 border-b border-ocean-blue/20 pb-6">
-        <button class="faq-toggle flex w-full items-center justify-between text-left group">
-          <h3 class="text-lg font-semibold text-deep-blue group-hover:text-coral">How long does it take to get certified?</h3>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue group-hover:text-coral transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        <div class="faq-content mt-4 text-ocean-blue hidden">
-          <p>The Open Water Diver course typically takes 3-4 days, including classroom sessions, confined water (pool) training, and open water dives. We offer flexible scheduling including weekend courses and eLearning options to complete the theory at your own pace.</p>
-        </div>
-      </div>
-      
-      <!-- FAQ Item 4 -->
-      <div class="mb-6 border-b border-ocean-blue/20 pb-6">
-        <button class="faq-toggle flex w-full items-center justify-between text-left group">
-          <h3 class="text-lg font-semibold text-deep-blue group-hover:text-coral">Is scuba diving dangerous?</h3>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue group-hover:text-coral transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        <div class="faq-content mt-4 text-ocean-blue hidden">
-          <p>When performed correctly following established guidelines and with proper training, scuba diving has an excellent safety record. Our courses emphasize safety procedures, and we maintain small class sizes to ensure proper supervision. Most diving accidents result from ignoring training or pushing limits.</p>
-        </div>
-      </div>
-      
-      <!-- FAQ Item 5 -->
-      <div class="mb-6">
-        <button class="faq-toggle flex justify-between items-center w-full text-left group">
-          <h3 class="text-lg font-bold text-deep-blue group-hover:text-coral">How deep can I dive with an Open Water certification?</h3>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-ocean-blue group-hover:text-coral transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        <div class="faq-content mt-4 text-ocean-blue hidden">
-          <p>The maximum recommended depth for Open Water Divers is 18 meters (60 feet). After completing the Advanced Open Water course, you'll be certified to dive to 30 meters (100 feet). Always dive within your training and experience limits.</p>
-        </div>
-      </div>
+      {% endfor %}
     </div>
     
     <div class="text-center mt-12">
-      <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-8 py-3">
+      <a href="{% url 'faqPage' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-8 py-3">
         View All FAQs
-      </button>
+      </a>
     </div>
   </div>
 </section>
@@ -658,15 +430,49 @@
     
     faqToggles.forEach(toggle => {
       toggle.addEventListener('click', function() {
-        // Toggle the answer visibility
+        // Toggle the answer visibility with animation
         const answer = this.nextElementSibling;
-        answer.classList.toggle('hidden');
-        
-        // Rotate the chevron icon
         const icon = this.querySelector('svg');
-        icon.classList.toggle('rotate-180');
+        
+        if (answer.classList.contains('hidden')) {
+          // Show the answer
+          answer.classList.remove('hidden');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          icon.classList.add('rotate-180');
+        } else {
+          // Hide the answer
+          answer.style.maxHeight = '0px';
+          icon.classList.remove('rotate-180');
+          setTimeout(() => {
+            answer.classList.add('hidden');
+          }, 300);
+        }
+        
+        // Close other FAQs
+        faqToggles.forEach(otherToggle => {
+          if (otherToggle !== toggle) {
+            const otherAnswer = otherToggle.nextElementSibling;
+            const otherIcon = otherToggle.querySelector('svg');
+            otherAnswer.classList.add('hidden');
+            otherAnswer.style.maxHeight = '0px';
+            otherIcon.classList.remove('rotate-180');
+          }
+        });
       });
     });
   });
 </script>
+
+<style>
+  .faq-content {
+    transition: max-height 0.3s ease-out;
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  .faq-content:not(.hidden) {
+    max-height: 500px;
+  }
+</style>
+
 {% endblock %}

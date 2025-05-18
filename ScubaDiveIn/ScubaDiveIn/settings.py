@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config, Csv
+from .timeout_settings import *  # Import all timeout settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,6 +69,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'course_filters': 'mainSite.templatetags.course_filters',
+            }
         },
     },
 ]
@@ -85,6 +89,18 @@ DATABASES = {
     }
 }
 
+# Timeout configurations
+DATABASES['default']['CONN_MAX_AGE'] = DB_CONNECT_TIMEOUT
+DATABASES['default']['OPTIONS'] = {
+    'timeout': DB_CONNECT_TIMEOUT,
+}
+
+# Session and cache settings
+SESSION_COOKIE_AGE = SESSION_COOKIE_AGE  # From timeout_settings
+CACHE_TIMEOUT = CACHE_TIMEOUT  # From timeout_settings
+
+# API timeout settings
+RAZORPAY_TIMEOUT = RAZORPAY_API_TIMEOUT  # From timeout_settings
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -160,3 +176,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='info@scubadivein.in')
 
 # Base URL configuration
 BASE_URL = 'http://127.0.0.1:8000'
+
+# Media files (User uploaded content)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

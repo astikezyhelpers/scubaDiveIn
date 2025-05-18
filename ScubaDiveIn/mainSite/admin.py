@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import RazorpayPayment, ServiceCategory, DivingService, ServiceImage, UserMessage
+from .models import RazorpayPayment, ServiceCategory, DivingService, ServiceImage, UserMessage, DiveLocation, Event, NewsletterSubscription, FAQ, InstructorBooking
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils import timezone
@@ -9,6 +9,14 @@ admin.site.register(RazorpayPayment)
 admin.site.register(ServiceCategory)
 admin.site.register(DivingService)
 admin.site.register(ServiceImage)
+
+@admin.register(DiveLocation)
+class DiveLocationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'depth_range_min', 'depth_range_max', 'boat_ride_duration', 'is_featured', 'is_active')
+    list_filter = ('is_featured', 'is_active')
+    search_fields = ('name', 'short_description', 'description')
+    prepopulated_fields = {'slug': ('name',)}
+    ordering = ('name',)
 
 @admin.register(UserMessage)
 class UserMessageAdmin(admin.ModelAdmin):
@@ -69,3 +77,69 @@ class UserMessageAdmin(admin.ModelAdmin):
             obj.replied_at = timezone.now()
             obj.status = 'replied'
         super().save_model(request, obj, form, change)
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'event_date', 'start_time', 'location', 'price', 'is_featured', 'is_active')
+    list_filter = ('is_featured', 'is_active', 'event_date', 'location')
+    search_fields = ('name', 'short_description', 'description')
+    prepopulated_fields = {'slug': ('name',)}
+    ordering = ('event_date', 'start_time')
+
+@admin.register(NewsletterSubscription)
+class NewsletterSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('email', 'subscribed_at', 'is_active')
+    list_filter = ('is_active', 'subscribed_at')
+    search_fields = ('email',)
+    ordering = ('-subscribed_at',)
+    date_hierarchy = 'subscribed_at'
+    list_per_page = 50
+    
+    actions = ['mark_active', 'mark_inactive']
+    
+    def mark_active(self, request, queryset):
+        queryset.update(is_active=True)
+    mark_active.short_description = "Mark selected subscriptions as active"
+    
+    def mark_inactive(self, request, queryset):
+        queryset.update(is_active=False)
+    mark_inactive.short_description = "Mark selected subscriptions as inactive"
+
+@admin.register(FAQ)
+class FAQAdmin(admin.ModelAdmin):
+    list_display = ('question', 'category', 'order', 'is_active', 'created_at')
+    list_filter = ('category', 'is_active', 'created_at')
+    search_fields = ('question', 'answer', 'category')
+    ordering = ('order', 'created_at')
+    list_editable = ('order', 'is_active')
+    list_per_page = 20
+    
+    fieldsets = (
+        (None, {
+            'fields': ('question', 'answer')
+        }),
+        ('Organization', {
+            'fields': ('category', 'order', 'is_active'),
+            'classes': ('collapse',)
+        })
+    )
+
+@admin.register(InstructorBooking)
+class InstructorBookingAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'phone', 'instructor', 'preferred_date', 'status', 'created_at')
+    list_filter = ('status', 'created_at', 'instructor')
+    search_fields = ('name', 'email', 'phone', 'instructor')
+    ordering = ('-created_at',)
+    readonly_fields = ('created_at',)
+    
+    fieldsets = (
+        ('Personal Information', {
+            'fields': ('name', 'email', 'phone')
+        }),
+        ('Booking Details', {
+            'fields': ('instructor', 'preferred_date', 'message')
+        }),
+        ('Status Information', {
+            'fields': ('status', 'created_at')
+        }),
+    )

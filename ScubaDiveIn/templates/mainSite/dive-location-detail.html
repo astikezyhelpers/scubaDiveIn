@@ -1,0 +1,134 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}{{ location.name }} - Dive Site in Andaman{% endblock %}
+
+{% block desription %}{{ location.short_description }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative h-[60vh] flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    {% if location.featured_image %}
+    <img src="{{ location.featured_image.url }}" alt="{{ location.name }}" class="w-full h-full object-cover">
+    {% else %}
+    <img src="{% static 'images/default-location.jpg' %}" alt="{{ location.name }}" class="w-full h-full object-cover" onerror="this.src='https://img.freepik.com/premium-photo/underwater-coral-reef-with-fishes_488220-28315.jpg'">
+    {% endif %}
+    <div class="absolute inset-0 bg-deep-blue opacity-50"></div>
+  </div>
+  <div class="container mx-auto px-[5%] relative z-10 text-center text-white">
+    <h1 class="text-4xl font-bold md:text-5xl lg:text-6xl mb-6">{{ location.name }}</h1>
+    <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">{{ location.short_description }}</p>
+  </div>
+</section>
+
+<!-- Location Details -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-[5%]">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Main Content -->
+      <div class="lg:col-span-2">
+        <div class="prose max-w-none">
+          <h2 class="text-3xl font-bold text-deep-blue mb-6">About This Location</h2>
+          <div class="text-ocean-blue">
+            {{ location.description|linebreaks }}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <div class="bg-wave rounded-xl p-6 shadow-lg">
+          <h3 class="text-xl font-bold text-deep-blue mb-4">Location Details</h3>
+          <div class="space-y-4">
+            <div class="flex items-center text-ocean-blue">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{{ location.boat_ride_duration }} minutes boat ride</span>
+            </div>
+            <div class="flex items-center text-ocean-blue">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span>Depth Range: {{ location.depth_range_min }}-{{ location.depth_range_max }} meters</span>
+            </div>
+          </div>
+          
+          <div class="mt-8">
+            <h4 class="text-lg font-semibold text-deep-blue mb-3">Best For:</h4>
+            <ul class="space-y-2 text-ocean-blue">
+              {% if location.depth_range_max <= 12 %}
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-sea-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Beginner Divers
+              </li>
+              {% endif %}
+              {% if location.depth_range_max > 12 and location.depth_range_max <= 30 %}
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-sea-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Advanced Divers
+              </li>
+              {% endif %}
+              {% if location.depth_range_max > 30 %}
+              <li class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-sea-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Technical Divers
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+          
+          <div class="mt-8">
+            <a href="{% url 'coursesPage' %}" class="block w-full">
+              <button class="w-full rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 py-3">
+                Book a Dive Course
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Locations -->
+<section class="py-16 bg-wave">
+  <div class="container mx-auto px-[5%]">
+    <h2 class="text-3xl font-bold text-deep-blue mb-8 text-center">Other Dive Sites You Might Like</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for other_location in locations|slice:":3" %}
+        {% if other_location != location %}
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+          <div class="relative h-48 overflow-hidden">
+            {% if other_location.featured_image %}
+            <img src="{{ other_location.featured_image.url }}" alt="{{ other_location.name }}" class="w-full h-full object-cover">
+            {% else %}
+            <img src="{% static 'images/default-location.jpg' %}" alt="{{ other_location.name }}" class="w-full h-full object-cover" onerror="this.src='https://img.freepik.com/premium-photo/underwater-coral-reef-with-fishes_488220-28315.jpg'">
+            {% endif %}
+            <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-deep-blue mb-2">{{ other_location.name }}</h3>
+            <p class="text-ocean-blue mb-4">{{ other_location.short_description }}</p>
+            <div class="mt-4">
+              <a href="{% url 'diveLocationDetail' other_location.slug %}" class="block w-full">
+                <button class="w-full rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2">
+                  Learn More
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %} 

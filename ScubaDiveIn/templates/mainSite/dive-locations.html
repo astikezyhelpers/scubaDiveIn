@@ -1,0 +1,69 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Dive Locations in Andaman - Explore Our Beautiful Dive Sites{% endblock %}
+
+{% block desription %}Discover the most beautiful dive sites in Andaman. From shallow coral reefs to deep-sea adventures, find the perfect spot for your next dive.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative h-[40vh] flex items-center justify-center overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <img src="https://img.freepik.com/premium-photo/underwater-coral-reef-with-fishes_488220-28315.jpg" alt="Dive Locations" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-deep-blue opacity-50"></div>
+  </div>
+  <div class="container mx-auto px-[5%] relative z-10 text-center text-white">
+    <h1 class="text-4xl font-bold md:text-5xl lg:text-6xl mb-6">Our Dive Locations</h1>
+    <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Explore the most beautiful dive sites in the Andaman Islands</p>
+  </div>
+</section>
+
+<!-- Dive Locations Grid -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-[5%]">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for location in locations %}
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div class="relative h-48 overflow-hidden">
+          {% if location.featured_image %}
+          <img src="{{ location.featured_image.url }}" alt="{{ location.name }}" class="w-full h-full object-cover">
+          {% else %}
+          <img src="{% static 'images/default-location.jpg' %}" alt="{{ location.name }}" class="w-full h-full object-cover" onerror="this.src='https://img.freepik.com/premium-photo/underwater-coral-reef-with-fishes_488220-28315.jpg'">
+          {% endif %}
+          <div class="absolute inset-0 bg-gradient-to-t from-deep-blue/80 to-transparent"></div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-deep-blue mb-2">{{ location.name }}</h3>
+          <p class="text-ocean-blue mb-4">{{ location.short_description }}</p>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center text-ocean-blue">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{{ location.boat_ride_duration }} minutes boat ride</span>
+            </div>
+            <div class="flex items-center text-ocean-blue">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span>Depth: {{ location.depth_range_min }}-{{ location.depth_range_max }} meters</span>
+            </div>
+          </div>
+          <div class="mt-6">
+            <a href="{% url 'diveLocationDetail' location.slug %}" class="block w-full">
+              <button class="w-full rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2">
+                Explore Location
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-span-full text-center text-ocean-blue">
+        <p>No dive locations available at the moment. Check back soon!</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %} 
