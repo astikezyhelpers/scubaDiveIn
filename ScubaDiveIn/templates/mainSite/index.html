@@ -169,9 +169,7 @@
           <div class="flex justify-between items-center">
             <div>
               <span class="text-sea-green font-bold">₹{{ course.price }}</span>
-              {% with mins=course.duration|default:1440 %}
-              <span class="text-sm text-gray-500 ml-2">({{ mins|floatformat:0|default:"1" }} mins)</span>
-              {% endwith %}
+              <span class="text-sm text-gray-500 ml-2">({{ course.get_formatted_duration }})</span>
             </div>
             <a href="{% url 'courseDetailPage' course.slug %}" class="text-sea-green hover:underline">
               <button class="rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue text-ocean-blue bg-white hover:bg-ocean-blue hover:text-white px-4 py-2 text-sm">

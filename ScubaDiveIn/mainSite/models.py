@@ -31,33 +31,108 @@ class DivingService(models.Model):
         ('advanced', 'Advanced'),
     )
     
+    DURATION_UNIT_CHOICES = (
+        ('minutes', 'Minutes'),
+        ('hours', 'Hours'),
+        ('days', 'Days'),
+    )
+    
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(unique=True, db_index=True)
     category = models.ForeignKey(ServiceCategory, on_delete=models.CASCADE, related_name='services')
     short_description = models.CharField(max_length=255)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2, db_index=True)
-    duration = models.PositiveIntegerField(help_text="Duration in minutes")
-    max_participants = models.PositiveIntegerField(default=10)
-    difficulty_level = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, default='beginner', db_index=True)
-    included_items = models.TextField(blank=True, help_text="Items included in the service, one per line")
-    requirements = models.TextField(blank=True, help_text="Requirements for this service, one per line")
+    price = models.DecimalField(max_digits=10, decimal_places=2, db_index=True, help_text="Base price or starting price")
+    duration = models.PositiveIntegerField(help_text="Base duration value")
+    duration_unit = models.CharField(max_length=10, choices=DURATION_UNIT_CHOICES, default='minutes', help_text="Unit for the duration")
+    max_participants = models.PositiveIntegerField(help_text="Maximum number of participants", default=4)
+    difficulty_level = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, default='beginner')
+    included_items = models.TextField(blank=True, help_text="Base items included in the service, one per line")
+    requirements = models.TextField(blank=True, help_text="Base requirements for this service, one per line")
     featured_image = ImageKitField(folder_name='service_images', max_length=500, blank=True, null=True)
     is_featured = models.BooleanField(default=False, db_index=True)
     is_active = models.BooleanField(default=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
-    def __str__(self):
-        return f"{self.name} - ₹{self.price}"
-    
+    variations = models.JSONField(blank=True, null=True, help_text='Course variations stored as JSON. Format: [{"id": "str", "name": "str", "price": float, "duration": int, "max_participants": int}]')
+
+    def has_variations(self):
+        """Check if the service has any variations"""
+        return bool(self.variations)
+
+    def get_price_range(self):
+        """Get the price range for the service including variations"""
+        if not self.variations:
+            return {'min_price': self.price, 'max_price': self.price}
+        
+        prices = [float(var['price']) for var in self.variations]
+        prices.append(float(self.price))  # Include base price
+        return {
+            'min_price': min(prices),
+            'max_price': max(prices)
+        }
+
+    def get_variation_by_id(self, variation_id):
+        """Get a specific variation by its ID"""
+        if not self.variations:
+            return None
+        
+        for variation in self.variations:
+            if str(variation['id']) == str(variation_id):
+                return variation
+        return None
+        
+    def get_formatted_duration(self, value=None, unit=None):
+        """Get the duration formatted with the appropriate unit
+        
+        Args:
+            value (int, optional): Duration value. Defaults to self.duration.
+            unit (str, optional): Duration unit. Defaults to self.duration_unit.
+            
+        Returns:
+            str: Formatted duration string with unit
+        """
+        duration = value if value is not None else self.duration
+        duration_unit = unit if unit is not None else self.duration_unit
+        
+        if duration_unit == 'hours':
+            if duration == 1:
+                return f"{duration} hour"
+            return f"{duration} hours"
+        elif duration_unit == 'days':
+            if duration == 1:
+                return f"{duration} day"
+            return f"{duration} days"
+        else:  # minutes is the default
+            return f"{duration} minutes"
+            
+    def get_variation_formatted_duration(self, variation):
+        """Get the formatted duration for a variation
+        
+        Args:
+            variation (dict): Variation dictionary with duration
+            
+        Returns:
+            str: Formatted duration string with unit
+        """
+        # If the variation has a duration, use it, otherwise use the base duration
+        duration = variation.get('duration', self.duration)
+        
+        # If the variation has a duration_unit, use it, otherwise use the base duration_unit
+        duration_unit = variation.get('duration_unit', self.duration_unit)
+        
+        return self.get_formatted_duration(duration, duration_unit)
+
     class Meta:
-        ordering = ['category', 'name']
-        indexes = [
-            models.Index(fields=['category', 'name']),
-            models.Index(fields=['is_featured', 'is_active']),
-            models.Index(fields=['difficulty_level']),
-        ]
+        ordering = ['name']
+        verbose_name = 'Diving Service'
+        verbose_name_plural = 'Diving Services'
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('courseDetailPage', args=[self.slug])
 
 class ServiceImage(models.Model):
     """Additional images for services"""

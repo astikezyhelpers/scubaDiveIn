@@ -1,7 +1,10 @@
 from django import forms
-from .models import UserMessage, InstructorBooking
 from django.core.validators import RegexValidator
 from datetime import datetime
+from .models import (
+    UserMessage, InstructorBooking, DivingService, 
+    ServiceImage, ServiceCategory
+)
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -20,10 +23,36 @@ class ContactForm(forms.ModelForm):
                 'class': 'rounded-full flex size-full py-2 align-middle transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 border-2 border-ocean-blue/20 bg-white min-h-11 px-3',
                 'placeholder': 'Subject (optional)'
             }),
-            'message': forms.Textarea(attrs={
-                'class': 'flex w-full border-2 border-ocean-blue/20 bg-white p-3 placeholder:text-ocean-blue/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 min-h-[11.25rem] overflow-auto rounded-lg',
-                'placeholder': 'Type your message...'
-            })
+            'message': forms.Textarea(attrs={'rows': 4}),
+        }
+
+class DivingServiceForm(forms.ModelForm):
+    class Meta:
+        model = DivingService
+        fields = '__all__'
+        widgets = {
+            'featured_image': forms.FileInput(),
+            'description': forms.Textarea(attrs={'rows': 6}),
+            'included_items': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter items one per line'}),
+            'requirements': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter requirements one per line'}),
+            'variations': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter variations in JSON format'}),
+        }
+
+class ServiceImageForm(forms.ModelForm):
+    class Meta:
+        model = ServiceImage
+        fields = '__all__'
+        widgets = {
+            'image': forms.FileInput(),
+        }
+
+class ServiceCategoryForm(forms.ModelForm):
+    class Meta:
+        model = ServiceCategory
+        fields = '__all__'
+        widgets = {
+            'image': forms.FileInput(),
+            'description': forms.Textarea(attrs={'rows': 4}),
         }
 
 class InstructorBookingForm(forms.ModelForm):
@@ -32,10 +61,7 @@ class InstructorBookingForm(forms.ModelForm):
         message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
     )
     phone = forms.CharField(validators=[phone_regex], max_length=17)
-    preferred_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date', 'min': datetime.now().date().isoformat()})
-    )
-
+    
     class Meta:
         model = InstructorBooking
         fields = ['name', 'email', 'phone', 'preferred_date', 'message', 'instructor']
@@ -43,6 +69,12 @@ class InstructorBookingForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Your Name'}),
             'email': forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Your Email'}),
             'phone': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Your Phone Number'}),
-            'message': forms.Textarea(attrs={'class': 'form-textarea', 'placeholder': 'Any specific requirements or questions?', 'rows': 4}),
-            'instructor': forms.HiddenInput()
-        } 
+            'preferred_date': forms.DateInput(attrs={'type': 'date', 'min': datetime.now().date().isoformat()}),
+            'message': forms.Textarea(attrs={'rows': 4}),
+        }
+
+    def clean_preferred_date(self):
+        date = self.cleaned_data.get('preferred_date')
+        if date and date < datetime.now().date():
+            raise forms.ValidationError("The preferred date cannot be in the past.")
+        return date 

@@ -81,8 +81,12 @@
           </p>
           <div class="flex justify-between items-center">
             <div>
-              <span class="text-sea-green font-bold">₹{{ course.price }}</span>
-              <span class="text-sm text-gray-500 ml-2">({{ course.duration }} minutes)</span>
+              {% if course.min_price == course.max_price %}
+                <span class="text-sea-green font-bold">₹{{ course.min_price }}</span>
+              {% else %}
+                <span class="text-sea-green font-bold">₹{{ course.min_price }} - ₹{{ course.max_price }}</span>
+              {% endif %}
+              <span class="text-sm text-gray-500 ml-2">({{ course.get_formatted_duration }})</span>
             </div>
             <a href="{% url 'courseDetailPage' course.slug %}">
               <button

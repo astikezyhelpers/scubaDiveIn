@@ -69,7 +69,7 @@
           <div class="space-y-4">
             <div>
               <h3 class="font-semibold text-ocean-blue">Duration</h3>
-              <p class="text-base text-deep-blue">{{ course.duration }} minutes</p>
+              <p class="text-base text-deep-blue course-duration-value">{{ course.get_formatted_duration }}</p>
             </div>
             <div>
               <h3 class="font-semibold text-ocean-blue">Difficulty Level</h3>
@@ -77,12 +77,34 @@
             </div>
             <div>
               <h3 class="font-semibold text-ocean-blue">Max Participants</h3>
-              <p class="text-base text-deep-blue">{{ course.max_participants }} people</p>
+              <p class="text-base text-deep-blue course-max-participants-value">{{ course.max_participants }} people</p>
             </div>
+
+            {% if has_variations %}
+            <div>
+              <h3 class="font-semibold text-ocean-blue">Course Options</h3>
+              <select id="courseVariation" class="w-full mt-2 px-4 py-2 border border-ocean-blue/20 rounded-lg focus:ring-2 focus:ring-ocean-blue focus:border-ocean-blue">
+                {% for variation in variations %}
+                <option 
+                  value="{{ variation.id }}" 
+                  data-price="{{ variation.price }}" 
+                  data-duration="{{ variation.duration|default:course.duration }}" 
+                  data-duration-unit="{{ variation.duration_unit|default:course.duration_unit }}"
+                  data-max-participants="{{ variation.max_participants|default:course.max_participants }}"
+                  data-formatted-duration="{{ variation.formatted_duration|default:course.get_formatted_duration }}"
+                  {% if forloop.first %}selected{% endif %}
+                >
+                  {{ variation.name }} - ₹{{ variation.price }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            {% else %}
             <div>
               <h3 class="font-semibold text-ocean-blue">Price</h3>
               <p class="text-base text-deep-blue">₹{{ course.price }}</p>
             </div>
+            {% endif %}
             
             <div class="pt-4 space-y-4">
               {% if user.is_authenticated %}
@@ -97,12 +119,12 @@
                     <span>View My Bookings</span>
                   </a>
                 {% else %}
-                  <a href="{% url 'initiate_payment' %}?service_id={{ course.id }}" class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
+                  <a href="{% url 'initiate_payment' %}?service_id={{ course.id }}" {% if has_variations %}id="bookNowLink"{% endif %} class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
                     <span>Book Now</span>
                   </a>
                 {% endif %}
               {% else %}
-                <a href="{% url 'initiate_payment' %}?service_id={{ course.id }}" class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
+                <a href="{% url 'guest_checkout' %}?service_id={{ course.id }}" {% if has_variations %}id="guestBookNowLink"{% endif %} class="w-full rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-6 py-3">
                   <span>Book Now</span>
                 </a>
               {% endif %}
@@ -126,4 +148,90 @@
         </div>
     {% endfor %}
 </div>
+
+<!-- Include JavaScript directly in the content block -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const variationSelect = document.getElementById('courseVariation');
+  const bookNowLink = document.getElementById('bookNowLink');
+  const guestBookNowLink = document.getElementById('guestBookNowLink');
+  const baseServiceId = '{{ course.id }}';
+  const baseServicePrice = '{{ course.price }}';
+  
+  // Robust way to get boolean from Django template
+  const hasVariationsStr = "{{ has_variations|yesno:'true,false,false' }}";
+  const hasVariations = (hasVariationsStr === "true");
+
+  function updateLinks() {
+    let targetUrlParams = new URLSearchParams();
+    targetUrlParams.set('service_id', baseServiceId);
+
+    if (hasVariations && variationSelect) {
+      const selectedOption = variationSelect.options[variationSelect.selectedIndex];
+      if (selectedOption) {
+        const variationId = selectedOption.value;
+        const variationPrice = selectedOption.dataset.price;
+        
+        if (variationId) targetUrlParams.set('variation_id', variationId);
+        if (variationPrice) targetUrlParams.set('price', variationPrice);
+
+        // Update duration and max participants displayed on page
+        const duration = selectedOption.dataset.duration;
+        const durationUnit = selectedOption.dataset.durationUnit || 'minutes';
+        const maxParticipants = selectedOption.dataset.maxParticipants;
+        const formattedDuration = selectedOption.dataset.formattedDuration;
+        
+        const durationElement = document.querySelector('.course-duration-value');
+        const maxParticipantsElement = document.querySelector('.course-max-participants-value');
+
+        if (formattedDuration && durationElement) {
+          durationElement.textContent = formattedDuration;
+        } else if (duration && durationElement) {
+          let calculatedFormattedDuration = '';
+          if (durationUnit === 'hours') {
+            calculatedFormattedDuration = duration + (duration === '1' ? ' hour' : ' hours');
+          } else if (durationUnit === 'days') {
+            calculatedFormattedDuration = duration + (duration === '1' ? ' day' : ' days');
+          } else {
+            calculatedFormattedDuration = duration + ' minutes';
+          }
+          durationElement.textContent = calculatedFormattedDuration;
+        }
+        
+        if (maxParticipants && maxParticipantsElement) {
+          maxParticipantsElement.textContent = maxParticipants + ' people';
+        }
+      } else {
+        // Fallback to base price if no variation selected for some reason
+        targetUrlParams.set('price', baseServicePrice);
+      }
+    } else {
+      // No variations, use base course price
+      targetUrlParams.set('price', baseServicePrice);
+    }
+
+    const queryString = targetUrlParams.toString();
+
+    if (bookNowLink) {
+      bookNowLink.href = '{% url "initiate_payment" %}?' + queryString;
+    }
+
+    if (guestBookNowLink) {
+      guestBookNowLink.href = '{% url "guest_checkout" %}?' + queryString;
+    }
+  }
+
+  if (hasVariations && variationSelect) {
+    variationSelect.addEventListener('change', updateLinks);
+    // Initial call to set links based on default selected variation
+    updateLinks(); 
+  } else if (!hasVariations) {
+    // For courses without variations, update links once with base price
+    updateLinks();
+  }
+});
+</script>
+{% endblock %}
+
+{% block extra_scripts %}
 {% endblock %}

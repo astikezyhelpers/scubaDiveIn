@@ -76,6 +76,8 @@ def has_purchased_course(user, service, email=None):
 def initiate_payment(request):
     service_id = request.GET.get('service_id')
     event_id = request.GET.get('event_id')
+    variation_id = request.GET.get('variation_id')
+    price = request.GET.get('price')  # Get price from URL
     
     if not service_id and not event_id:
         return redirect('coursesPage')
@@ -83,26 +85,42 @@ def initiate_payment(request):
     if service_id:
         # Handle course booking
         service = get_object_or_404(DivingService, id=service_id, is_active=True)
+        
+        # Get variation if specified
+        variation = None
+        if variation_id and service.variations:
+            # Find the variation in the JSON array
+            for var in service.variations:
+                if str(var['id']) == str(variation_id):
+                    variation = var
+                    # Override variation price if price parameter is provided
+                    if price:
+                        var['price'] = float(price)
+                    break
+            if not variation:
+                messages.error(request, "Selected course variation not found.")
+                return redirect('courseDetailPage', slug=service.slug)
     
-    # Check if user has already purchased this course
-    already_purchased = has_purchased_course(request.user, service)
-    
-    if already_purchased:
-        messages.warning(request, f"You have already purchased the '{service.name}' course. Check your booking history.")
-        return redirect('booking_history')
-    
+        # Check if user has already purchased this course
+        already_purchased = has_purchased_course(request.user, service)
+        
+        if already_purchased:
+            messages.warning(request, f"You have already purchased the '{service.name}' course. Check your booking history.")
+            return redirect('booking_history')
+        
         # Get user profile info for prefilling the form
         user = request.user
         context = {
             'service': service,
-                'booking_type': 'course',
-                'user_info': {
-                    'name': f"{user.first_name} {user.last_name}".strip(),
-                    'email': user.email,
-                    'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
-                },
-                'is_authenticated': True
-            }
+            'variation': variation,
+            'booking_type': 'course',
+            'user_info': {
+                'name': f"{user.first_name} {user.last_name}".strip(),
+                'email': user.email,
+                'phone': user.profile.phone_number if hasattr(user, 'profile') else '',
+            },
+            'is_authenticated': True
+        }
     else:
         # Handle event booking
         event = get_object_or_404(Event, id=event_id, is_active=True)
@@ -133,16 +151,28 @@ def guest_checkout(request):
     if request.user.is_authenticated:
         service_id = request.GET.get('service_id')
         event_id = request.GET.get('event_id')
+        variation_id = request.GET.get('variation_id')
+        price = request.GET.get('price')  # Get price from URL
+        
+        params = []
         if service_id:
-            return redirect(f"{reverse('initiate_payment')}?service_id={service_id}")
-        elif event_id:
-            return redirect(f"{reverse('initiate_payment')}?event_id={event_id}")
-        return redirect('coursesPage')
+            params.append(f"service_id={service_id}")
+        if event_id:
+            params.append(f"event_id={event_id}")
+        if variation_id:
+            params.append(f"variation_id={variation_id}")
+        if price:
+            params.append(f"price={price}")  # Include price in redirect
+            
+        query_string = "&".join(params)
+        return redirect(f"{reverse('initiate_payment')}?{query_string}")
     
     logger = logging.getLogger(__name__)
     
     service_id = request.GET.get('service_id')
     event_id = request.GET.get('event_id')
+    variation_id = request.GET.get('variation_id')
+    price = request.GET.get('price')  # Get price from URL
     
     if not service_id and not event_id:
         return redirect('coursesPage')
@@ -150,8 +180,25 @@ def guest_checkout(request):
     if service_id:
         # Handle course booking
         service = get_object_or_404(DivingService, id=service_id, is_active=True)
+        
+        # Get variation if specified
+        variation = None
+        if variation_id and service.variations:
+            # Find the variation in the JSON array
+            for var in service.variations:
+                if str(var['id']) == str(variation_id):
+                    variation = var
+                    # Override variation price if price parameter is provided
+                    if price:
+                        var['price'] = float(price)
+                    break
+            if not variation:
+                messages.error(request, "Selected course variation not found.")
+                return redirect('courseDetailPage', slug=service.slug)
+        
         context = {
             'service': service,
+            'variation': variation,
             'booking_type': 'course',
             'is_authenticated': False,
             'warning_message': "Note: Purchasing without an account will make it harder to access your course materials later. Consider creating an account first."
@@ -186,12 +233,14 @@ def create_payment(request):
         data = json.loads(request.body)
         service_id = data.get('service_id')
         event_id = data.get('event_id')
+        variation_id = data.get('variation_id')
+        price = data.get('price')
         name = data.get('name')
         email = data.get('email', '').strip().lower() if data.get('email') else ''
         phone = data.get('phone')
 
         logger = logging.getLogger(__name__)
-        logger.info(f"Payment creation requested for service_id={service_id}, event_id={event_id}, email={email}")
+        logger.info(f"Payment creation requested for service_id={service_id}, event_id={event_id}, variation_id={variation_id}, price={price}, email={email}")
 
         if not name or not email or not phone:
             return JsonResponse({
@@ -202,7 +251,27 @@ def create_payment(request):
         if service_id:
             # Handle course payment
             service = get_object_or_404(DivingService, id=service_id, is_active=True)
-            amount = service.price
+            
+            # Get variation if specified
+            if variation_id and service.variations:
+                # Find the variation in the JSON array
+                variation = None
+                for var in service.variations:
+                    if str(var['id']) == str(variation_id):
+                        variation = var
+                        break
+                if variation:
+                    amount = float(price) if price else variation['price']
+                    item_name = f"{service.name} - {variation['name']}"
+                else:
+                    return JsonResponse({
+                        'success': False,
+                        'error': 'Selected course variation not found.'
+                    })
+            else:
+                amount = float(price) if price else service.price
+                item_name = service.name
+                
             item = service
         elif event_id:
             # Handle event payment
@@ -212,9 +281,10 @@ def create_payment(request):
                     'success': False,
                     'error': 'This event has already passed and cannot be booked.',
                     'redirect_to': reverse('eventsPage')
-                        })
+                })
             amount = event.price
             item = event
+            item_name = event.name
         else:
             return JsonResponse({
                 'success': False,
@@ -232,9 +302,11 @@ def create_payment(request):
             'notes': {
                 'service_id': service_id,
                 'event_id': event_id,
+                'variation_id': variation_id,
                 'name': name,
                 'email': email,
-                'phone': phone
+                'phone': phone,
+                'item_name': item_name
             }
         }
         
@@ -250,6 +322,9 @@ def create_payment(request):
         # Create payment record with standardized customer notes format
         try:
             customer_notes = f"Name: {name}, Email: {email}, Phone: {phone}"
+            if variation_id:
+                customer_notes += f", Variation: {variation['name']}"
+                
             payment = RazorpayPayment.objects.create(
                 service=item if isinstance(item, DivingService) else None,
                 event=item if isinstance(item, Event) else None,
@@ -593,8 +668,16 @@ def send_message_to_user(request, user_id):
 
 def courses(request):
     courses = DivingService.objects.filter(is_active=True).select_related('category')
-    for course_item in courses: # Changed variable name to avoid conflict
-        course_item.featured_image_url = get_image_url(course_item.featured_image, 'thumbnail')
+    for course in courses:
+        course.featured_image_url = get_image_url(course.featured_image, 'thumbnail')
+        # Get price range for display
+        if course.has_variations():
+            price_range = course.get_price_range()
+            course.min_price = price_range['min_price']
+            course.max_price = price_range['max_price']
+        else:
+            course.min_price = course.max_price = course.price
+    
     context = {
         'courses': courses,
     }
@@ -799,10 +882,30 @@ def courseDetail(request, slug):
         for gallery_image in course_images:
             gallery_image.optimized_url = get_image_url(gallery_image.image, 'gallery')
 
+        # Get variations from JSON field
+        variations = course.variations or []
+        has_variations = bool(variations)  # Check if variations list is not empty
+
+        # If there are variations, use them for price range
+        if has_variations:
+            prices = [var['price'] for var in variations]
+            min_price = min(prices)
+            max_price = max(prices)
+            
+            # Add formatted_duration to each variation
+            for variation in variations:
+                variation['formatted_duration'] = course.get_variation_formatted_duration(variation)
+        else:
+            min_price = max_price = course.price
+
         context = {
             'course': course,
             'images': course_images,
-            'already_purchased': already_purchased
+            'already_purchased': already_purchased,
+            'variations': variations,
+            'has_variations': has_variations,
+            'min_price': min_price,
+            'max_price': max_price
         }
         return render(request, 'mainSite/courseDetail.html', context)
     except DivingService.DoesNotExist:
