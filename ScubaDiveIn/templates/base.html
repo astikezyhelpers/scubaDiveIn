@@ -30,47 +30,47 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-wave font-sans">
-<!-- Navigation Bar (Same as original) -->
-    <section id="relume" class="fixed top-4 left-4 right-4 z-[999] flex w-full items-center border-b border-ocean-blue/20 bg-white/80 backdrop-blur-md rounded-full shadow-lg lg:min-h-20 lg:px-[5%]">
+<!-- Navigation Bar -->
+    <section id="relume" class="fixed top-0 md:top-4 left-0 md:left-4 right-0 md:right-4 z-[999] flex w-full items-center border-b border-ocean-blue/20 bg-white/80 backdrop-blur-md md:rounded-full shadow-lg lg:min-h-20 px-4 lg:px-[5%] transition-all duration-300">
     <div class="mx-auto size-full lg:grid lg:grid-cols-[0.375fr_1fr_0.375fr] lg:items-center lg:justify-between lg:gap-4">
-        <div class="flex min-h-16 items-center justify-between px-[5%] md:min-h-18 lg:min-h-full lg:px-0">
-        <a href="{% url 'homePage' %}"><img src="{% static 'images/logo-main.png' %}" alt="Logo image" style="height: 75px;"/></a>
-        <div class="flex items-center gap-4 lg:hidden">
+        <div class="flex min-h-16 items-center justify-between md:min-h-18 lg:min-h-full lg:px-0">
+        <a href="{% url 'homePage' %}"><img src="{% static 'images/logo-main.png' %}" alt="Logo image" class="h-12 md:h-16 lg:h-[75px] transition-all duration-300"/></a>
+        <div class="flex items-center gap-3 lg:hidden">
             <div>
             {% if user.is_authenticated %}
-              <a href="{% url 'profile' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-1" title="Profile">
+              <a href="{% url 'profile' %}" class="rounded-full inline-flex gap-2 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-3 py-1 text-sm md:px-4 md:text-base" title="Profile">
                 My Account
               </a>
             {% else %}
-              <a href="{% url 'login' %}" class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-1" title="Login">
+              <a href="{% url 'login' %}" class="rounded-full inline-flex gap-2 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-3 py-1 text-sm md:px-4 md:text-base" title="Login">
                 Login
               </a>
             {% endif %}
             </div>
-            <button class="-mr-2 flex size-12 flex-col items-center justify-center lg:hidden">
-            <span class="my-[3px] h-0.5 w-6 bg-ocean-blue"></span>
-            <span class="my-[3px] h-0.5 w-6 bg-ocean-blue"></span>
-            <span class="my-[3px] h-0.5 w-6 bg-ocean-blue"></span>
+            <button class="flex flex-col items-center justify-center w-10 h-10 lg:hidden focus:outline-none" aria-label="Toggle Menu" id="mobile-menu-button">
+            <span class="my-[3px] h-0.5 w-6 bg-ocean-blue transition-all duration-300"></span>
+            <span class="my-[3px] h-0.5 w-6 bg-ocean-blue transition-all duration-300"></span>
+            <span class="my-[3px] h-0.5 w-6 bg-ocean-blue transition-all duration-300"></span>
             </button>
         </div>
         </div>
-        <div class="overflow-hidden px-[5%] text-center lg:flex lg:items-center lg:justify-center lg:px-0 lg:[--height-closed:auto] lg:[--height-open:auto]" style="height:var(--height-closed, 0)">
-        <a href="{% url 'homePage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">Home</a>
-        <a href="{% url 'aboutPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">About Us</a>
-        <a href="{% url 'coursesPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">Courses</a>
-        <a href="{% url 'instructorsPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">Instructors</a>
-        <a href="{% url 'blogsPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">Blogs</a>
-        <a href="{% url 'contactPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2">Contact Us</a>
+        <div class="overflow-hidden px-4 md:px-[5%] text-center lg:flex lg:items-center lg:justify-center lg:px-0 lg:[--height-closed:auto] lg:[--height-open:auto] transition-all duration-300 ease-in-out" id="mobile-menu" style="height:var(--height-closed, 0)">
+        <a href="{% url 'homePage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral first:pt-7 lg:px-4 lg:py-2 first:lg:pt-2 transition-colors duration-200">Home</a>
+        <a href="{% url 'aboutPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral lg:px-4 lg:py-2 transition-colors duration-200">About Us</a>
+        <a href="{% url 'coursesPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral lg:px-4 lg:py-2 transition-colors duration-200">Courses</a>
+        <a href="{% url 'instructorsPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral lg:px-4 lg:py-2 transition-colors duration-200">Instructors</a>
+        <a href="{% url 'blogsPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral lg:px-4 lg:py-2 transition-colors duration-200">Blogs</a>
+        <a href="{% url 'contactPage' %}" class="block py-3 text-base text-ocean-blue hover:text-coral lg:px-4 lg:py-2 transition-colors duration-200">Contact Us</a>
         
         {% if user.is_authenticated %}
         <div class="border-t border-gray-200 mt-4 mb-2 lg:hidden"></div>
-        <a href="{% url 'profile' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">My Profile</a>
-        <a href="{% url 'booking_history' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">My Bookings</a>
-        <a href="{% url 'logout' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">Log Out</a>
+        <a href="{% url 'profile' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden transition-colors duration-200">My Profile</a>
+        <a href="{% url 'booking_history' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden transition-colors duration-200">My Bookings</a>
+        <a href="{% url 'logout' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden transition-colors duration-200">Log Out</a>
         {% else %}
         <div class="border-t border-gray-200 mt-4 mb-2 lg:hidden"></div>
-        <a href="{% url 'login' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">Log In</a>
-        <a href="{% url 'signup' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden">Sign Up</a>
+        <a href="{% url 'login' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden transition-colors duration-200">Log In</a>
+        <a href="{% url 'signup' %}" class="block py-3 text-base text-coral hover:text-ocean-blue lg:hidden transition-colors duration-200">Sign Up</a>
         {% endif %}
         </div>
         <div class="hidden justify-self-end lg:block">
@@ -79,16 +79,16 @@
               <div class="relative group">
                 <button class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out focus-visible:outline-none border-2 border-ocean-blue bg-ocean-blue text-white hover:bg-white hover:text-ocean-blue px-4 py-2" title="My Account">
                   <span>{{ user.first_name|default:user.username }}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down transition-transform duration-200 group-hover:rotate-180" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                   </svg>
                 </button>
-                <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block">
+                <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block transition-all duration-200">
                   <div class="py-1">
-                    <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white">My Profile</a>
-                    <a href="{% url 'booking_history' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white">My Bookings</a>
+                    <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white transition-colors duration-200">My Profile</a>
+                    <a href="{% url 'booking_history' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white transition-colors duration-200">My Bookings</a>
                     <div class="border-t border-gray-200"></div>
-                    <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white">Log Out</a>
+                    <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-ocean-blue hover:bg-ocean-blue hover:text-white transition-colors duration-200">Log Out</a>
                   </div>
                 </div>
               </div>
@@ -112,18 +112,18 @@
     {% endblock %}
 
     <!-- CTA Section -->
-<section id="relume" class="px-[5%] py-16 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-deep-blue">
+<section id="relume" class="px-4 sm:px-[5%] py-12 md:py-24 lg:py-28 bg-gradient-to-b from-wave to-deep-blue">
   <div class="container mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Your Diving Journey?</h2>
-    <p class="text-wave max-w-2xl mx-auto mb-8">Our instructors are ready to guide you through every step of your scuba adventure, from your first breath underwater to advanced technical diving.</p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="{% url 'dsdBooking' %}">
-        <button class="rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-8 py-3 transition-colors">
+    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 md:mb-6">Ready to Start Your Diving Journey?</h2>
+    <p class="text-wave max-w-2xl mx-auto mb-6 md:mb-8 px-4 sm:px-0 text-sm sm:text-base">Our instructors are ready to guide you through every step of your scuba adventure, from your first breath underwater to advanced technical diving.</p>
+    <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0">
+      <a href="{% url 'dsdBooking' %}" class="w-full sm:w-auto">
+        <button class="w-full sm:w-auto rounded-full inline-flex items-center justify-center border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 sm:px-8 py-3 transition-colors text-sm sm:text-base">
           Book a Discover Scuba Dive
         </button>
       </a>
-      <a href="{% url 'contactPage' %}">
-        <button class="rounded-full inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-deep-blue px-8 py-3 transition-colors">
+      <a href="{% url 'contactPage' %}" class="w-full sm:w-auto">
+        <button class="w-full sm:w-auto rounded-full inline-flex items-center justify-center border-2 border-white bg-transparent text-white hover:bg-white hover:text-deep-blue px-6 sm:px-8 py-3 transition-colors text-sm sm:text-base">
           Contact Our Team
         </button>
       </a>
@@ -131,113 +131,114 @@
   </div>
 </section>
 
+    <footer id="relume" class="px-4 sm:px-[5%] py-12 md:py-18 lg:py-20 bg-deep-blue text-white">
+        <div class="container mx-auto">
+          <div class="grid grid-cols-1 items-start gap-y-10 pb-8 sm:pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[1fr_0.5fr] lg:gap-y-4 lg:pb-20">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
+              <div class="flex flex-col items-center lg:items-start col-span-1 sm:col-span-2 lg:col-span-1">
+                <a href="{% url 'homePage' %}" class="mb-8">
+                  <img src="{% static 'images/logo-white.png' %}" alt="Logo image" class="h-16 sm:h-20"/>
+                </a>
+              </div>
 
-    <footer id="relume" class="px-[5%] py-12 md:py-18 lg:py-20 bg-deep-blue text-white">
-        <div class="container">
-          <div
-            class="grid grid-cols-1 items-start gap-x-[8vw] gap-y-12 pb-12 md:gap-y-16 md:pb-18 lg:grid-cols-[1fr_0.5fr] lg:gap-y-4 lg:pb-20"
-          >
-            <div
-              class="grid grid-cols-1 items-start gap-x-8 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-12 md:gap-x-8 lg:grid-cols-4"
-            >
-              <a
-                href="{% url 'homePage' %}"
-                class="sm:col-start-1 sm:col-end-4 sm:row-start-1 sm:row-end-2 lg:col-start-auto lg:col-end-auto lg:row-start-auto lg:row-end-auto"
-                ><img
-                src="{% static 'images/logo-white.png' %}"
-                alt="Logo image"
-            /></a>
-              <div class="flex flex-col items-start justify-start">
-                <h2 class="mb-3 font-semibold text-coral md:mb-4">Quick Links</h2>
-                <ul>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'aboutPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">About Us</a>
+              <!-- Quick Links Section -->
+              <div class="flex flex-col items-center lg:items-start">
+                <h2 class="text-lg font-semibold text-coral mb-4">Quick Links</h2>
+                <ul class="flex flex-col items-center lg:items-start space-y-2">
+                  <li>
+                    <a href="{% url 'aboutPage' %}" class="text-sm text-white hover:text-coral transition-colors">About Us</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'contactPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Contact Us</a>
+                  <li>
+                    <a href="{% url 'contactPage' %}" class="text-sm text-white hover:text-coral transition-colors">Contact Us</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'coursesPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Our Courses</a>
+                  <li>
+                    <a href="{% url 'coursesPage' %}" class="text-sm text-white hover:text-coral transition-colors">Our Courses</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'blogsPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Blog</a>
+                  <li>
+                    <a href="{% url 'blogsPage' %}" class="text-sm text-white hover:text-coral transition-colors">Blog</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'instructorsPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Instructor Info</a>
+                  <li>
+                    <a href="{% url 'instructorsPage' %}" class="text-sm text-white hover:text-coral transition-colors">Instructor Info</a>
                   </li>
                 </ul>
               </div>
-              <div class="flex flex-col items-start justify-start">
-                <h2 class="mb-3 font-semibold text-coral md:mb-4">Stay Connected</h2>
-                <ul>
-                  <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Follow Us</a>
+
+              <!-- Stay Connected Section -->
+              <div class="flex flex-col items-center lg:items-start">
+                <h2 class="text-lg font-semibold text-coral mb-4">Stay Connected</h2>
+                <ul class="flex flex-col items-center lg:items-start space-y-2">
+                  <li>
+                    <a href="#" class="text-sm text-white hover:text-coral transition-colors">Follow Us</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Social Media</a>
+                  <li>
+                    <a href="#" class="text-sm text-white hover:text-coral transition-colors">Social Media</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'blogsPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Diving Tips</a>
+                  <li>
+                    <a href="{% url 'blogsPage' %}" class="text-sm text-white hover:text-coral transition-colors">Diving Tips</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Safety Guidelines</a>
+                  <li>
+                    <a href="#" class="text-sm text-white hover:text-coral transition-colors">Safety Guidelines</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'faqPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">FAQs</a>
+                  <li>
+                    <a href="{% url 'faqPage' %}" class="text-sm text-white hover:text-coral transition-colors">FAQs</a>
                   </li>
                 </ul>
               </div>
-              <div class="flex flex-col items-start justify-start">
-                <h2 class="mb-3 font-semibold text-coral md:mb-4">Newsletter</h2>
-                <ul>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'signup' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Sign Up</a>
+
+              <!-- Newsletter Section -->
+              <div class="flex flex-col items-center lg:items-start">
+                <h2 class="text-lg font-semibold text-coral mb-4">Newsletter</h2>
+                <ul class="flex flex-col items-center lg:items-start space-y-2">
+                  <li>
+                    <a href="{% url 'signup' %}" class="text-sm text-white hover:text-coral transition-colors">Sign Up</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Latest News</a>
+                  <li>
+                    <a href="#" class="text-sm text-white hover:text-coral transition-colors">Latest News</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'coursesPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Course Updates</a>
+                  <li>
+                    <a href="{% url 'coursesPage' %}" class="text-sm text-white hover:text-coral transition-colors">Course Updates</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="#" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Special Offers</a>
+                  <li>
+                    <a href="#" class="text-sm text-white hover:text-coral transition-colors">Special Offers</a>
                   </li>
-                  <li class="py-2 text-sm">
-                    <a href="{% url 'eventsPage' %}" class="flex items-center gap-3 text-white hover:text-coral transition-colors">Event Alerts</a>
+                  <li>
+                    <a href="{% url 'eventsPage' %}" class="text-sm text-white hover:text-coral transition-colors">Event Alerts</a>
                   </li>
                 </ul>
               </div>
             </div>
-            <div class="flex flex-col">
-              <h1 class="mb-3 font-semibold text-coral md:mb-4">Subscribe</h1>
-              <p class="mb-3 text-sm text-white md:mb-4">
+
+            <!-- Subscribe Section -->
+            <div class="flex flex-col items-center lg:items-start mt-10 lg:mt-0">
+              <h2 class="text-lg font-semibold text-coral mb-4">Subscribe</h2>
+              <p class="text-sm text-white mb-6 text-center lg:text-left max-w-sm">
                 Join our newsletter to stay updated on courses and special offers.
               </p>
               <div class="w-full max-w-md">
                 <form action="{% url 'newsletter_signup' %}" method="POST"
-                  class="mb-3 grid grid-cols-1 gap-x-4 gap-y-3 sm:grid-cols-[1fr_max-content] md:gap-y-4">
+                  class="flex flex-col sm:flex-row gap-3">
                   {% csrf_token %}
-                  <div class="relative flex w-full items-center">
+                  <div class="flex-grow">
                     <input
                       type="email"
                       name="email"
-                      class="rounded-full flex size-full py-2 align-middle transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 border-2 border-white bg-transparent text-white placeholder-white/70 min-h-11 px-3"
+                      class="w-full rounded-full py-2 px-4 transition-all duration-200 border-2 border-white bg-transparent text-white placeholder-white/70 min-h-[44px] text-sm focus:outline-none focus:border-coral"
                       id="email"
                       placeholder="Enter your email"
                       required
                     />
                   </div>
                   <button type="submit"
-                    class="rounded-full inline-flex gap-3 items-center justify-center whitespace-nowrap transition-all duration-200 ease-in-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-5 py-2"
+                    class="w-full sm:w-auto rounded-full inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 border-2 border-coral bg-coral text-white hover:bg-white hover:text-coral px-6 py-2 min-h-[44px] text-sm"
                     title="Subscribe">
                     <span>Subscribe</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </button>
                 </form>
                 {% if messages %}
-                <div class="messages mt-4">
+                <div class="messages mt-4 text-center lg:text-left">
                     {% for message in messages %}
                     <div class="text-sm {% if message.tags == 'success' %}text-green-400{% elif message.tags == 'error' %}text-red-400{% else %}text-white/70{% endif %}">
                         {{ message }}
@@ -245,65 +246,46 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-                <p class="text-xs text-white/70">
+                <p class="text-xs text-white/70 mt-4 text-center lg:text-left">
                   By subscribing, you agree to our Privacy Policy and receive updates.
                 </p>
               </div>
             </div>
           </div>
-          <div class="h-px w-full bg-white/20"></div>
-          <div
-            class="flex flex-col-reverse items-start pt-6 pb-4 text-sm md:justify-start md:pt-8 md:pb-0 lg:flex-row lg:items-center lg:justify-between"
-          >
-            <div
-              class="flex flex-col-reverse items-start md:flex-row md:gap-6 lg:items-center"
-            >
-              <div
-                class="grid grid-flow-row grid-cols-[max-content] justify-center gap-y-4 md:grid-flow-col md:justify-center md:gap-x-6 md:gap-y-0 lg:text-left"
-              >
-                <p class="mt-8 text-white/70 md:mt-0">© 2025 Scuba Dive. All rights reserved.</p>
-                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
-                  <a href="{% url 'privacyPolicy' %}" class="text-white/70 hover:text-coral transition-colors">Privacy Policy</a>
-                  <a href="{% url 'termsConditions' %}" class="text-white/70 hover:text-coral transition-colors">Terms & Conditions</a>
-                  <a href="{% url 'shippingPolicy' %}" class="text-white/70 hover:text-coral transition-colors">Shipping Policy</a>
-                  <a href="{% url 'cancellationsRefunds' %}" class="text-white/70 hover:text-coral transition-colors">Cancellations & Refunds</a>
-                </div>
+
+          <!-- Social Media Links -->
+          <div class="mt-10 pt-8 border-t border-white/10">
+            <div class="flex flex-col items-center gap-6">
+              <div class="flex items-center justify-center gap-4">
+                <a href="https://www.facebook.com/profile.php?id=61574950652928" 
+                   class="text-white hover:text-coral transition-colors p-2"
+                   aria-label="Facebook">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.001 2.002c-5.522 0-9.999 4.477-9.999 9.999 0 4.99 3.656 9.126 8.437 9.879v-6.988h-2.54v-2.891h2.54V9.798c0-2.508 1.493-3.891 3.776-3.891 1.094 0 2.24.195 2.24.195v2.459h-1.264c-1.24 0-1.628.772-1.628 1.563v1.875h2.771l-.443 2.891h-2.328v6.988C18.344 21.129 22 16.992 22 12.001c0-5.522-4.477-9.999-9.999-9.999z"/>
+                  </svg>
+                </a>
+                <a href="https://www.instagram.com/scubadiveindia" 
+                   class="text-white hover:text-coral transition-colors p-2"
+                   aria-label="Instagram">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 0 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
+                  </svg>
+                </a>
               </div>
-            </div>
-            <div class="mb-8 flex items-center justify-center gap-3 lg:mb-0">
-              <a href="https://www.facebook.com/profile.php?id=61574950652928" class="text-white hover:text-coral transition-colors"
-                ><svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  class="size-6"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12.001 2.002c-5.522 0-9.999 4.477-9.999 9.999 0 4.99 3.656 9.126 8.437 9.879v-6.988h-2.54v-2.891h2.54V9.798c0-2.508 1.493-3.891 3.776-3.891 1.094 0 2.24.195 2.24.195v2.459h-1.264c-1.24 0-1.628.772-1.628 1.563v1.875h2.771l-.443 2.891h-2.328v6.988C18.344 21.129 22 16.992 22 12.001c0-5.522-4.477-9.999-9.999-9.999z"
-                  ></path></svg></a
-              ><a href="https://www.instagram.com/scubadiveindia" class="text-white hover:text-coral transition-colors"
-                ><svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  class="size-6"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248zm0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008z"
-                  ></path>
-                  <circle cx="16.806" cy="7.207" r="1.078"></circle>
-                  <path
-                    d="M20.533 6.111A4.605 4.605 0 0 0 17.9 3.479a6.606 6.606 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.554 6.554 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.585 6.585 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71 0 2.442 0 2.753.056 3.71.015.748.156 1.486.419 2.187a4.61 4.61 0 0 0 2.634 2.632 6.584 6.584 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.615 6.615 0 0 0 2.186-.419 4.613 4.613 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.581 6.581 0 0 0-.421-2.217zm-1.218 9.532a5.043 5.043 0 0 1-.311 1.688 2.987 2.987 0 0 1-1.712 1.711 4.985 4.985 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a4.96 4.96 0 0 1-1.669-.311 2.985 2.985 0 0 1-1.719-1.711 5.08 5.08 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654 0-2.437 0-2.686.053-3.655a5.038 5.038 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5.01 5.01 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a4.96 4.96 0 0 1 1.67.311 2.991 2.991 0 0 1 1.712 1.712 5.08 5.08 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655 0 2.436 0 2.698-.043 3.654h-.011z"
-                  ></path></svg></a
-              >
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-white/70">
+                <a href="{% url 'privacyPolicy' %}" class="hover:text-coral transition-colors">Privacy Policy</a>
+                <span class="hidden sm:block">•</span>
+                <a href="{% url 'termsConditions' %}" class="hover:text-coral transition-colors">Terms & Conditions</a>
+                <span class="hidden sm:block">•</span>
+                <a href="{% url 'shippingPolicy' %}" class="hover:text-coral transition-colors">Shipping Policy</a>
+                <span class="hidden sm:block">•</span>
+                <a href="{% url 'cancellationsRefunds' %}" class="hover:text-coral transition-colors">Cancellations & Refunds</a>
+              </div>
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-2 text-sm text-white/70">
+                <p>© {% now "Y" %} ScubaDiveIn. All rights reserved.</p>
+                <span class="hidden sm:block">•</span>
+                <p>Powered by <a href="https://www.monkmantra.com/" target="_blank" rel="noopener noreferrer" class="text-coral hover:text-white transition-colors">Monk Mantra</a></p>
+              </div>
             </div>
           </div>
         </div>
@@ -314,6 +296,51 @@
       id="aisensy-wa-widget"
       widget-id="aaa0eo"
     >
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuBars = menuButton.querySelectorAll('span');
+            let isOpen = false;
+
+            function updateMenuState() {
+                if (isOpen) {
+                    // Set menu height to its scroll height when open
+                    mobileMenu.style.height = mobileMenu.scrollHeight + 'px';
+                    // Transform hamburger to X
+                    menuBars[0].style.transform = 'translateY(8px) rotate(45deg)';
+                    menuBars[1].style.opacity = '0';
+                    menuBars[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+                } else {
+                    // Close menu
+                    mobileMenu.style.height = '0';
+                    // Reset hamburger
+                    menuBars[0].style.transform = 'none';
+                    menuBars[1].style.opacity = '1';
+                    menuBars[2].style.transform = 'none';
+                }
+            }
+
+            menuButton.addEventListener('click', function() {
+                isOpen = !isOpen;
+                updateMenuState();
+            });
+
+            // Handle resize events to ensure proper menu state
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) { // lg breakpoint
+                    mobileMenu.style.height = 'auto';
+                    isOpen = false;
+                    menuBars.forEach(bar => {
+                        bar.style.transform = 'none';
+                        bar.style.opacity = '1';
+                    });
+                } else if (!isOpen) {
+                    mobileMenu.style.height = '0';
+                }
+            });
+        });
     </script>
 </body>
 </html>
