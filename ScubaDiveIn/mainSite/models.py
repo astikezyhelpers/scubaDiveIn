@@ -329,3 +329,21 @@ class InstructorBooking(models.Model):
     
     def __str__(self):
         return f"Booking by {self.name} for {self.instructor} on {self.preferred_date}"
+
+class Lead(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    message = models.TextField()
+    course_interest = models.CharField(max_length=100, blank=True, null=True)
+    subscribe_newsletter = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
+    is_contacted = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"{self.name} - {self.email} ({self.created_at.strftime('%Y-%m-%d')})"
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Lead'
+        verbose_name_plural = 'Leads'

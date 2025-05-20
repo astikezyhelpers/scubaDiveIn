@@ -31,4 +31,6 @@ urlpatterns = [
     path('newsletter/signup/', views.newsletter_signup, name='newsletter_signup'),
     path('faq/', views.faq_page, name='faqPage'),
     path('book-instructor/', views.book_instructor, name='bookInstructor'),
+    # Ad Landing Page
+    path('discover/', views.ad_landing, name='ad_landing'),
 ]

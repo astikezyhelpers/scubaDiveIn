@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from .models import (
     ServiceCategory, DivingService, ServiceImage, DiveLocation,
     Event, RazorpayPayment, UserMessage, NewsletterSubscription,
-    FAQ, InstructorBooking
+    FAQ, InstructorBooking, Lead
 )
 from .forms import (
     DivingServiceForm, ServiceImageForm, ServiceCategoryForm
@@ -131,3 +131,18 @@ class InstructorBookingAdmin(admin.ModelAdmin):
     list_filter = ('status', 'created_at', 'instructor')
     search_fields = ('name', 'email', 'instructor', 'message')
     date_hierarchy = 'created_at'
+
+@admin.register(Lead)
+class LeadAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'phone', 'course_interest', 'created_at', 'is_contacted')
+    list_filter = ('is_contacted', 'subscribe_newsletter', 'created_at')
+    search_fields = ('name', 'email', 'phone', 'message')
+    readonly_fields = ('created_at',)
+    ordering = ('-created_at',)
+    date_hierarchy = 'created_at'
+    
+    def mark_as_contacted(self, request, queryset):
+        queryset.update(is_contacted=True)
+    mark_as_contacted.short_description = "Mark selected leads as contacted"
+    
+    actions = ['mark_as_contacted']

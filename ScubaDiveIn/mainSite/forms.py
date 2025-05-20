@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 from datetime import datetime
 from .models import (
     UserMessage, InstructorBooking, DivingService, 
-    ServiceImage, ServiceCategory
+    ServiceImage, ServiceCategory, Lead
 )
 
 class ContactForm(forms.ModelForm):
@@ -78,3 +78,31 @@ class InstructorBookingForm(forms.ModelForm):
         if date and date < datetime.now().date():
             raise forms.ValidationError("The preferred date cannot be in the past.")
         return date 
+
+class LeadForm(forms.ModelForm):
+    class Meta:
+        model = Lead
+        fields = ['name', 'email', 'phone', 'message', 'course_interest', 'subscribe_newsletter']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-lg border-2 border-wave focus:border-ocean-blue focus:ring-2 focus:ring-ocean-blue/20 transition-all duration-300 outline-none text-deep-blue',
+                'placeholder': 'John Doe'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-lg border-2 border-wave focus:border-ocean-blue focus:ring-2 focus:ring-ocean-blue/20 transition-all duration-300 outline-none text-deep-blue',
+                'placeholder': 'john@example.com'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-lg border-2 border-wave focus:border-ocean-blue focus:ring-2 focus:ring-ocean-blue/20 transition-all duration-300 outline-none text-deep-blue',
+                'placeholder': '+91 1234567890'
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'w-full px-4 py-3 rounded-lg border-2 border-wave focus:border-ocean-blue focus:ring-2 focus:ring-ocean-blue/20 transition-all duration-300 outline-none text-deep-blue resize-none',
+                'placeholder': 'Tell us about your diving interests and any questions you have...',
+                'rows': '4'
+            }),
+            'course_interest': forms.HiddenInput(),
+            'subscribe_newsletter': forms.CheckboxInput(attrs={
+                'class': 'h-5 w-5 rounded border-2 border-wave text-ocean-blue focus:ring-ocean-blue/20'
+            })
+        } 

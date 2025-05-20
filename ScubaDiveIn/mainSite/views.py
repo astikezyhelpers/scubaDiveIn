@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import RazorpayPayment, DivingService, ServiceCategory, DiveLocation, Event, NewsletterSubscription, FAQ, InstructorBooking
 from django.contrib import messages
-from .forms import ContactForm, InstructorBookingForm
+from .forms import ContactForm, InstructorBookingForm, LeadForm
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -972,3 +972,42 @@ def book_instructor(request):
         else:
             return JsonResponse({'status': 'error', 'errors': form.errors}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=405)
+
+def ad_landing(request):
+    """View function for the ad landing page"""
+    # Get featured courses
+    featured_courses = DivingService.objects.filter(
+        is_active=True,
+        is_featured=True
+    ).select_related('category')[:3]
+    
+    # Transform image URLs
+    for course in featured_courses:
+        course.featured_image_url = get_image_url(course.featured_image, 'thumbnail')
+        # Get price range for display
+        if course.has_variations():
+            price_range = course.get_price_range()
+            course.min_price = price_range['min_price']
+            course.max_price = price_range['max_price']
+        else:
+            course.min_price = course.max_price = course.price
+
+    if request.method == 'POST':
+        form = LeadForm(request.POST)
+        if form.is_valid():
+            lead = form.save()
+            # If user subscribed to newsletter, create subscription
+            if form.cleaned_data['subscribe_newsletter']:
+                NewsletterSubscription.objects.get_or_create(email=form.cleaned_data['email'])
+            messages.success(request, "Thank you for your interest! We'll get back to you within 24 hours.")
+            return redirect('ad_landing')
+        else:
+            messages.error(request, "Please correct the errors below and try again.")
+    else:
+        form = LeadForm()
+    
+    context = {
+        'form': form,
+        'featured_courses': featured_courses,
+    }
+    return render(request, 'mainSite/ad-landing.html', context)
