@@ -11,12 +11,12 @@
 <section class="relative h-screen flex items-center justify-center overflow-hidden pt-20">
   <div class="absolute inset-0 z-0">
     <video autoplay muted loop class="w-full h-full object-cover">
-      <source src="{% static 'videos/hero-video.mp4' %}" type="video/mp4">
+      <source src="https://pro-cms.padi.com/sites/default/files/documents/marketing-hub/Lead%20Adventure%20Video_ENGLISH.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <div class="absolute inset-0 bg-deep-blue opacity-50"></div>
   </div>
-  <div class="container mx-auto px-[5%] relative z-10 text-center text-white">
+  <div class="container mx-auto px-[5%] relative z-999 text-center text-white">
     <h1 class="text-4xl font-bold md:text-5xl lg:text-6xl mb-6">Dive Into a World of Adventure</h1>
     <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Discover the magic beneath the waves with our internationally certified scuba diving courses</p>
     <div class="flex flex-wrap justify-center gap-4">
@@ -28,10 +28,10 @@
       </button>
       
       <!-- Video Popup Container (initially hidden) -->
-      <div id="videoPopup" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+      <div id="videoPopup" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[1100] hidden">
         <div class="relative w-full max-w-4xl px-4">
           <button onclick="closeVideoPopup()" class="absolute -top-10 right-0 text-white text-2xl">&times;</button>
-          <div class="aspect-w-16 aspect-h-9">
+          <div class="aspect-w-16 aspect-h-10">
             <iframe id="youtubeVideo" class="w-full h-[500px]" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
@@ -43,7 +43,7 @@
           const iframe = document.getElementById('youtubeVideo');
           
           // Replace 'YOUTUBE_VIDEO_ID' with your actual YouTube video ID
-          iframe.src = 'https://www.youtube.com/embed/fU-WTD1NmJQ?si=iKoqay-hlmjGSBgi';
+          iframe.src = 'https://www.youtube.com/embed/KvZT3etZIsw?si=XrvN_pEt9Yfe9Ks4';
           
           popup.classList.remove('hidden');
           document.body.style.overflow = 'hidden'; // Prevent scrolling
