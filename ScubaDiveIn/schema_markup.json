@@ -59,15 +59,15 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Open Water Certification",
-              "description": "PADI Open Water Diver certification course"
+              "name": "Discover SCUBA Dive (DSD)",
+              "description": "Learn the basics of scuba diving in a safe and controlled environment"
             }
           },
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Advanced Open Water",
+              "name": "Advanced Open Water Course (AOW)",
               "description": "Advanced diving techniques and specialties"
             }
           },
@@ -75,8 +75,24 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "Discover Scuba Diving",
-              "description": "Try scuba diving for beginners"
+              "name": "Dive Master Course (DMC)",
+              "description": "Professional diving leadership training"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Guided Diving at AQUARIUM",
+              "description": "Dive at the mesmerizing Aquarium dive site in Havelock Island"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Guided Diving at JHON LAWRENCE",
+              "description": "Dive at the world-renowned John Lawrence dive site"
             }
           }
         ]
@@ -104,52 +120,86 @@
     },
     {
       "@type": "Course",
-      "name": "PADI Open Water Diver",
-      "description": "The PADI Open Water Diver course is the world's most popular scuba course, and has introduced millions of people to the adventurous diving lifestyle.",
+      "name": "Discover SCUBA Dive (DSD)",
+      "description": "Learn the basics of scuba diving in a safe and controlled environment",
       "provider": {
         "@id": "https://scubadivein.in/#organization"
       },
-      "courseCode": "OWD-001",
-      "courseDuration": "P3D",
-      "coursePrerequisites": "Must be at least 10 years old and able to swim",
-      "educationalCredentialAwarded": "PADI Open Water Diver Certification",
+      "courseCode": "DSD",
+      "coursePrerequisites": "Must be at least 8 years old, swimming not required for DSD",
+      "educationalCredentialAwarded": "Discover Scuba Diving Experience Certificate",
       "offers": {
         "@type": "Offer",
-        "price": "25000",
+        "price": "5500",
         "priceCurrency": "INR",
         "availability": "https://schema.org/InStock",
         "validFrom": "2024-01-01",
-        "category": "Scuba Diving Certification"
+        "category": "Beginner Scuba Diving Experience"
       },
       "hasCourseInstance": {
         "@type": "CourseInstance",
         "courseMode": "https://schema.org/OnSiteInstruction",
-        "startDate": "2024-02-01",
-        "endDate": "2024-02-03",
         "instructor": {
           "@type": "Person",
-          "name": "Certified Instructor",
+          "name": "Certified PADI Instructor",
           "jobTitle": "PADI Instructor"
         }
       }
     },
     {
       "@type": "Course",
-      "name": "Discover Scuba Diving",
-      "description": "Try scuba diving for the first time with our experienced instructors in the beautiful waters of Andaman.",
+      "name": "Advanced Open Water Course (AOW)",
+      "description": "The Advanced Open Water Diver course is all about advancing your skills. You'll practice navigation and buoyancy, try deep diving and make three specialty dives of your choosing.",
       "provider": {
         "@id": "https://scubadivein.in/#organization"
       },
-      "courseCode": "DSD-001",
-      "courseDuration": "P1D",
-      "coursePrerequisites": "Must be at least 8 years old and able to swim",
+      "courseCode": "AOW",
+      "coursePrerequisites": "Must have Open Water Diver certification or equivalent",
+      "educationalCredentialAwarded": "PADI Advanced Open Water Diver Certification",
       "offers": {
         "@type": "Offer",
-        "price": "4500",
+        "price": "30000",
         "priceCurrency": "INR",
         "availability": "https://schema.org/InStock",
         "validFrom": "2024-01-01",
-        "category": "Scuba Diving Experience"
+        "category": "Advanced Scuba Diving Certification"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "https://schema.org/OnSiteInstruction",
+        "instructor": {
+          "@type": "Person",
+          "name": "Certified PADI Instructor",
+          "jobTitle": "PADI Advanced Open Water Instructor"
+        }
+      }
+    },
+    {
+      "@type": "Course",
+      "name": "Dive Master Course (DMC)",
+      "description": "Learn how to lead underwater tours, assist with scuba classes and inspire others to care about the ocean. Hone your skills and be the diver everyone admires.",
+      "provider": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "courseCode": "DMC",
+      "coursePrerequisites": "Must have Advanced Open Water certification and Rescue Diver certification",
+      "educationalCredentialAwarded": "PADI Divemaster Certification",
+      "offers": {
+        "@type": "Offer",
+        "price": "80000",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2024-01-01",
+        "category": "Professional Scuba Diving Certification"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "https://schema.org/OnSiteInstruction",
+        "instructor": {
+          "@type": "Person",
+          "name": "PADI Course Director",
+          "jobTitle": "PADI Course Director"
+        }
       }
     },
     {
@@ -175,48 +225,100 @@
     },
     {
       "@type": "Service",
-      "name": "Guided Diving Tours",
-      "description": "Professional guided diving tours to the best diving spots in Andaman with experienced dive masters.",
+      "name": "AQUARIUM Dive Site",
+      "description": "Step into the mesmerizing Aquarium dive site in Havelock Island, a kaleidoscope of colors beneath the waves! Depth: 3-15m, 20 min boat ride.",
       "provider": {
         "@id": "https://scubadivein.in/#organization"
       },
-      "serviceType": "Guided Tours",
+      "serviceType": "Guided Diving Tours",
       "offers": {
         "@type": "Offer",
-        "price": "3500",
         "priceCurrency": "INR",
-        "availability": "https://schema.org/InStock",
-        "priceSpecification": {
-          "@type": "UnitPriceSpecification",
-          "price": "3500",
-          "priceCurrency": "INR",
-          "unitText": "per dive"
-        }
+        "availability": "https://schema.org/InStock"
       }
     },
     {
-      "@type": "Article",
-      "headline": "Best Diving Spots in Andaman",
-      "description": "Discover the most amazing diving locations in Andaman with crystal-clear waters and vibrant marine life.",
-      "author": {
-        "@type": "Person",
-        "name": "ScubaDiveIn Team",
-        "jobTitle": "Dive Master"
-      },
-      "publisher": {
+      "@type": "Service", 
+      "name": "JHON LAWRENCE Dive Site",
+      "description": "Dive into the adventure at John Lawrence, a world-renowned dive site in Havelock Island! Depth: 20-34m, 45 min boat ride.",
+      "provider": {
         "@id": "https://scubadivein.in/#organization"
       },
-      "datePublished": "2024-01-15",
-      "dateModified": "2024-01-15",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://scubadivein.in/blogs/"
+      "serviceType": "Guided Diving Tours",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Service",
+      "name": "JHONNY DIXON Dive Site", 
+      "description": "Whether you're a seasoned diver or just starting out, Johnny Dixon promises an unforgettable adventure beneath the waves! Depth: 16-35m, 45 min boat ride.",
+      "provider": {
+        "@id": "https://scubadivein.in/#organization"
       },
-      "image": {
-        "@type": "ImageObject",
-        "url": "https://scubadivein.in/static/images/logo-main.png",
-        "width": 1200,
-        "height": 630
+      "serviceType": "Guided Diving Tours",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Event",
+      "name": "PADI Women's Dive Day",
+      "description": "On 19 July 2025, the 11th Annual PADI Women's Dive Day is celebrating more than a decade of empowering female divers, fostering connections, and inspiring ocean exploration and conservation",
+      "startDate": "2025-07-19T09:00:00+05:30",
+      "endDate": "2025-07-19T12:00:00+05:30",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Havelock Island, Andaman",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Havelock Island",
+          "addressRegion": "Andaman and Nicobar Islands",
+          "addressCountry": "IN"
+        }
+      },
+      "organizer": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "5000",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    {
+      "@type": "Event",
+      "name": "PADI AWARE Dive Against Debris & Plastic Treaty",
+      "description": "PADI AWARE focuses on addressing the issue of marine debris, particularly plastic pollution, through education, research, and community engagement.",
+      "startDate": "2025-08-16T09:00:00+05:30",
+      "endDate": "2025-08-16T12:00:00+05:30",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Havelock Island, Andaman",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Havelock Island",
+          "addressRegion": "Andaman and Nicobar Islands",
+          "addressCountry": "IN"
+        }
+      },
+      "organizer": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "5000",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
       }
     },
     {
@@ -245,26 +347,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is the minimum age for scuba diving?",
+          "name": "What is scuba diving?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The minimum age for Discover Scuba Diving is 8 years old, and for PADI Open Water Diver certification is 10 years old."
+            "text": "Scuba diving is a form of underwater diving where divers use breathing equipment (scuba gear) that is completely independent of a surface air supply. This allows divers to stay underwater longer and explore marine environments."
           }
         },
         {
           "@type": "Question", 
-          "name": "Do I need to know how to swim to take a diving course?",
+          "name": "Do I need to know how to swim to scuba dive?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, basic swimming skills are required. You need to be comfortable in water and able to swim at least 200 meters."
+            "text": "Yes, basic swimming ability is required for scuba diving. You should be able to swim 200 meters without any swimming aids and float/tread water for 10 minutes."
           }
         },
         {
           "@type": "Question",
-          "name": "What is the best time to visit Andaman for scuba diving?",
+          "name": "What is the minimum age requirement for scuba diving?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The best time for scuba diving in Andaman is from October to May when the weather is pleasant and visibility underwater is excellent."
+            "text": "Minimum age is 10 for courses and DSD. Also Swimming is not required for DSD, but is a must for the course."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What medical conditions might prevent me from diving?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Several medical conditions may affect your ability to dive safely, including heart conditions, lung diseases, ear problems, and pregnancy. A medical evaluation is required before diving, and you should consult with a diving medical professional."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What equipment do I need for scuba diving?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Essential scuba equipment includes a mask, fins, wetsuit, BCD (Buoyancy Control Device), regulator, air tank, depth gauge, and dive computer. For training courses and DSD experiences, all equipment is typically provided."
           }
         }
       ]
