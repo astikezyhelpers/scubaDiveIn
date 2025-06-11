@@ -30,20 +30,20 @@
       "name": "ScubaDiveIn",
       "description": "Premier scuba diving center in Andaman offering professional diving courses, equipment rental, and guided underwater experiences in crystal-clear waters.",
       "url": "https://scubadivein.in",
-      "telephone": "+91-9999999999",
-      "email": "info@scubadivein.in",
+      "telephone": "+91-7695070548",
+      "email": "scubadivein1@gmail.com",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Havelock Island",
-        "addressLocality": "Port Blair",
+        "streetAddress": "Govinda nager, beach no. 01",
+        "addressLocality": "Swarajdeep, South Andaman",
         "addressRegion": "Andaman and Nicobar Islands",
         "postalCode": "744211",
         "addressCountry": "IN"
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": "12.0175",
-        "longitude": "92.8326"
+        "latitude": "12.0064",
+        "longitude": "92.8526"
       },
       "openingHours": [
         "Mo-Fr 08:00-18:00",
@@ -142,7 +142,8 @@
         "courseSchedule": {
           "@type": "Schedule",
           "duration": "PT2H",
-          "repeatFrequency": "Daily"
+          "repeatFrequency": "Daily",
+          "repeatCount": 1
         },
         "instructor": {
           "@type": "Person",
@@ -175,7 +176,8 @@
         "courseSchedule": {
           "@type": "Schedule",
           "duration": "P2D",
-          "repeatFrequency": "Weekly"
+          "repeatFrequency": "Weekly",
+          "repeatCount": 1
         },
         "instructor": {
           "@type": "Person",
@@ -208,7 +210,8 @@
         "courseSchedule": {
           "@type": "Schedule",
           "duration": "P22D",
-          "repeatFrequency": "Monthly"
+          "repeatFrequency": "Monthly",
+          "repeatCount": 1
         },
         "instructor": {
           "@type": "Person",
@@ -301,11 +304,13 @@
       },
       "location": {
         "@type": "Place",
-        "name": "Havelock Island, Andaman",
+        "name": "ScubaDiveIn Dive Center",
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Havelock Island",
+          "streetAddress": "Govinda nager, beach no. 01",
+          "addressLocality": "Swarajdeep, South Andaman",
           "addressRegion": "Andaman and Nicobar Islands",
+          "postalCode": "744211",
           "addressCountry": "IN"
         }
       },
@@ -342,11 +347,13 @@
       },
       "location": {
         "@type": "Place",
-        "name": "Havelock Island, Andaman",
+        "name": "ScubaDiveIn Dive Center",
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Havelock Island",
+          "streetAddress": "Govinda nager, beach no. 01",
+          "addressLocality": "Swarajdeep, South Andaman",
           "addressRegion": "Andaman and Nicobar Islands",
+          "postalCode": "744211",
           "addressCountry": "IN"
         }
       },
@@ -365,8 +372,8 @@
     {
       "@type": "ContactPoint",
       "contactType": "Customer Service",
-      "telephone": "+91-9999999999",
-      "email": "info@scubadivein.in",
+      "telephone": "+91-7695070548",
+      "email": "scubadivein1@gmail.com",
       "availableLanguage": ["English", "Hindi"],
       "hoursAvailable": {
         "@type": "OpeningHoursSpecification",
