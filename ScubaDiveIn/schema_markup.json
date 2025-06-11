@@ -138,7 +138,12 @@
       },
       "hasCourseInstance": {
         "@type": "CourseInstance",
-        "courseMode": "https://schema.org/OnSiteInstruction",
+        "courseMode": "onsite",
+        "courseSchedule": {
+          "@type": "Schedule",
+          "duration": "PT2H",
+          "repeatFrequency": "Daily"
+        },
         "instructor": {
           "@type": "Person",
           "name": "Certified PADI Instructor",
@@ -166,7 +171,12 @@
       },
       "hasCourseInstance": {
         "@type": "CourseInstance",
-        "courseMode": "https://schema.org/OnSiteInstruction",
+        "courseMode": "onsite",
+        "courseSchedule": {
+          "@type": "Schedule",
+          "duration": "P2D",
+          "repeatFrequency": "Weekly"
+        },
         "instructor": {
           "@type": "Person",
           "name": "Certified PADI Instructor",
@@ -194,7 +204,12 @@
       },
       "hasCourseInstance": {
         "@type": "CourseInstance",
-        "courseMode": "https://schema.org/OnSiteInstruction",
+        "courseMode": "onsite",
+        "courseSchedule": {
+          "@type": "Schedule",
+          "duration": "P22D",
+          "repeatFrequency": "Monthly"
+        },
         "instructor": {
           "@type": "Person",
           "name": "PADI Course Director",
@@ -273,6 +288,17 @@
       "endDate": "2025-07-19T12:00:00+05:30",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://scubadivein.in/static/images/logo-main.png",
+        "width": 1200,
+        "height": 630
+      },
+      "performer": {
+        "@type": "Organization",
+        "name": "ScubaDiveIn",
+        "url": "https://scubadivein.in"
+      },
       "location": {
         "@type": "Place",
         "name": "Havelock Island, Andaman",
@@ -288,9 +314,11 @@
       },
       "offers": {
         "@type": "Offer",
+        "url": "https://scubadivein.in/",
         "price": "5000",
         "priceCurrency": "INR",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2024-01-01"
       }
     },
     {
@@ -301,6 +329,17 @@
       "endDate": "2025-08-16T12:00:00+05:30",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://scubadivein.in/static/images/logo-main.png",
+        "width": 1200,
+        "height": 630
+      },
+      "performer": {
+        "@type": "Organization",
+        "name": "ScubaDiveIn",
+        "url": "https://scubadivein.in"
+      },
       "location": {
         "@type": "Place",
         "name": "Havelock Island, Andaman",
@@ -316,9 +355,11 @@
       },
       "offers": {
         "@type": "Offer",
+        "url": "https://scubadivein.in/",
         "price": "5000",
         "priceCurrency": "INR",
-        "availability": "https://schema.org/InStock"
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2024-01-01"
       }
     },
     {
