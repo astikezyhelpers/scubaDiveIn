@@ -1,0 +1,273 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://scubadivein.in/#organization",
+      "name": "ScubaDiveIn",
+      "url": "https://scubadivein.in",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://scubadivein.in/static/images/logo-main.png",
+        "width": 300,
+        "height": 100
+      },
+      "description": "Professional scuba diving services in Andaman. Explore crystal-clear waters, vibrant coral reefs, and diverse marine life with expert instruction and certification programs for all skill levels.",
+      "foundingDate": "2020",
+      "serviceArea": {
+        "@type": "Place",
+        "name": "Andaman and Nicobar Islands, India"
+      },
+      "sameAs": [
+        "https://www.facebook.com/scubadivein",
+        "https://www.instagram.com/scubadivein",
+        "https://www.twitter.com/scubadivein"
+      ]
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://scubadivein.in/#localbusiness",
+      "name": "ScubaDiveIn",
+      "description": "Premier scuba diving center in Andaman offering professional diving courses, equipment rental, and guided underwater experiences in crystal-clear waters.",
+      "url": "https://scubadivein.in",
+      "telephone": "+91-9999999999",
+      "email": "info@scubadivein.in",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Havelock Island",
+        "addressLocality": "Port Blair",
+        "addressRegion": "Andaman and Nicobar Islands",
+        "postalCode": "744211",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "12.0175",
+        "longitude": "92.8326"
+      },
+      "openingHours": [
+        "Mo-Fr 08:00-18:00",
+        "Sa-Su 07:00-19:00"
+      ],
+      "priceRange": "$$",
+      "image": "https://scubadivein.in/static/images/logo-main.png",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Diving Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Open Water Certification",
+              "description": "PADI Open Water Diver certification course"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Advanced Open Water",
+              "description": "Advanced diving techniques and specialties"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Discover Scuba Diving",
+              "description": "Try scuba diving for beginners"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://scubadivein.in/#website",
+      "url": "https://scubadivein.in",
+      "name": "ScubaDiveIn",
+      "description": "Professional scuba diving services and certification courses in Andaman",
+      "publisher": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "potentialAction": [
+        {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://scubadivein.in/courses/"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      ]
+    },
+    {
+      "@type": "Course",
+      "name": "PADI Open Water Diver",
+      "description": "The PADI Open Water Diver course is the world's most popular scuba course, and has introduced millions of people to the adventurous diving lifestyle.",
+      "provider": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "courseCode": "OWD-001",
+      "courseDuration": "P3D",
+      "coursePrerequisites": "Must be at least 10 years old and able to swim",
+      "educationalCredentialAwarded": "PADI Open Water Diver Certification",
+      "offers": {
+        "@type": "Offer",
+        "price": "25000",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2024-01-01",
+        "category": "Scuba Diving Certification"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "https://schema.org/OnSiteInstruction",
+        "startDate": "2024-02-01",
+        "endDate": "2024-02-03",
+        "instructor": {
+          "@type": "Person",
+          "name": "Certified Instructor",
+          "jobTitle": "PADI Instructor"
+        }
+      }
+    },
+    {
+      "@type": "Course",
+      "name": "Discover Scuba Diving",
+      "description": "Try scuba diving for the first time with our experienced instructors in the beautiful waters of Andaman.",
+      "provider": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "courseCode": "DSD-001",
+      "courseDuration": "P1D",
+      "coursePrerequisites": "Must be at least 8 years old and able to swim",
+      "offers": {
+        "@type": "Offer",
+        "price": "4500",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2024-01-01",
+        "category": "Scuba Diving Experience"
+      }
+    },
+    {
+      "@type": "Service",
+      "name": "Equipment Rental",
+      "description": "Complete scuba diving equipment rental including masks, fins, regulators, BCDs, and tanks.",
+      "provider": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "serviceType": "Equipment Rental",
+      "offers": {
+        "@type": "Offer",
+        "price": "1500",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "1500",
+          "priceCurrency": "INR",
+          "unitText": "per day"
+        }
+      }
+    },
+    {
+      "@type": "Service",
+      "name": "Guided Diving Tours",
+      "description": "Professional guided diving tours to the best diving spots in Andaman with experienced dive masters.",
+      "provider": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "serviceType": "Guided Tours",
+      "offers": {
+        "@type": "Offer",
+        "price": "3500",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "3500",
+          "priceCurrency": "INR",
+          "unitText": "per dive"
+        }
+      }
+    },
+    {
+      "@type": "Article",
+      "headline": "Best Diving Spots in Andaman",
+      "description": "Discover the most amazing diving locations in Andaman with crystal-clear waters and vibrant marine life.",
+      "author": {
+        "@type": "Person",
+        "name": "ScubaDiveIn Team",
+        "jobTitle": "Dive Master"
+      },
+      "publisher": {
+        "@id": "https://scubadivein.in/#organization"
+      },
+      "datePublished": "2024-01-15",
+      "dateModified": "2024-01-15",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://scubadivein.in/blogs/"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://scubadivein.in/static/images/logo-main.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "Customer Service",
+      "telephone": "+91-9999999999",
+      "email": "info@scubadivein.in",
+      "availableLanguage": ["English", "Hindi"],
+      "hoursAvailable": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday", 
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "08:00",
+        "closes": "18:00"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the minimum age for scuba diving?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The minimum age for Discover Scuba Diving is 8 years old, and for PADI Open Water Diver certification is 10 years old."
+          }
+        },
+        {
+          "@type": "Question", 
+          "name": "Do I need to know how to swim to take a diving course?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, basic swimming skills are required. You need to be comfortable in water and able to swim at least 200 meters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best time to visit Andaman for scuba diving?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The best time for scuba diving in Andaman is from October to May when the weather is pleasant and visibility underwater is excellent."
+          }
+        }
+      ]
+    }
+  ]
+} 
