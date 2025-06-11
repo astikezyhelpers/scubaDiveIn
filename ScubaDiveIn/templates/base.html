@@ -31,11 +31,82 @@
   <title>{% block title %}Scuba Diving in Andaman – Explore the Best Diving Spots & Packages{% endblock %}</title>
   <meta name="description" content="{% block description %}Discover the beauty of scuba diving in Andaman! Explore crystal-clear waters, vibrant coral reefs, and diverse marine life. Book the best scuba diving packages for an unforgettable underwater adventure.{% endblock %}">
   <link rel="shortcut icon" href="{% static 'images/logo-main.png' %}">
-  <!-- Optimized Font Loading -->
+  <!-- Optimized Font Loading with Critical CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+    /* Critical font loading with system font fallback */
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    
+    /* Critical H1 styles to prevent layout shift and render blocking */
+    .hero-title {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-weight: 700;
+      font-size: 2.25rem; /* text-4xl */
+      line-height: 1.1;
+      margin-top: 5rem; /* mt-20 */
+      margin-bottom: 0;
+      color: white;
+      text-align: center;
+      /* Ensure text renders immediately */
+      font-display: swap;
+    }
+    
+    /* Progressive enhancement when custom font loads */
+    .fonts-loaded .hero-title,
+    .fonts-loaded body {
+      font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+    }
+    
+    /* Responsive breakpoints */
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 3rem; /* md:text-5xl */
+        margin-top: 0; /* md:mt-0 */
+        margin-bottom: 3.5rem; /* md:mb-14 */
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 3.75rem; /* lg:text-6xl */
+      }
+    }
+    
+    /* Critical Tailwind utilities for immediate rendering */
+    .text-center { text-align: center; }
+    .text-white { color: white; }
+    .font-bold { font-weight: 700; }
+    .relative { position: relative; }
+    .container { 
+      width: 100%; 
+      margin-left: auto; 
+      margin-right: auto; 
+      padding-left: 5%; 
+      padding-right: 5%; 
+    }
+  </style>
+  
+  <!-- Font loading optimization script -->
+  <script>
+    // Optimize font loading performance
+    if ('fonts' in document) {
+      document.fonts.ready.then(function() {
+        document.documentElement.classList.add('fonts-loaded');
+      });
+    } else {
+      // Fallback for older browsers
+      setTimeout(function() {
+        document.documentElement.classList.add('fonts-loaded');
+      }, 100);
+    }
+  </script>
   
   <!-- Optimized Tailwind CSS Loading -->
   <script>
