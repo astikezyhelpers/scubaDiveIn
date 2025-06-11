@@ -31,27 +31,40 @@
   <title>{% block title %}Scuba Diving in Andaman – Explore the Best Diving Spots & Packages{% endblock %}</title>
   <meta name="description" content="{% block description %}Discover the beauty of scuba diving in Andaman! Explore crystal-clear waters, vibrant coral reefs, and diverse marine life. Book the best scuba diving packages for an unforgettable underwater adventure.{% endblock %}">
   <link rel="shortcut icon" href="{% static 'images/logo-main.png' %}">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Optimized Font Loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet"></noscript>
+  
+  <!-- Optimized Tailwind CSS Loading -->
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'ocean-blue': '#006994',
-            'coral': '#FF6B6B',
-            'sea-green': '#2E8B57',
-            'deep-blue': '#003366',
-            'sand': '#F4D03F',
-            'wave': '#E8F4F8'
-          },
-          fontFamily: {
-            'sans': ['"Open Sans"', 'sans-serif'],
+    // Load Tailwind CSS asynchronously
+    const tailwindScript = document.createElement('script');
+    tailwindScript.src = 'https://cdn.tailwindcss.com';
+    tailwindScript.async = true;
+    tailwindScript.onload = function() {
+      // Configure Tailwind after it loads
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'ocean-blue': '#006994',
+              'coral': '#FF6B6B',
+              'sea-green': '#2E8B57',
+              'deep-blue': '#003366',
+              'sand': '#F4D03F',
+              'wave': '#E8F4F8'
+            },
+            fontFamily: {
+              'sans': ['"Open Sans"', 'sans-serif'],
+            }
           }
         }
       }
-    }
+    };
+    document.head.appendChild(tailwindScript);
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-wave font-sans">
 <!-- Navigation Bar -->

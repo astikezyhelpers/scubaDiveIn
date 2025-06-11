@@ -8,56 +8,66 @@
     <title>Discover Scuba Diving in Andaman - Special Offer | ScubaDiveIn</title>
     <meta name="description" content="Start your underwater adventure with ScubaDiveIn. Professional instructors, world-class equipment, and breathtaking locations in Andaman.">
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Optimized Font Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
     
     <!-- AOS Library -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Optimized Tailwind CSS Loading -->
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'coral': '#FF6B6B',
-                        'coral-light': '#FF8585',
-                        'ocean-blue': '#4A90E2',
-                        'ocean-dark': '#357ABD',
-                        'deep-blue': '#2C3E50',
-                        'wave': '#E3F2FD',
-                        'wave-dark': '#B3D4FC',
-                        'sea-green': '#2ECC71',
-                        'sea-dark': '#27AE60'
-                    },
-                    animation: {
-                        'float': 'float 3s ease-in-out infinite',
-                        'wave': 'wave 2s ease-in-out infinite',
-                        'fade-in': 'fadeIn 0.5s ease-out'
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' }
+        // Load Tailwind CSS asynchronously
+        const tailwindScript = document.createElement('script');
+        tailwindScript.src = 'https://cdn.tailwindcss.com';
+        tailwindScript.async = true;
+        tailwindScript.onload = function() {
+            // Configure Tailwind after it loads
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'coral': '#FF6B6B',
+                            'coral-light': '#FF8585',
+                            'ocean-blue': '#4A90E2',
+                            'ocean-dark': '#357ABD',
+                            'deep-blue': '#2C3E50',
+                            'wave': '#E3F2FD',
+                            'wave-dark': '#B3D4FC',
+                            'sea-green': '#2ECC71',
+                            'sea-dark': '#27AE60'
                         },
-                        wave: {
-                            '0%, 100%': { transform: 'rotate(0deg)' },
-                            '25%': { transform: 'rotate(10deg)' },
-                            '75%': { transform: 'rotate(-10deg)' }
+                        animation: {
+                            'float': 'float 3s ease-in-out infinite',
+                            'wave': 'wave 2s ease-in-out infinite',
+                            'fade-in': 'fadeIn 0.5s ease-out'
                         },
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        keyframes: {
+                            float: {
+                                '0%, 100%': { transform: 'translateY(0)' },
+                                '50%': { transform: 'translateY(-10px)' }
+                            },
+                            wave: {
+                                '0%, 100%': { transform: 'rotate(0deg)' },
+                                '25%': { transform: 'rotate(10deg)' },
+                                '75%': { transform: 'rotate(-10deg)' }
+                            },
+                            fadeIn: {
+                                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                                '100%': { opacity: '1', transform: 'translateY(0)' }
+                            }
+                        },
+                        screens: {
+                            'xs': '475px',
+                            '3xl': '1600px'
                         }
-                    },
-                    screens: {
-                        'xs': '475px',
-                        '3xl': '1600px'
-                    },
+                    }
                 }
-            }
-        }
+            };
+        };
+        document.head.appendChild(tailwindScript);
     </script>
     
     <!-- Custom Styles -->
