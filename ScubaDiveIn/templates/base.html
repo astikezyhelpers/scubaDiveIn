@@ -39,9 +39,24 @@
   
   <!-- Critical CSS for above-the-fold content -->
   <style>
+    /* Font fallback optimization to prevent layout shifts */
+    @font-face {
+      font-family: 'Open Sans Fallback';
+      src: local('system-ui'), local('-apple-system'), local('Segoe UI');
+      font-display: swap;
+      size-adjust: 100%;
+    }
+    
     /* Critical font loading with system font fallback */
     body {
       font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      /* Ensure consistent metrics to prevent layout shifts */
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 400;
+      /* Prevent font synthesis that can cause shifts */
+      font-synthesis: none;
+      font-kerning: auto;
     }
     
     /* Critical H1 styles to prevent layout shift and render blocking */
@@ -54,8 +69,13 @@
       margin-bottom: 0;
       color: white;
       text-align: center;
-      /* Ensure text renders immediately */
+      /* Ensure consistent rendering */
       font-display: swap;
+      font-synthesis: none;
+      font-kerning: none;
+      /* Prevent layout shifts during font loading */
+      text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
     }
     
     /* Progressive enhancement when custom font loads */
@@ -64,7 +84,7 @@
       font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
     }
     
-    /* Responsive breakpoints */
+    /* Responsive breakpoints with consistent metrics */
     @media (min-width: 768px) {
       .hero-title {
         font-size: 3rem; /* md:text-5xl */
@@ -86,10 +106,39 @@
     .relative { position: relative; }
     .container { 
       width: 100%; 
+      max-width: 1280px;
       margin-left: auto; 
       margin-right: auto; 
       padding-left: 5%; 
-      padding-right: 5%; 
+      padding-right: 5%;
+      /* Prevent container size changes */
+      box-sizing: border-box;
+    }
+    
+    /* Reserve space for WhatsApp button to prevent layout shifts */
+    .whatsapp-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      z-index: 50;
+      /* Ensure no layout shifts */
+      contain: layout;
+    }
+    
+    /* Prevent layout shifts from images */
+    img {
+      /* Ensure images don't cause layout shifts */
+      height: auto;
+      max-width: 100%;
+    }
+    
+    /* Reserve space for dynamic content */
+    .reviews-container {
+      min-height: 400px;
+      /* Prevent shifts when content loads */
+      contain: layout;
     }
   </style>
   
@@ -475,7 +524,7 @@
       }
     </style>
     
-    <div class="fixed bottom-6 right-6 z-50">
+    <div class="whatsapp-container">
       <!-- Pulse Ring Animation -->
       <div class="absolute inset-0 bg-green-400 rounded-full pulse-ring"></div>
       <div class="absolute inset-0 bg-green-400 rounded-full pulse-ring" style="animation-delay: 1s;"></div>
@@ -497,14 +546,6 @@
         <div class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center animate-bounce">
           <div class="absolute inset-0 bg-red-400 rounded-full animate-ping"></div>
           <span class="relative z-10 font-bold">!</span>
-        </div>
-        
-        <!-- Tooltip -->
-        <div class="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <div class="bg-gray-800 text-white text-sm py-2 px-3 rounded-lg whitespace-nowrap shadow-lg">
-            Chat with us on WhatsApp
-            <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
-          </div>
         </div>
       </a>
     </div>
