@@ -8,7 +8,7 @@
 
 {% block content %}
 <!-- Hero Section with Video Background -->
-<section class="relative h-screen flex items-center justify-center overflow-hidden pt-20">
+<section class="hero-section">
   <div class="absolute inset-0 z-0">
     <video autoplay muted loop class="w-full h-full object-cover">
       <source src="https://pro-cms.padi.com/sites/default/files/documents/marketing-hub/Lead%20Adventure%20Video_ENGLISH.mp4" type="video/mp4">
@@ -16,7 +16,7 @@
     </video>
     <div class="absolute inset-0 bg-deep-blue opacity-50"></div>
   </div>
-  <div class="container mx-auto px-[5%] relative z-999 text-center text-white">
+  <div class="hero-container">
     <h1 class="hero-title">Dive Into a World of Adventure</h1>
     <p class="text-xl md:text-2xl mt-24 mb-4 md:mb-4 md:mt-8 max-w-3xl mx-auto">Discover the magic beneath the waves with our internationally certified scuba diving courses</p>
     <div class="flex flex-wrap justify-center gap-4">
@@ -86,6 +86,9 @@
           src="{% static 'images/padi-logo.png' %}"
           alt="PADI logo"
           class="max-h-36 md:max-h-42"
+          width="200"
+          height="144"
+          style="aspect-ratio: 200/144;"
         />
       </div>
       <!-- <div
@@ -151,7 +154,7 @@
         <div class="relative h-48 overflow-hidden">
           <div class="course-image">
             {% if course.featured_image_url %}
-                <img src="{{ course.featured_image_url }}" alt="{{ course.name }}" class="w-full h-full object-cover" width="400" height="192" style="aspect-ratio: 400/192;">
+               <img src="{{ course.featured_image_url }}" alt="{{ course.name }}" class="w-full h-full object-cover" width="400" height="192" style="aspect-ratio: 400/192;">
             {% else %}
                 <img src="{% static 'images/default-course.jpg' %}" alt="{{ course.name }}" class="w-full h-full object-cover" width="400" height="192" style="aspect-ratio: 400/192;" onerror="this.src='https://res.cloudinary.com/padi/image/upload/f_auto,q_90,w_auto,dpr_auto/v1743670865/CDN/commerce/60462-1B2C.jpg'">
             {% endif %}
